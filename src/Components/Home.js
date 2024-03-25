@@ -1,21 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Home.css'
 import { IoMdMenu } from "react-icons/io";
+import { RxCross2 } from "react-icons/rx";
 
 function Home() {
+    const [visible,setVisible]= useState(false)
+
+    const handleClick=(e)=>{
+        setVisible((currele)=>!currele)
+    }
     return (
         <>
             <div className='home'>
                 <div className='home-sec1'>
                     <nav className='home-nav'>
-                        <ul>
+                    {visible?  <ul> 
                             <li>Home</li>
                             <li>About</li>
                             <li>Product</li>
                             <li>Catelog</li>
                             <li>Contact</li>
-                        </ul>
-                        <IoMdMenu className='menu-icon'></IoMdMenu>
+                        </ul> : <ul className='notvisible'> 
+                            <li>Home</li>
+                            <li>About</li>
+                            <li>Product</li>
+                            <li>Catelog</li>
+                            <li>Contact</li>
+                        </ul>}
+                       <span className='nav-icons'>
+                        {!visible?
+                        <IoMdMenu id='menu-icon' onClick={handleClick}></IoMdMenu>:
+                        <RxCross2 id='menu-icon' onClick={handleClick}></RxCross2>
+                        }
+                       </span>
                     </nav>
                     <hr></hr>
                     <div className='home-title'>
