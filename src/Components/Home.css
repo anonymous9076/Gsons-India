@@ -123,9 +123,7 @@
     width: 90%;
 }
 
-.notvisible{
-    display: none !important;
-}
+
 .nav-icons{
     display: none;
 }
@@ -246,6 +244,9 @@
         padding: 0;
         position: relative;
 
+    }
+    .notvisible{
+        display: none !important;
     }
 
 }
