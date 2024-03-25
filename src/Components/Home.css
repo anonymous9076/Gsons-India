@@ -126,6 +126,9 @@
 .notvisible{
     display: none !important;
 }
+.nav-icons{
+    display: none;
+}
 
 @media screen and (max-width:900px) {
     .home {
