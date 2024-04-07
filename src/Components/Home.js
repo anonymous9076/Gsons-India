@@ -1,10 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import './Home.css'
 import { IoMdMenu } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
+import AOS from 'aos'
+import 'aos/dist/aos.css'; 
 
 function Home() {
+
     const [visible,setVisible]= useState(false)
+
+    useEffect(()=>{
+        AOS.init({
+            delay:500
+        })
+    },[])
 
     const handleClick=(e)=>{
         setVisible((currele)=>!currele)
@@ -13,7 +22,7 @@ function Home() {
         <>
             <div className='home'>
                 <div className='home-sec1'>
-                    <nav className='home-nav'>
+                    <nav className='home-nav' data-aos='fade-up'>
                     {visible?  <ul> 
                             <li>Home</li>
                             <li>About</li>
@@ -35,17 +44,17 @@ function Home() {
                        </span>
                     </nav>
                     <hr></hr>
-                    <div className='home-title'>
+                    <div className='home-title' data-aos='fade-right'>
                         <h1>GSONS<br></br>LUMINOUS</h1>
                         <p>Lights & Accessories</p>
                         <button type='submit'>Contact Now</button>
                     </div>
                     <hr></hr>
-                    <p>"Illuminate your life with style and shine"</p>
+                    <p data-aos='fade-up'>"Illuminate your life with style and shine"</p>
                 </div>
                 <div className='home-sec2'>
                     <div className='home-img-bg'>
-                        <img src='./Images/decoration-7162595_1920.jpg' className='home-img' alt='...'></img>
+                        <img data-aos='fade-up-left' src='./Images/decoration-7162595_1920.jpg' className='home-img' alt='...'></img>
                     </div>
                 </div>
 

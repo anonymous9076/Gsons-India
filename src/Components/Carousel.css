@@ -1,0 +1,22 @@
+.carousel{
+    height: 100dvh;
+    width: 100%;
+    display: grid;
+    place-content: center;
+    background-color: #070d10;
+    transition: all 1s;
+}
+.img-cont{
+    height: 100%;
+    width: 100%;
+    padding: 0 auto;
+
+}
+.img-cont>img{
+    padding: 0 auto;
+    max-height: 90dvh;
+    height: fit-content;
+    max-width:100dvw;
+    width: fit-content;
+   
+}
