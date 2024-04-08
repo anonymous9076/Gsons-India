@@ -5,5 +5,7 @@
     place-content: center;
     background-color: #746E6B;
     transition: all 1s;
+    box-sizing:border-box;
+    padding:5%;
 }
 
