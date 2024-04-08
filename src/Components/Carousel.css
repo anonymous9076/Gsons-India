@@ -8,4 +8,8 @@
     box-sizing:border-box;
     padding:0 5%;
 }
+@media screen and (max-width:100px){
+.carousel{
+    display:none;
+}
 
