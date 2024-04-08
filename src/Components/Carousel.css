@@ -15,8 +15,8 @@
 .img-cont>img{
     padding: 0 auto;
     max-height: 90dvh;
-    height: fit-content;
+    height: 80%;
     max-width:100dvw;
-    width: fit-content;
+    width: 80%;
    
 }
