@@ -10,13 +10,12 @@
     height: 100%;
     width: 100%;
     padding: 0 auto;
-
+    transition : all 1s;
+      display: grid;
+    place-content: center;
 }
 .img-cont>img{
     padding: 0 auto;
-    max-height: 90dvh;
     height: 80%;
-    max-width:100dvw;
     width: 80%;
-   
 }
