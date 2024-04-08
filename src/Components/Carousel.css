@@ -15,5 +15,11 @@
 .img-cont>img{
     padding: 0 auto;
     height: 80%;
+    max-height:80%;
+    max-width:
     width: 80%;
+}
+.carousel-item.active{
+    hwight:100dvh;
+    width:100dvw:
 }
