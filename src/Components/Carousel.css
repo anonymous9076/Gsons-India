@@ -1,17 +1,19 @@
 .carousel{
-    height: 100dvh;
+    height: 60dvh;
     width: 100%;
     display: grid;
     place-content: center;
     background-color: #070d10;
     transition: all 1s;
+    box-sizing:border-box;
+    padding:0 5%;
 }
-.img-cont{
-    height: 100%;
-    width: 100%;
-    padding: 0 auto;
-
+@media screen and (max-width:1000px){
+.carousel{
+    display:none;
 }
+}
+<<<<<<< HEAD
 .img-cont>img{
     padding: 0 auto;
     max-height: 90dvh;
@@ -25,3 +27,5 @@
         display: none;
     }
 }
+=======
+>>>>>>> a1bce6ed510b938ee8cb2fdf46615a91c5b368b6
