@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Contact.css';
+import axios from 'axios'
 
 const Contact = () => {
     const [formData, setFormData] = useState({
@@ -16,10 +17,12 @@ const Contact = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
+        console.log('yo')
         // Add your submission logic here
-        console.log(formData);
+        const res= await axios.post('https://formsubmit.co/indiagsons@gmail.com',formData)
+        console.log(res)
         // You can send the form data to your backend or perform any action as needed
     };
 

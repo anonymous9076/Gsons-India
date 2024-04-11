@@ -9,10 +9,11 @@
     padding: 0;
     width: 50%;
     display: grid;
-    padding-left: 4%;
+    padding-left: 5%;
     font-size: clamp(2rem, 4vw, 3.5rem);
     font-weight: 600;
     place-content: end start;
+    color: black;
 }
 
 .contact-form-container {
@@ -23,9 +24,9 @@
 }
 
 .contact-form {
-    max-width: 500px;
+    max-width: 600px;
     width: 100%;
-    padding: 20px;
+    padding-left: 5%;
     border-radius: 8px;
     height: 80%;
 }
@@ -71,7 +72,7 @@
 }
 
 .contact-right {
-    width: 60%;
+    width: 50%;
     height: 100%;
     display: grid;
     place-items: end end;

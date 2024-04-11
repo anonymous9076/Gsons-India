@@ -18,23 +18,50 @@ function Home() {
     const handleClick=(e)=>{
         setVisible((currele)=>!currele)
     }
+    const scrollToTop = (e) => {
+        if(e===1)
+        window.scrollTo({
+          top: 0, // Scroll to 100vh from the top
+          behavior: 'smooth'
+        })
+        if(e===2)
+        window.scrollTo({
+          top:2* window.innerHeight, // Scroll to 100vh from the top
+          behavior: 'smooth'
+        })
+        if(e===3)
+        window.scrollTo({
+          top:4* window.innerHeight, // Scroll to 100vh from the top
+          behavior: 'smooth'
+        })
+        if(e===4)
+        window.scrollTo({
+          top: 3*window.innerHeight, // Scroll to 100vh from the top
+          behavior: 'smooth'
+        })
+        if(e===5)
+        window.scrollTo({
+          top: 6*window.innerHeight, // Scroll to 100vh from the top
+          behavior: 'smooth'
+        })
+        ;}
     return (
         <>
             <div className='home'>
                 <div className='home-sec1'>
                     <nav className='home-nav' data-aos='fade-up'>
                     {visible?  <ul> 
-                            <li>Home</li>
-                            <li>About</li>
-                            <li>Product</li>
-                            <li>Catelog</li>
-                            <li>Contact</li>
+                            <li onClick={()=>scrollToTop(1)}>Home</li>
+                            <li onClick={()=>scrollToTop(2)}>About</li>
+                            <li onClick={()=>scrollToTop(3)}>Product</li>
+                            <li onClick={()=>scrollToTop(4)}>Catelog</li>
+                            <li onClick={()=>scrollToTop(5)}>Contact</li>
                         </ul> : <ul className='notvisible'> 
-                            <li>Home</li>
-                            <li>About</li>
-                            <li>Product</li>
-                            <li>Catelog</li>
-                            <li>Contact</li>
+                            <li onClick={()=>scrollToTop(1)}>Home</li>
+                            <li onClick={()=>scrollToTop(2)}>About</li>
+                            <li onClick={()=>scrollToTop(3)}>Product</li>
+                            <li onClick={()=>scrollToTop(4)}>Catelog</li>
+                            <li onClick={()=>scrollToTop(5)}>Contact</li>
                         </ul>}
                        <span className='nav-icons'>
                         {!visible?

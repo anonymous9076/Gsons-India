@@ -79,6 +79,7 @@
     box-sizing: border-box;
 
 }
+
 .cat-right {
     height: 100%;
     width: 40%;
@@ -92,6 +93,30 @@
 .cat-right>img {
     height: 90%;
     width: 90%;
+}
+
+#wire {
+    height: 100%;
+    width: 100%;
+    background: url('../Images/WIRE.jfif');
+    background-size: cover;
+    background-position: center;
+}
+
+#switch {
+    height: 100%;
+    width: 100%;
+    background: url('../Images/SWITCHES.jfif');
+    background-size: cover;
+    background-position: bottom;
+}
+
+#light {
+    height: 100%;
+    width: 100%;
+    background: url('../Images/LIGHTS.jfif');
+    background-size: cover;
+    background-position: center;
 }
 
 
