@@ -40,7 +40,7 @@ function Catelog() {
         </div>
       </div>
       <div className='cat-right'>
-        <img data-aos="fade-left" src='./Images/ai-generated-8593619_1920.jpg' alt='...'></img>
+        <img data-aos="fade-left" src='./Images/rope-2368997_1920.jpg' alt='...'></img>
       </div>
     </div>
   )

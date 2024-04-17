@@ -1,6 +1,7 @@
 import React from 'react';
 import './Footer.css'
 import { MDBFooter, MDBContainer, MDBRow, MDBCol, MDBIcon } from 'mdb-react-ui-kit';
+import {Link} from 'react-router-dom'
 
 export default function Footer() {
   return (
@@ -11,21 +12,21 @@ export default function Footer() {
         </div>
 
         <div>
-          <a href='' className='me-4 text-reset'>
+          <Link to='' className='me-4 text-reset'>
             <MDBIcon fab icon="facebook-f" />
-          </a>
-          <a href='' className='me-4 text-reset'>
+          </Link>
+          <Link to='' className='me-4 text-reset'>
             <MDBIcon fab icon="twitter" />
-          </a>
-          <a href='' className='me-4 text-reset'>
+          </Link>
+          <Link to='' className='me-4 text-reset'>
             <MDBIcon fab icon="google" />
-          </a>
-          <a href='' className='me-4 text-reset'>
+          </Link>
+          <Link to='https://www.instagram.com/gsonsindia/' className='me-4 text-reset'>
             <MDBIcon fab icon="instagram" />
-          </a>
-          <a href='' className='me-4 text-reset'>
+          </Link>
+          <Link to='' className='me-4 text-reset'>
             <MDBIcon fab icon="linkedin" />
-          </a>
+          </Link>
         </div>
       </section>
 
@@ -46,43 +47,43 @@ export default function Footer() {
             <MDBCol md="2" lg="2" xl="2" className='mx-auto mb-4'>
               <h6 className='text-uppercase fw-bold mb-4'>Catelogs</h6>
               <p>
-                <a href='/' className='text-reset'>
+                <Link to='/' className='text-reset'>
                   Lights
-                </a>
+                </Link>
               </p>
               <p>
-                <a href='/' className='text-reset'>
+                <Link to='/' className='text-reset'>
                   Switches
-                </a>
+                </Link>
               </p>
               <p>
-                <a href='/' className='text-reset'>
+                <Link to='/' className='text-reset'>
                   wires
-                </a>
+                </Link>
               </p>
             </MDBCol>
 
             <MDBCol md="3" lg="2" xl="2" className='mx-auto mb-4'>
               <h6 className='text-uppercase fw-bold mb-4'>Useful links</h6>
               <p>
-                <a href='#!' className='text-reset'>
+                <Link to='#!' className='text-reset'>
                   Home
-                </a>
+                </Link>
               </p>
               <p>
-                <a href='#!' className='text-reset'>
+                <Link to='#!' className='text-reset'>
                   About
-                </a>
+                </Link>
               </p>
               <p>
-                <a href='#!' className='text-reset'>
+                <Link to='#!' className='text-reset'>
                   products
-                </a>
+                </Link>
               </p>
               <p>
-                <a href='#!' className='text-reset'>
+                <Link to='#!' className='text-reset'>
                   Contact
-                </a>
+                </Link>
               </p>
             </MDBCol>
 
@@ -109,9 +110,9 @@ export default function Footer() {
 
       <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.05)' }}>
         © 2021 Copyright:
-        <a className='text-reset fw-bold' href='https://mdbootstrap.com/'>
+        <Link className='text-reset fw-bold' to='https://mdbootstrap.com/'>
           gsonsindia.com
-        </a>
+        </Link>
       </div>
     </MDBFooter>
   );

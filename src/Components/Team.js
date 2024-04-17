@@ -11,55 +11,37 @@ function Team() {
     }, [])
     return (
         <div className='team'>
-            <h1 data-aos='fade-down'>Our Team</h1>
-            <div className='co staff'>
-                <div className='team-img-cont ' data-aos='fade-down-right'>
-                    <img src='./Images/ceiling-5190252_1920.jpg' alt='...'></img>
-                    <p id='staff-detail'>
-                        Alongside Sumit Goel, Kashish Aggarwal stands as a stalwart leader at Gsons,
-                        contributing invaluable expertise and a strategic vision to drive the company forward.
-                        Together, as co-heads, they synergize their talents to innovate,
-                        inspire, and redefine the world of lighting. With their combined leadership,
-                        Gsons continues to illuminate spaces with unparalleled elegance and flair.</p>
-
-                    <div className='name'>
-                        <h2> Kashish Aggarwal</h2>
-                        CO
-                    </div>
+            <h1>Our Team</h1>
+            <div  className='team-cont'>
+            <div className="card" data-aos='fade-left' data-aos-delay="500">
+                <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp" className="card-img-top" alt="Fissure in Sandstone" />
+                <div className="card-body">
+                    <h5 className="card-title">Kashish Aggarwal</h5>
+                    <p className="card-text"> Alongside Sumit Goel, Kashish Aggarwal stands as a stalwart leader at Gsons,
+                        contributing invaluable expertise and a strategic vision to drive the company forward.</p>
                 </div>
             </div>
-            <div className='ceo staff' data-aos='fade-up'>
-                <h1>Our Team</h1>
-                <div className='team-img-co '>
-                    <img src='./Images/ceiling-5190252_1920.jpg' alt='...'></img>
-                    <p id='staff-detail'>
-                        Sumit Goel, the visionary founder of Gsons,
+
+            <div className="card" data-aos='fade-left' data-aos-delay="1000">
+                <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp" className="card-img-top" alt="Fissure in Sandstone" />
+                <div className="card-body">
+                    <h5 className="card-title">Sumit Goel</h5>
+                    <p className="card-text">   Sumit Goel, the visionary founder of Gsons,
                         brings a passion for innovation and a keen eye for design to every aspect of the company.
-                        As the CEO, he leads with a commitment to excellence,
-                        ensuring that Gsons continues to illuminate lives with creativity and distinction.</p>
-
-                    <div className='name-co'>
-                        <h2>Sumit Goel</h2>
-                        CEO
-                    </div>
+                        As the CEO, he leads with a commitment to excellence.</p>
                 </div>
             </div>
-            <div className='ac staff'>
-                <div className='team-img-cont ' data-aos='fade-down-left'>
-                    <img src='./Images/ac.jpeg' alt='...'></img>
-                    <p id='staff-detail'>
-                        At Gsons, Avtar Singh plays a pivotal role as the head of the accounts department,
+
+            <div className="card" data-aos='fade-left' data-aos-delay="1500">
+                <img src="./Images/ac.jpeg" className="card-img-top" alt="Fissure in Sandstone" />
+                <div className="card-body">
+                    <h5 className="card-title">Avtar Singh</h5>
+                    <p className="card-text">   At Gsons, Avtar Singh plays a pivotal role as the head of the accounts department,
                         where he expertly manages all financial transactions with precision and diligence.
-                        With his meticulous attention to detail and unwavering dedication,
-                        Avtar ensures the smooth functioning of the company's financial operations,
-                        contributing to Gsons' success and growth.</p>
-                    <div className='name'>
-                        <h2> Avtar singh</h2>
-                        AC.
-                    </div>
+                        With his meticulous attention to detail and unwavering dedication.</p>
                 </div>
             </div>
-
+            </div>
         </div>
     )
 }

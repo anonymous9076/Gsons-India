@@ -3,8 +3,9 @@
     width: 100%;
     display: flex;
     box-sizing: border-box;
-    background-color: #070d10;
-    color: white;
+    background-color: white;
+    color: #070d10;
+    backdrop-filter: blur(2px);
 }
 
 .cat-left {
@@ -19,7 +20,7 @@
     letter-spacing: 2px;
     font-size: clamp(2rem, 4vw, 4rem);
     font-weight: 700;
-    color: white;
+    color: #f36d21;
     display: grid;
     place-items: end center;
     box-sizing: border-box;
@@ -30,7 +31,7 @@
     content: '';
     height: 70%;
     width: 70%;
-    border: 20px solid #efefef;
+    border: 10px solid #ff914d;
     position: absolute;
     z-index: 2;
     background-color: transparent;
@@ -49,7 +50,7 @@
 
 
 .cat-pdfs>div {
-    background-color: #efefef;
+    background-color: #f36d21;
     height: 40%;
     width: 25%;
     min-height: 11rem;
@@ -59,7 +60,7 @@
     display: grid;
     grid-template-rows: 30% 70%;
     place-items: center start;
-    color: black;
+    color: white;
     font-size: 1.3rem;
     padding-left: 5%;
     box-sizing: border-box;
@@ -68,9 +69,7 @@
     transition: all .5s;
 }
 
-.cat-pdfs>div:hover {
-    transform: translate(5%, 5%);
-}
+
 
 .cat-pdfs>div>div {
     height: 100%;
@@ -93,6 +92,7 @@
 .cat-right>img {
     height: 90%;
     width: 90%;
+  
 }
 
 #wire {

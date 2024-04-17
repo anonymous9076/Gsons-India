@@ -16,12 +16,12 @@ function About() {
             </div>
             <div className='about-body'>
                 <div className='about-img'>
-                    <img data-aos="fade-down-right" src='./images/ai-generated-8515044_1920.jpg' alt='...'></img>
+                    <img data-aos="fade-down-right" src='./Images/ai-generated-8515044_1920.jpg' alt='...'></img>
                 </div>
                 <div className='about-text'>
                     <p data-aos='fade-left'>
                         Welcome to Gsons, your ultimate destination for illuminating spaces and enhancing ambiances! At Gsons, we're passionate about brightening up your world with our exquisite range of lights and accessories. Whether you're looking to create a cozy atmosphere in your living room, add a touch of sophistication to your office, or transform your outdoor space into a captivating haven, we've got you covered.
-<br></br><br></br>
+                        <br></br><br></br>
                         Our Journey:
                         <br></br>
                         Founded in [YEAR], Gsons was born out of a vision to redefine the way people perceive lighting. It all started in the vibrant city of Batala, Punjab, where our founder, Sumit Goel, set out on a mission to illuminate homes and lives with creativity and innovation. Drawing inspiration from the interplay of lights and shadows, Sumit embarked on a journey to curate a collection of lighting solutions that not only illuminate spaces but also evoke emotions and enhance experiences.

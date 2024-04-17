@@ -1,8 +1,9 @@
 .about {
     width: 100%;
     height: 100dvh;
-    background-color: #EFEFEF;
-    color: #070d10;
+    color: white;
+    background-color: #f36d21;
+
 }
 
 .about-title {
@@ -19,17 +20,18 @@
     width: 25%;
     height: 60%;
     background-color: transparent;
-    border: 10px solid black;
+    border: 10px solid white;
     font-size: clamp(1.5rem, 4vw, 4rem);
     font-weight: 700;
     display: grid;
+    color: white;
     place-items: center;
 }
 
 .about-title>hr {
     width: 60%;
-    height: 3px;
-    background-color: black;
+    height: 4px;
+    background-color: white;
 }
 
 .about-body {
@@ -40,7 +42,7 @@
 }
 
 .about-img {
-    width: 60%;
+    width: 50%;
     height: 100%;
     position: relative;
 
@@ -52,7 +54,7 @@
     height: 70%;
     position: absolute;
     z-index: 2;
-    background-color: #B3AFAD;
+    background-color: #ff914d;
     bottom: 4rem;
     left: 5rem;
 }
@@ -63,7 +65,7 @@
     height: 70%;
     position: absolute;
     background-color: transparent;
-    border: 10px solid #746E6B;
+    border: 10px solid white;
     z-index: 3;
     bottom: 6rem;
     left: 40%;
@@ -79,16 +81,21 @@
 }
 
 .about-text {
-    width: 40%;
+    width: 45%;
     box-sizing: border-box;
     padding: 0 4% 0 0;
     height: 100%;
+    text-align: center;
 }
 
 .about-text>p {
     height: 80%;
     padding-bottom: 4%;
     overflow-x: hidden;
+}
+
+.about-text>p::-webkit-scrollbar{
+    display: none;
 }
 
 @media screen and (max-width:700px) {
@@ -122,7 +129,7 @@
         bottom: -60%;
         right: -40%;
         background-color: transparent;
-        border: 7px solid #B3AFAD;
+        border: 7px solid #ff914d;
         z-index: 2;
     }
 
@@ -145,4 +152,13 @@
 
     }
 
+}
+@media screen and (max-height:500px) {
+    .about {
+        width: 100%;
+        height: 150dvh;
+        color: white;
+        background-color: #f36d21;
+    
+    }
 }

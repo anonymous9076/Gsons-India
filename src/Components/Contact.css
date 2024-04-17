@@ -1,6 +1,10 @@
 .contact {
-    background-color: #efefef;
+    background: url(../Images/images.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     height: 100dvh;
+    background-attachment: fixed;
 }
 
 .contact>h1 {
@@ -13,11 +17,13 @@
     font-size: clamp(2rem, 4vw, 3.5rem);
     font-weight: 600;
     place-content: end start;
-    color: black;
+    color: #f36d21;
+    -webkit-text-stroke-color: white;
+    -webkit-text-stroke-width: 0.5px;
 }
 
 .contact-form-container {
-    background-color: #efefef;
+    background-color: transparent;
     display: flex;
     height: 80%;
     align-items: center;
@@ -39,14 +45,15 @@
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    background-color: #070d10;
+    background-color: #f36d21;
     color: white;
+    outline-style: none;
 
 }
 
 .contact-form input::placeholder,
 .contact-form textarea::placeholder {
-    background-color: #070d10;
+    background-color: #f36d21;
     color: white;
 }
 
@@ -58,7 +65,7 @@
     height: 3rem;
     width: 7rem;
     padding: 10px;
-    background-color: #070d10;
+    background-color: #f36d21;
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -67,25 +74,13 @@
 }
 
 .contact-form button:hover {
-    background-color: #070d10;
+    background-color: #ff914d;
     font-size: 1.2rem;
 }
 
-.contact-right {
-    width: 50%;
-    height: 100%;
-    display: grid;
-    place-items: end end;
-    position: relative;
-}
 
-.contact-right>img {
-    height: 70%;
-    width: 60%;
-    border: 10px solid #070d10;
-    position: relative;
-    z-index: 3;
-}
+
+
 
 .contact-right::after {
     content: '';
@@ -106,5 +101,18 @@
 @media  screen and (max-width:800px) {
     .contact-right {
       display: none;
+    }
+    .contact {
+        background: url(../Images/images.jpg);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        height: 100dvh;
+    }
+    
+}
+@media  screen and (max-height:500px) {
+    .contact {
+        height: 130dvh;
     }
 }

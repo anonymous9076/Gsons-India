@@ -1,11 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './Product.css'
-function product() {
+import AOS from 'aos'
+import 'aos/dist/aos.css';
+
+function Product() {
+  useEffect(() => {
+    AOS.init({
+    })
+  }, [])
   return (
     <div className='products'>
       <div className='pro-left'>
         <div className='pro-img-cont'>
-          <img className='pro-img' src='./Images/dinner-table-7910402_1920.jpg' alt='...'></img>
+          <video className='pro-img' autoPlay={true} loop={true}>
+            <source src='./Images/wallvid.mp4' type="video/mp4" />
+          </video>
         </div>
       </div>
 
@@ -14,7 +23,7 @@ function product() {
           OUR PRODUCTS
         </div>
 
-        <div className='items-list-cont'>
+        <div className='items-list-cont' data-aos='fade-up'  >
           <img src='https://res.cloudinary.com/djnjmmgu8/image/upload/v1712727091/CONCIELD/5_iwsu0s.png' alt='...' className='item'></img>
           <img src='https://res.cloudinary.com/djnjmmgu8/image/upload/v1712726789/FANCY%20WALL/1_bimnjp.png' alt='...' className='item'></img>
           <img src='https://res.cloudinary.com/djnjmmgu8/image/upload/v1712725449/GATE/38_cgggxu.png' alt='...' className='item'></img>
@@ -35,4 +44,4 @@ function product() {
   )
 }
 
-export default product
+export default Product

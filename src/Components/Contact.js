@@ -21,9 +21,14 @@ const Contact = () => {
         e.preventDefault();
         console.log('yo')
         // Add your submission logic here
+        try{
         const res= await axios.post('https://formsubmit.co/indiagsons@gmail.com',formData)
         console.log(res)
         // You can send the form data to your backend or perform any action as needed
+        }
+        catch(err){
+            console.log(err)
+        }
     };
 
     return (
@@ -56,9 +61,6 @@ const Contact = () => {
                     ></textarea>
                     <button type="submit">Submit</button>
                 </form>
-                <div className='contact-right'>
-                    <img src='./Images/marble-4062830_1920.jpg' alt='...'></img>
-                </div>
             </div>
         </div>
 
