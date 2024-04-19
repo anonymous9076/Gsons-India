@@ -2,25 +2,24 @@ import Carousel from 'react-bootstrap/Carousel';
 import './Carousel.css'
 
 function IndividualIntervalsExample() {
+  const arr = ['https://res.cloudinary.com/djnjmmgu8/image/upload/v1712723809/ADV/ADD62_oighsg.png',
+    'https://res.cloudinary.com/djnjmmgu8/image/upload/v1712723738/ADV/ADD43_t4y2sy.png',
+    'https://res.cloudinary.com/djnjmmgu8/image/upload/v1712723806/ADV/ADD55_a0qkfa.png',
+    'https://res.cloudinary.com/djnjmmgu8/image/upload/v1712723694/ADV/ADD6_bq42qi.png'
+  ]
   return (
     <Carousel className='carousel'>
-      <Carousel.Item interval={5000} className='img-cont'>
-        <img src='./Images/wall-823611_1920.jpg' alt='...'></img>
-        <Carousel.Caption>
-          {/* <h3>First slide label</h3>
-          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item interval={5000} className='img-cont'>
-      <img src='./Images/logo-6173652_1920.jpg' alt='...'></img>
-        <Carousel.Caption>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item className='img-cont'>
-      <img src='./Images/dinner-table-7910402_1920.jpg' alt='...'></img>
-        <Carousel.Caption>
-        </Carousel.Caption>
-      </Carousel.Item>
+
+      {
+        arr.map((item) => 
+          <Carousel.Item interval={3000}  className='img-cont'>
+            <img src={item} alt='...'></img>
+
+          </Carousel.Item>
+        )
+      }
+
+
     </Carousel>
   );
 }

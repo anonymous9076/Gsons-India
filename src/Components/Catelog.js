@@ -20,7 +20,7 @@ function Catelog() {
 
   useEffect(()=>{
     AOS.init({
-        delay:500
+     
     })
 },[])
   return (

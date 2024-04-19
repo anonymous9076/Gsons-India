@@ -86,8 +86,9 @@
 }
 
 .item {
-    background-color: #ff914d;
+    background-color: #ffffff;
     height: 10rem;
+    border: 10px solid #ff914d;
     width: 10rem;
     margin: 2%;
     transition: all .5s;

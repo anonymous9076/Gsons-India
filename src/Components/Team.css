@@ -19,13 +19,14 @@
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-evenly;
+    align-items: center;
 }
 .card{
     width: 20rem;
     margin: 1% 2%;
     height: 25rem !important;
-    transition: all .5s;
+    transition: all 1s !important;
 
 }
 .card-img-top{
@@ -55,5 +56,5 @@
 }
 .card:hover{
     height:fit-content;
-    transform: translate(-2% ,-2%);
+    transform: translate(-2% ,-2%) !important;
 }

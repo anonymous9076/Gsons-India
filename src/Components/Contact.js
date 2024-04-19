@@ -20,10 +20,11 @@ const Contact = () => {
     const handleSubmit = async(e) => {
         e.preventDefault();
         console.log('yo')
+        console.log(formData)
         // Add your submission logic here
         try{
-        const res= await axios.post('https://formsubmit.co/indiagsons@gmail.com',formData)
-        console.log(res)
+        await axios.post('https://formsubmit.co/indiagsons@gmail.com',formData)
+        alert("form submited successfully")
         // You can send the form data to your backend or perform any action as needed
         }
         catch(err){
@@ -35,7 +36,7 @@ const Contact = () => {
         <div className='contact'>
             <h1>Contact us</h1>
             <div className="contact-form-container">
-                <form onSubmit={handleSubmit} className="contact-form">
+                <form className="contact-form">
                     <input
                         type="text"
                         name="name"
@@ -59,7 +60,7 @@ const Contact = () => {
                         placeholder="Your Message"
                         required
                     ></textarea>
-                    <button type="submit">Submit</button>
+                    <button type="submit" onClick={handleSubmit} >Submit</button>
                 </form>
             </div>
         </div>

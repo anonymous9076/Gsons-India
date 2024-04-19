@@ -1,13 +1,23 @@
 .carousel {
-    padding: 3% 0;
-    height: 100dvh;
+    height: 60dvh;
     width: 100%;
     display: grid;
     place-content: center;
     background-color: white;
-    transition: all 1s;
     box-sizing: border-box;
-    padding: 0 5%;
+    padding: 0;
+    scroll-behavior:smooth !important;
+}
+.img-cont{
+    height: 100%;
+    width: 100%;
+}
+
+.img-cont>img {
+    height:100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
 }
 
 @media screen and (max-width:1000px) {
@@ -16,14 +26,6 @@
     }
 }
 
-.img-cont>img {
-    padding: 0 auto;
-    max-height: 90dvh;
-    height: fit-content;
-    max-width: 100dvw;
-    width: fit-content;
-
-}
 
 @media screen and (max-width:1000px) {
     .carousel {

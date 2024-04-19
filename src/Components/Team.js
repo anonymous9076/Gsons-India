@@ -6,7 +6,6 @@ import 'aos/dist/aos.css';
 function Team() {
     useEffect(() => {
         AOS.init({
-            delay: 500
         })
     }, [])
     return (

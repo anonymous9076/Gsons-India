@@ -16,7 +16,7 @@ function About() {
             </div>
             <div className='about-body'>
                 <div className='about-img'>
-                    <img data-aos="fade-down-right" src='./Images/ai-generated-8515044_1920.jpg' alt='...'></img>
+                    <img data-aos="fade-down-right" src='https://res.cloudinary.com/djnjmmgu8/image/upload/v1712725421/GATE/27_cxu9zx.jpg' alt='...'></img>
                 </div>
                 <div className='about-text'>
                     <p data-aos='fade-left'>

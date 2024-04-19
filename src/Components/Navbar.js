@@ -3,6 +3,7 @@ import './Navbar.css'
 import { Link } from 'react-router-dom';
 
 function Navbar() {
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg">
@@ -13,23 +14,23 @@ function Navbar() {
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
-              <li className="nav-item">
+              <li className="nav-item" >
                 <Link className="nav-link " aria-current="page" to='/'>Home</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to='/'>About</Link>
+                <Link className="nav-link" to='/about'>About</Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to='/'>Catelogs</Link>
+              <li className="nav-item"  >
+                <Link className="nav-link" to='/catelog'>Catelogs</Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to='/'>Product</Link>
+              <li className="nav-item" >
+                <Link className="nav-link" to='/products'>Product</Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to='/'>Team</Link>
+              <li className="nav-item" >
+                <Link className="nav-link" to='/team'>Team</Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to='/'>Contact</Link>
+              <li className="nav-item" >
+                <Link className="nav-link" to='/contact'>Contact</Link>
               </li>
 
             </ul>

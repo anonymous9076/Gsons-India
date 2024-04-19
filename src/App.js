@@ -7,35 +7,30 @@ import Footer from './Components/Footer';
 import Home from './Components/Home';
 import Navbar from './Components/Navbar';
 import Product from './Components/Product';
+import AllItems from './Components/AllItems'
 import Team from './Components/Team';
-import CardItems from './Components/CardItems'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
     <BrowserRouter>
-    <>
-    <Navbar></Navbar>
-    </>
+      <>
+        <Navbar></Navbar>
+      </>
 
       <Routes>
         <Route path='/' element={<Home />}></Route>
         <Route path='/' element={<Carousle />}></Route>
-        <Route path='/' element={<About />}></Route>
-        <Route path='/' element={<Catelog />}></Route>
-        <Route path='/' element={<Product />}></Route>
-        <Route path='/' element={<Team />}></Route>
-        <Route path='/' element={<Contact />}></Route>
+        <Route path='/About' element={<About />}></Route>
+        <Route path='/Catelog' element={<Catelog />}></Route>
+        <Route path='/Products' element={<Product />}></Route>
+        <Route path='/Team' element={<Team />}></Route>
+        <Route path='/Contact' element={<Contact />}></Route>
+        <Route path='/AllItems' element={<AllItems />}></Route>
+
       </Routes >
-      <div className='app'>  
-      <Carousle></Carousle>
-        <About></About>
-        <Catelog />
-        <Product></Product>
-        <Team></Team>
-        <Contact></Contact>
+      <div className='app'>
         <Footer></Footer>
-        <CardItems></CardItems>
       </div>
     </BrowserRouter >
 

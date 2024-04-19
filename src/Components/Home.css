@@ -1,10 +1,10 @@
 .home{
     height: calc(100dvh - 4rem);
     width: 100%;
-    background: url(../Images/Home-Lighting.jpg);
+    background: url(https://www.nobroker.in/blog/wp-content/uploads/2022/05/Living-Room-Ceiling-Lights.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
+    background-position: top;
     background-attachment: fixed;
 }
 .home-text{
@@ -37,7 +37,6 @@
     .home{
         height: calc(100dvh - 4rem);
         width: 100%;
-        background: url(../Images/Home-Lighting.jpg);
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
@@ -54,7 +53,6 @@
     .home{
         height: calc(120dvh - 4rem);
         width: 100%;
-        background: url(../Images/Home-Lighting.jpg);
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;

@@ -1,7 +1,7 @@
 import React from 'react';
 import './Footer.css'
 import { MDBFooter, MDBContainer, MDBRow, MDBCol, MDBIcon } from 'mdb-react-ui-kit';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 export default function Footer() {
   return (
@@ -39,25 +39,26 @@ export default function Footer() {
                 Gsons India
               </h6>
               <p>
-                Here you can use rows and columns to organize your footer content. Lorem ipsum dolor sit amet,
-                consectetur adipisicing elit.
+                "Illuminate your world with GSOSN lights,
+                Where brilliance meets your every sight.
+                Let your space shine, day or night."
               </p>
             </MDBCol>
 
             <MDBCol md="2" lg="2" xl="2" className='mx-auto mb-4'>
               <h6 className='text-uppercase fw-bold mb-4'>Catelogs</h6>
               <p>
-                <Link to='/' className='text-reset'>
+                <Link to='https://res.cloudinary.com/djnjmmgu8/image/upload/v1712740209/pdfs/RATAIL_ALL_ITEMS_LIST_yvtrtg.pdf' className='text-reset'>
                   Lights
                 </Link>
               </p>
               <p>
-                <Link to='/' className='text-reset'>
+                <Link to='https://res.cloudinary.com/djnjmmgu8/image/upload/v1712739498/pdfs/GSONS_SWITCHES_ogrms7.pdf' className='text-reset'>
                   Switches
                 </Link>
               </p>
               <p>
-                <Link to='/' className='text-reset'>
+                <Link to='https://res.cloudinary.com/djnjmmgu8/image/upload/v1712739495/pdfs/WIRE_LIST_yxez8z.pdf' className='text-reset'>
                   wires
                 </Link>
               </p>
@@ -66,22 +67,22 @@ export default function Footer() {
             <MDBCol md="3" lg="2" xl="2" className='mx-auto mb-4'>
               <h6 className='text-uppercase fw-bold mb-4'>Useful links</h6>
               <p>
-                <Link to='#!' className='text-reset'>
+                <Link to='/' className='text-reset'>
                   Home
                 </Link>
               </p>
               <p>
-                <Link to='#!' className='text-reset'>
+                <Link to='/about' className='text-reset'>
                   About
                 </Link>
               </p>
               <p>
-                <Link to='#!' className='text-reset'>
+                <Link to='/products' className='text-reset'>
                   products
                 </Link>
               </p>
               <p>
-                <Link to='#!' className='text-reset'>
+                <Link to='/contact' className='text-reset'>
                   Contact
                 </Link>
               </p>
