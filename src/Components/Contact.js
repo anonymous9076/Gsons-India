@@ -29,7 +29,14 @@ const Contact = () => {
         }
         catch(err){
             console.log(err)
+            alert('something went wrong')
         }
+
+        setFormData({
+            name: '',
+            email: '',
+            message: ''
+        })
     };
 
     return (
