@@ -1,4 +1,5 @@
 import React from 'react'
+import './CardItems.css'
 import {
   MDBCard,
   MDBCardBody,
@@ -7,7 +8,7 @@ import {
   MDBRipple,
 } from "mdb-react-ui-kit";
 
-function CardItems() {
+function CardItems(props) {
 
   return (
     <>
@@ -18,9 +19,9 @@ function CardItems() {
               className="bg-image rounded hover-overlay"
             >
               <MDBCardImage
-                src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/12.webp"
+                src={props.image}
                 fluid
-                className="w-100"
+                className="w-100 helllo"
                 style={{
                   borderTopLeftRadius: "15px",
                   borderTopRightRadius: "15px",
@@ -33,12 +34,7 @@ function CardItems() {
             <MDBCardBody className="pb-0" id='white'>
               <div className="d-flex justify-content-between">
                 <div>
-                  <p>
-                    <span className="text" id='white'>
-                      Dell Xtreme 270
-                    </span>
-                  </p>
-                  <p className="small text-muted" id='white'>Laptops</p>
+                  <p className="small text-muted" id='white'>{props.cat}</p>
                 </div>
                 <div>
                   <div className="d-flex flex-row justify-content-end mt-1 mb-4 text" id='white'>
