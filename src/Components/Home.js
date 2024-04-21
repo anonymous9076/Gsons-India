@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import './Home.css'
 import AOS from 'aos'
 import 'aos/dist/aos.css';
-import Carousle from './Carousle'
 import About from './About'
 import Team from './Team'
 import Contact from './Contact'
@@ -26,7 +25,6 @@ function Home() {
         </div>
 
       </div>
-      {/* <Carousle></Carousle> */}
       <About></About>
       <Team></Team>
       <Contact></Contact>

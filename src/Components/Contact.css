@@ -95,7 +95,7 @@
 
 @media screen and (max-width: 480px) {
     .contact-form {
-        max-width: 300px;
+        max-width: 80%;
     }
 }
 @media  screen and (max-width:800px) {

@@ -1,6 +1,5 @@
 import './App.css';
 import About from './Components/About';
-import Carousle from './Components/Carousle';
 import Catelog from './Components/Catelog';
 import Contact from './Components/Contact';
 import Footer from './Components/Footer';
@@ -20,7 +19,6 @@ function App() {
 
       <Routes>
         <Route path='/' element={<Home />}></Route>
-        <Route path='/' element={<Carousle />}></Route>
         <Route path='/About' element={<About />}></Route>
         <Route path='/Catelog' element={<Catelog />}></Route>
         <Route path='/Products' element={<Product />}></Route>

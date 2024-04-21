@@ -18,9 +18,6 @@ export default function Footer() {
           <Link to='' className='me-4 text-reset'>
             <MDBIcon fab icon="twitter" />
           </Link>
-          <Link to='' className='me-4 text-reset'>
-            <MDBIcon fab icon="google" />
-          </Link>
           <Link to='https://www.instagram.com/gsonsindia/' className='me-4 text-reset'>
             <MDBIcon fab icon="instagram" />
           </Link>

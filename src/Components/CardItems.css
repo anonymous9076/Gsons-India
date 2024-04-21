@@ -1,6 +1,19 @@
-.helllo{
-    height: 100%;
-    object-fit: fit;
-    aspect-ratio: 1/4;
-
+.item-card{
+    height: 20rem;
+    width:18rem;
+    padding: 2%;
+    border: 10px solid #f36d21;
+    box-sizing: border-box;
+   margin: 2% 0;
+   background-color: rgb(255, 255, 255);
+   overflow: hidden;
+}
+.img-top{
+    height:100%;
+    width:100%;
+    object-fit: contain !important;
+    transition: all 1s;
+}
+.item-card:hover .img-top{
+    transform: scale(1.2);
 }
