@@ -30,7 +30,7 @@
 
 }
 .card-img-top{
-    height: 50%;
+    height: 55%;
     object-fit: cover;
     object-position: center;
 }
@@ -43,7 +43,7 @@
     height: 70%;
     overflow: scroll;
     box-sizing: border-box;
-    transition: all .5s;
+    transition: all .2s;
     color: white;
 }
 .card-text::-webkit-scrollbar{
@@ -57,4 +57,5 @@
 .card:hover{
     height:fit-content;
     transform: translate(-2% ,-2%) !important;
+    box-shadow: 5px 5px 10px 2px grey;
 }

@@ -13,7 +13,7 @@ function Team() {
             <h1>Our Team</h1>
             <div  className='team-cont'>
             <div className="card" data-aos='fade-left' data-aos-delay="500">
-                <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp" className="card-img-top" alt="Fissure in Sandstone" />
+                <img src="./Images/kashish.jpeg" className="card-img-top" alt="Fissure in Sandstone" />
                 <div className="card-body">
                     <h5 className="card-title">Kashish Aggarwal</h5>
                     <p className="card-text"> Alongside Sumit Goel, Kashish Aggarwal stands as a stalwart leader at Gsons,
