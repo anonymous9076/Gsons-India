@@ -4,6 +4,10 @@
     width: 100%;
     background-color: white;
     box-sizing: border-box;
+     display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
 }
 .team>h1{
     height:5rem;
