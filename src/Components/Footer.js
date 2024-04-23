@@ -96,10 +96,7 @@ export default function Footer() {
                 gsonsindia@gmail.com
               </p>
               <p>
-                <MDBIcon icon="phone" className="me-3" /> + 01 234 567 88
-              </p>
-              <p>
-                <MDBIcon icon="print" className="me-3" /> + 01 234 567 89
+                <MDBIcon icon="phone" className="me-3" /> +91 9815695810
               </p>
             </MDBCol>
           </MDBRow>
