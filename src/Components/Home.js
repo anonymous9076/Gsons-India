@@ -9,7 +9,7 @@ import Contact from './Contact'
 function Home() {
   useEffect(() => {
     AOS.init({
-      duration: 2000
+      duration: 200
     })
   }, [])
   return (
