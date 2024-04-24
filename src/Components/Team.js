@@ -14,7 +14,7 @@ function Team() {
         <div className='team-cont'>
 
             <div className="card" data-aos='fade-left' data-aos-delay="1000">
-                <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp" className="card-img-top" alt="Fissure in Sandstone" />
+                <img src="./Images/sumit goel.jpeg" className="card-img-top" alt="Fissure in Sandstone" />
                 <div className="card-body">
                     <h5 className="card-title">Sumit Goel (CEO)</h5>
                     <p className="card-text">   Sumit Goel, the visionary founder of Gsons,

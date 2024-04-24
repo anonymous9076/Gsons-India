@@ -7,7 +7,7 @@ function Catelog() {
 
   const light ='https://res.cloudinary.com/djnjmmgu8/image/upload/v1712740209/pdfs/RATAIL_ALL_ITEMS_LIST_yvtrtg.pdf';
   const switches ='https://res.cloudinary.com/djnjmmgu8/image/upload/v1712739498/pdfs/GSONS_SWITCHES_ogrms7.pdf';
-  const wire = 'https://res.cloudinary.com/djnjmmgu8/image/upload/v1712739495/pdfs/WIRE_LIST_yxez8z.pdf';
+  const wire = 'https://res.cloudinary.com/djnjmmgu8/image/upload/v1713946774/pdfs/NO_PRICE_WIRE_ljn4se.pdf';
 
   const openPdf = (pdf) => {
   

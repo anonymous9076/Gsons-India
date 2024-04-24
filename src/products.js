@@ -94,11 +94,15 @@ export const strip = [
 
 ]
 export const wall = [
-    'https://res.cloudinary.com/djnjmmgu8/image/upload/v1712727702/WALL/J_r3p3s3.png',
-    'https://res.cloudinary.com/djnjmmgu8/image/upload/v1712725553/WALL/WhatsApp_Image_2024-03-01_at_4.06.48_PM__1_-removebg-preview_sph3r5.png',
-    'https://res.cloudinary.com/djnjmmgu8/image/upload/v1712727696/WALL/H_lhjffa.png',
-    'https://res.cloudinary.com/djnjmmgu8/image/upload/v1712725557/WALL/WhatsApp_Image_2024-03-01_at_4.06.48_PM__2_-removebg-preview_rgvpp8.png',
-    'https://res.cloudinary.com/djnjmmgu8/image/upload/v1712725546/WALL/WhatsApp_Image_2024-03-01_at_2.25.34_PM__2_-removebg-preview_edsi7g.png',
+    'https://res.cloudinary.com/djnjmmgu8/image/upload/v1713965346/WALL/LED_Wall_Light_Outdoor_Waterproof_Modern_Nordic_Style_Indoor_Wall_Lamps_Living_Room_Porch_Garden_Lamp_2W_4W_6W_8W_12W_NR-69_-_White___8W___Warm_white_w6ohxk.jpg',
+    'https://res.cloudinary.com/djnjmmgu8/image/upload/v1713965346/WALL/Avivah_Wandleuchte_Wei%C3%9F_6_6__x_3_1__x_1_6____16_8cm_x_8cm_x_4cm_-_6W-Nat%C3%BCrliches_Wei%C3%9F_4000_K_nbgsvd.jpg',
+    'https://res.cloudinary.com/djnjmmgu8/image/upload/v1713965346/WALL/510eTxOYTfL._AC_UF894_1000_QL80__ttugx7.jpg',
+    'https://res.cloudinary.com/djnjmmgu8/image/upload/v1713965345/WALL/COB_LED_DOWN_LIGHT_5W_z8ggmu.jpg',
+    'https://res.cloudinary.com/djnjmmgu8/image/upload/v1713965345/WALL/Avivah_Wandleuchte_Wei%C3%9F_5_6_cm_x_7_7_cm_x_3_4_cm_2_W-Nat%C3%BCrliches_Wei%C3%9F_4000_K_b2fgvg.jpg',
+    'https://res.cloudinary.com/djnjmmgu8/image/upload/v1713965345/WALL/3W_6W_LED_Aluminum_Wall_Lamp_Porch_Light_Wall_Sconce_Square_Outdoor_Waterproof_Wall_Light_Garden_Lights_Modern_wall_lights_BL22_-_Warm_White___Square_6W___Gray_vr2bpc.jpg',
+    'https://res.cloudinary.com/djnjmmgu8/image/upload/v1713965345/WALL/Avivah_Wandleuchte_Schwarz_6_6_x_3_1_x_1_6_Zoll___16_8_cm_x_8_cm_x_4_cm_6_W-Nat%C3%BCrliches_Wei%C3%9F_4000_K_blfqxp.jpg',
+    'https://res.cloudinary.com/djnjmmgu8/image/upload/v1713965345/WALL/Avivah_Wandleuchte_Wei%C3%9F_12_cm_x_8_cm_x_4_cm_4_W-Warmwei%C3%9F_2700_3500_K_yoe3tt.jpg',
+    'https://res.cloudinary.com/djnjmmgu8/image/upload/v1713965346/WALL/WL2290-1-removebg-preview_vw5xjz.png',
     'https://res.cloudinary.com/djnjmmgu8/image/upload/v1712725566/WALL/WhatsApp_Image_2024-03-02_at_6.36.59_PM-removebg-preview_u0lrxk.png',
     'https://res.cloudinary.com/djnjmmgu8/image/upload/v1712725561/WALL/WhatsApp_Image_2024-03-01_at_4.58.54_PM-removebg-preview_ecwrio.png',
     'https://res.cloudinary.com/djnjmmgu8/image/upload/v1712725544/WALL/WhatsApp_Image_2024-03-01_at_2.07.15_PM-removebg-preview_1_dzvupc.png',
