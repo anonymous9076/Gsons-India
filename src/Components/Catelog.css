@@ -43,6 +43,7 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    flex-wrap: wrap;
     position: relative;
     box-sizing: border-box;
 
@@ -53,6 +54,7 @@
     background-color: #f36d21;
     height: 40%;
     width: 25%;
+    margin: 2%;
     min-height: 11rem;
     min-width: 10rem;
     position: relative;
@@ -118,6 +120,24 @@
     background-size: cover;
     background-position: center;
 }
+#concield {
+    height: 100%;
+    width: 100%;
+    background: url('https://res.cloudinary.com/djnjmmgu8/image/upload/v1713425140/CONCIELD/CN001_xvbwuw.png');
+    background-size: cover;
+    background-position: center;
+    background-color: rgb(207, 207, 207);
+}
+#gate {
+    height: 100%;
+    width: 100%;
+    background: url('https://res.cloudinary.com/djnjmmgu8/image/upload/v1712725449/GATE/38_cgggxu.png');
+    background-size: cover;
+    background-position: center;
+    background-color: rgb(207, 207, 207);
+
+}
+
 
 
 @media screen and (max-width:800px) {
@@ -156,7 +176,7 @@
 
 @media screen and (max-width:320px) {
     .catelog {
-        height: 200dvh;
+        height: fit-content;
     }
 
     .cat-right {
@@ -172,7 +192,6 @@
     }
 
     .cat-pdfs>div {
-        background-color: rgb(151, 151, 151);
         height: 40%;
         width: 25%;
         min-height: 11rem;
@@ -184,12 +203,16 @@
         display: grid;
         grid-template-rows: 30% 70%;
         place-items: center start;
-        color: black;
         font-size: 1.3rem;
         padding-left: 2%;
         box-sizing: border-box;
         font-weight: 700;
         letter-spacing: 2px;
         transition: all .2s;
+    }
+}
+@media screen and (max-width:600px) {
+    .catelog {
+        height: fit-content;
     }
 }
