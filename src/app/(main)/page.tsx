@@ -1,0 +1,17 @@
+import Hero from "@/components/Hero";
+import CategoryList from "@/components/CategoryList";
+import SustainabilitySection from "@/components/SustainabilitySection";
+import PopularProductsSection from "@/components/PopularProductsSection";
+
+export default function Home() {
+  return (
+    <main className="min-h-screen">
+      <Hero />
+      <CategoryList />
+      <SustainabilitySection />
+      <PopularProductsSection />
+
+
+    </main>
+  );
+}
