@@ -6,7 +6,7 @@ export interface LoginData {
 }
 
 const API = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/gsons",
+    baseURL: process.env.NEXT_PUBLIC_API_URL || "https://gsonsbackend.vercel.app/gsons",
     withCredentials: true,
 });
 
