@@ -27,7 +27,7 @@ export default function Hero() {
                             Shop Collection
                         </Link>
                         <Link
-                            href="/catalogue"
+                            href="/catalogues"
                             className="inline-flex items-center justify-center px-8 py-3.5 text-sm font-bold text-gray-900 transition-all bg-white border border-gray-200 rounded-full hover:bg-gray-50 hover:border-gray-300"
                         >
                             View Catalogue

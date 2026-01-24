@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Search, ShoppingBag, User, Menu, LogOut, ChevronDown, Heart } from "lucide-react";
+import { Search, ShoppingBag, User, Menu, LogOut, ChevronDown, Heart, X } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import { useSaved } from "../context/SavedContext";
 
@@ -11,6 +11,7 @@ export default function Navbar() {
   const { user, isAuthenticated, logout } = useAuth();
   const { savedProducts } = useSaved();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   return (
     <nav className="sticky top-0 z-50 bg-white backdrop-blur-md border-b border-gray-100">
       <div className="container-custom flex items-center justify-between h-20">
@@ -123,11 +124,73 @@ export default function Navbar() {
               Login
             </Link>
           )}
-          <button className="md:hidden text-gray-600 hover:text-primary transition-colors">
-            <Menu className="w-6 h-6" />
+          <button
+            className="md:hidden px-3 text-gray-600 hover:text-primary transition-colors focus:outline-none"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
           </button>
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden absolute top-20 left-0 w-full bg-white border-b border-gray-100 shadow-lg py-6 px-4 flex flex-col space-y-4 animate-in slide-in-from-top-5">
+          <Link
+            href="/"
+            className="text-gray-700 hover:text-primary font-medium transition-colors"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Home
+          </Link>
+          <Link
+            href="/about"
+            className="text-gray-700 hover:text-primary font-medium transition-colors"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Our Story
+          </Link>
+          <Link
+            href="/products"
+            className="text-gray-700 hover:text-primary font-medium transition-colors"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            All Products
+          </Link>
+          <Link
+            href="/catalogues"
+            className="text-gray-700 hover:text-primary font-medium transition-colors"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Catalogues
+          </Link>
+          {isAuthenticated && (
+            <Link
+              href="/saved"
+              className="text-gray-700 hover:text-primary font-medium transition-colors flex items-center justify-between"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <span>Saved</span>
+              {savedProducts.length > 0 && (
+                <span className="bg-primary text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                  {savedProducts.length}
+                </span>
+              )}
+            </Link>
+          )}
+          <Link
+            href="/contact"
+            className="text-gray-700 hover:text-primary font-medium transition-colors"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Contact
+          </Link>
+        </div>
+      )}
     </nav>
   );
 }

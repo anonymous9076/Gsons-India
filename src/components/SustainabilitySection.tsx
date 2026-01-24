@@ -36,7 +36,7 @@ export default function SustainabilitySection() {
                             and ethically sourced ingredients.
                         </p>
                         <Link
-                            href="#"
+                            href="/about"
                             className="inline-block px-8 py-3 bg-gray-900 text-white font-medium rounded-lg hover:bg-gray-800 transition-colors shadow-lg shadow-gray-900/20"
                         >
                             More About Us

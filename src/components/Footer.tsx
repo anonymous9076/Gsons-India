@@ -42,9 +42,9 @@ export default function Footer() {
                     <div>
                         <h4 className="font-bold text-gray-900 mb-6">Shop</h4>
                         <ul className="space-y-3 text-sm text-gray-500">
-                            <li><Link href="#" className="hover:text-primary">All Products</Link></li>
-                            <li><Link href="#" className="hover:text-primary">Best Sellers</Link></li>
-                            <li><Link href="#" className="hover:text-primary">New Arrivals</Link></li>
+                            <li><Link href="/products" className="hover:text-primary">All Products</Link></li>
+                            <li><Link href="/products" className="hover:text-primary">Best Sellers</Link></li>
+                            <li><Link href="/products" className="hover:text-primary">New Arrivals</Link></li>
                         </ul>
                     </div>
 
@@ -52,10 +52,10 @@ export default function Footer() {
                     <div>
                         <h4 className="font-bold text-gray-900 mb-6">Company</h4>
                         <ul className="space-y-3 text-sm text-gray-500">
-                            <li><Link href="#" className="hover:text-primary">About Us</Link></li>
+                            <li><Link href="/about" className="hover:text-primary">About Us</Link></li>
                             <li><Link href="#" className="hover:text-primary">Careers</Link></li>
                             <li><Link href="#" className="hover:text-primary">Blog</Link></li>
-                            <li><Link href="#" className="hover:text-primary">Contact</Link></li>
+                            <li><Link href="/contact" className="hover:text-primary">Contact</Link></li>
                         </ul>
                     </div>
 
