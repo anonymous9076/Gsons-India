@@ -52,6 +52,7 @@ export default function EditProductPage() {
                 description: p.description || "",
                 isActive: p.isActive ?? true,
             });
+            
             setExistingImages(p.images || []);
         }
     }, [productData]);
