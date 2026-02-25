@@ -94,7 +94,7 @@ export default function Navbar() {
 
                   {user?.role === 'admin' && (
                     <Link
-                      href="/admin/dashboard"
+                      href="/admin"
                       className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-primary transition-colors"
                       onClick={() => setIsDropdownOpen(false)}
                     >

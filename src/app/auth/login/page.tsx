@@ -17,7 +17,7 @@ export default function LoginPage() {
             await login({ email, password });
             router.push("/admin");
         } catch (error: any) {
-            alert(error.response?.data?.message || "Login failed");
+            console.error("Login error:", error);
         }
     };
 
@@ -56,7 +56,7 @@ export default function LoginPage() {
 
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                            <label className="block text-sm font-medium text-gray-900 mb-2">
                                 Email Address
                             </label>
                             <input
@@ -70,7 +70,7 @@ export default function LoginPage() {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                            <label className="block text-sm font-medium text-gray-900 mb-2">
                                 Password
                             </label>
                             <input
@@ -88,9 +88,9 @@ export default function LoginPage() {
                                 <input type="checkbox" className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary" />
                                 <span className="ml-2 text-sm text-gray-600">Remember me</span>
                             </label>
-                            <a href="#" className="text-sm font-semibold text-primary hover:underline">
+                            <Link href="/auth/forgot-password" className="text-sm font-semibold text-primary hover:underline">
                                 Forgot password?
-                            </a>
+                            </Link>
                         </div>
 
                         <button

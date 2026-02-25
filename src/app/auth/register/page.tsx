@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function RegisterPage() {
     const { register, loading } = useAuth();
@@ -24,7 +25,7 @@ export default function RegisterPage() {
         e.preventDefault();
 
         if (formData.password !== formData.confirmPassword) {
-            alert("Passwords do not match");
+            toast.error("Passwords do not match");
             return;
         }
 
@@ -37,7 +38,7 @@ export default function RegisterPage() {
             await register(registerData);
             router.push("/admin");
         } catch (error: any) {
-            alert(error.response?.data?.message || "Registration failed");
+            console.error("Registration error:", error);
         }
     };
 
@@ -77,7 +78,7 @@ export default function RegisterPage() {
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="space-y-6">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                                <label className="block text-sm font-medium text-gray-900 mb-2">Full Name</label>
                                 <input
                                     type="text"
                                     name="name"
@@ -89,7 +90,7 @@ export default function RegisterPage() {
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                                <label className="block text-sm font-medium text-gray-900 mb-2">Email Address</label>
                                 <input
                                     type="email"
                                     name="email"
@@ -104,7 +105,7 @@ export default function RegisterPage() {
 
                         <div className="grid md:grid-cols-2 gap-6">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                                <label className="block text-sm font-medium text-gray-900 mb-2">Password</label>
                                 <input
                                     type="password"
                                     name="password"
@@ -116,7 +117,7 @@ export default function RegisterPage() {
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
+                                <label className="block text-sm font-medium text-gray-900 mb-2">Confirm Password</label>
                                 <input
                                     type="password"
                                     name="confirmPassword"

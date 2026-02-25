@@ -1,36 +1,98 @@
 "use client";
 
-import { useState } from "react";
-import { Plus, X, Upload } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { X, Upload, Plus, Trash2, Send } from "lucide-react";
+import Loader from "@/components/Loader";
+import Button from "@/components/Button";
 import { useRouter } from "next/navigation";
+import { createProduct } from "@/services/productApi";
+import { getAllCategories } from "@/services/categoryApi";
+import { useQuery } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 export default function NewProductPage() {
     const router = useRouter();
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const [images, setImages] = useState<File[]>([]);
+    const [loading, setLoading] = useState(false);
+
     const [formData, setFormData] = useState({
         name: "",
-        type: "LED",
-        category: "wall",
-        material: "",
-        leds: 0,
-        code: "",
-        price: "",
-        bodycolor: "",
-        dimensions: "",
+        slug: "",
+        categoryId: "",
         description: "",
+        isActive: true,
     });
 
-    const categories = ["bulb", "concield", "adeptor", "fancyWall", "hanging", "gate", "jhummer", "strip", "wall"];
+    // Fetch Categories from API
+    const { data: catData, isLoading: catLoading } = useQuery({
+        queryKey: ["categories"],
+        queryFn: getAllCategories,
+    });
+
+    const categories = catData?.categories || [];
+
+    // Auto-generate slug from name
+    useEffect(() => {
+        if (!formData.slug || formData.slug === formData.name.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "")) {
+            setFormData(prev => ({
+                ...prev,
+                slug: formData.name.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "")
+            }));
+        }
+    }, [formData.name]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+        const { name, value, type } = e.target;
+        const val = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
+        setFormData(prev => ({ ...prev, [name]: val }));
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            const selectedFiles = Array.from(e.target.files);
+            setImages(prev => [...prev, ...selectedFiles]);
+        }
+    };
+
+    const removeImage = (index: number) => {
+        setImages(prev => prev.filter((_, i) => i !== index));
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Mock save
-        alert("Product created successfully (Mock)!");
-        router.push("/admin/products");
+
+        if (!formData.categoryId) {
+            return toast.error("Please select a category");
+        }
+
+        if (images.length === 0) {
+            return toast.error("Please upload at least one product image");
+        }
+
+        setLoading(true);
+
+        try {
+            const data = new FormData();
+            data.append("name", formData.name);
+            data.append("slug", formData.slug);
+            data.append("categoryId", formData.categoryId);
+            data.append("description", formData.description);
+            data.append("isActive", String(formData.isActive));
+
+            images.forEach((image) => {
+                data.append("files", image);
+            });
+
+            await createProduct(data);
+            toast.success("Product created successfully!");
+            router.push("/admin/products");
+        } catch (error: any) {
+            console.error(error);
+            toast.error(error.response?.data?.message || "Failed to create product");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -38,7 +100,7 @@ export default function NewProductPage() {
             <div className="flex items-center justify-between">
                 <div>
                     <h1 className="text-3xl font-bold text-gray-900">Add New Product</h1>
-                    <p className="text-gray-500 mt-2">Create a new entry in your collection.</p>
+                    <p className="text-gray-500 mt-2">Create a new base product entry. You can add variants later.</p>
                 </div>
                 <button
                     onClick={() => router.back()}
@@ -52,64 +114,26 @@ export default function NewProductPage() {
                 <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm space-y-6">
                     <div className="grid md:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                            <label className="text-sm font-bold text-gray-700">Product Name</label>
+                            <label className="text-sm font-bold text-gray-900">Product Name</label>
                             <input
                                 type="text"
                                 name="name"
                                 value={formData.name}
                                 onChange={handleChange}
-                                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:bg-white transition-all"
+                                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:bg-white transition-all text-gray-900 placeholder:text-gray-500"
                                 placeholder="Golden Wall Sconce"
                                 required
                             />
                         </div>
                         <div className="space-y-2">
-                            <label className="text-sm font-bold text-gray-700">Product Code</label>
+                            <label className="text-sm font-bold text-gray-900">Product Slug</label>
                             <input
                                 type="text"
-                                name="code"
-                                value={formData.code}
+                                name="slug"
+                                value={formData.slug}
                                 onChange={handleChange}
-                                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:bg-white transition-all"
-                                placeholder="GS-WAL-101"
-                            />
-                        </div>
-                    </div>
-
-                    <div className="grid md:grid-cols-3 gap-6">
-                        <div className="space-y-2">
-                            <label className="text-sm font-bold text-gray-700">Category</label>
-                            <select
-                                name="category"
-                                value={formData.category}
-                                onChange={handleChange}
-                                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary transition-all capitalize"
-                            >
-                                {categories.map(cat => (
-                                    <option key={cat} value={cat}>{cat}</option>
-                                ))}
-                            </select>
-                        </div>
-                        <div className="space-y-2">
-                            <label className="text-sm font-bold text-gray-700">Type</label>
-                            <input
-                                type="text"
-                                name="type"
-                                value={formData.type}
-                                onChange={handleChange}
-                                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary transition-all"
-                                placeholder="LED"
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <label className="text-sm font-bold text-gray-700">Price (₹)</label>
-                            <input
-                                type="number"
-                                name="price"
-                                value={formData.price}
-                                onChange={handleChange}
-                                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary transition-all"
-                                placeholder="2999"
+                                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:bg-white transition-all text-gray-900 placeholder:text-gray-500 font-mono text-sm"
+                                placeholder="golden-wall-sconce"
                                 required
                             />
                         </div>
@@ -117,94 +141,108 @@ export default function NewProductPage() {
 
                     <div className="grid md:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                            <label className="text-sm font-bold text-gray-700">Material</label>
-                            <input
-                                type="text"
-                                name="material"
-                                value={formData.material}
+                            <label className="text-sm font-bold text-gray-900">Category</label>
+                            <select
+                                name="categoryId"
+                                value={formData.categoryId}
                                 onChange={handleChange}
-                                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary transition-all"
-                                placeholder="Aluminum, Glass"
-                            />
+                                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary transition-all text-gray-900 disabled:opacity-50"
+                                required
+                                disabled={catLoading}
+                            >
+                                <option value="">Select a category</option>
+                                {categories.map((cat: any) => (
+                                    <option key={cat._id} value={cat._id}>{cat.name}</option>
+                                ))}
+                            </select>
+                            {catLoading && <div className="text-xs text-gray-400 flex items-center gap-1"><Loader size="sm" text="" /> Loading categories...</div>}
                         </div>
-                        <div className="space-y-2">
-                            <label className="text-sm font-bold text-gray-700">LEDs (count)</label>
-                            <input
-                                type="number"
-                                name="leds"
-                                value={formData.leds}
-                                onChange={handleChange}
-                                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary transition-all"
-                                placeholder="12"
-                            />
-                        </div>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 gap-6">
-                        <div className="space-y-2">
-                            <label className="text-sm font-bold text-gray-700">Body Color</label>
-                            <input
-                                type="text"
-                                name="bodycolor"
-                                value={formData.bodycolor}
-                                onChange={handleChange}
-                                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary transition-all"
-                                placeholder="Mate Black"
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <label className="text-sm font-bold text-gray-700">Dimensions</label>
-                            <input
-                                type="text"
-                                name="dimensions"
-                                value={formData.dimensions}
-                                onChange={handleChange}
-                                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary transition-all"
-                                placeholder="20cm x 15cm"
-                            />
+                        <div className="flex items-end pb-4">
+                            <div className="flex items-center gap-2">
+                                <input
+                                    type="checkbox"
+                                    id="isActive"
+                                    name="isActive"
+                                    checked={formData.isActive}
+                                    onChange={(e) => setFormData(prev => ({ ...prev, isActive: e.target.checked }))}
+                                    className="w-4 h-4 text-primary focus:ring-primary border-gray-300 rounded"
+                                />
+                                <label htmlFor="isActive" className="text-sm font-bold text-gray-900 cursor-pointer">Active</label>
+                            </div>
                         </div>
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-sm font-bold text-gray-700">Description</label>
+                        <label className="text-sm font-bold text-gray-900">Description</label>
                         <textarea
                             name="description"
                             value={formData.description}
                             onChange={handleChange}
                             rows={4}
-                            className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary transition-all"
+                            className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary transition-all text-gray-900 placeholder:text-gray-500"
                             placeholder="Detailed product information..."
                         />
                     </div>
 
                     <div className="pt-4">
-                        <label className="text-sm font-bold text-gray-700 block mb-2">Product Images</label>
-                        <div className="border-2 border-dashed border-gray-200 rounded-3xl p-12 text-center hover:border-primary transition-colors cursor-pointer group">
+                        <label className="text-sm font-bold text-gray-900 block mb-2">Base Product Images</label>
+                        <div
+                            onClick={() => fileInputRef.current?.click()}
+                            className="border-2 border-dashed border-gray-200 rounded-3xl p-12 text-center hover:border-primary transition-colors cursor-pointer group"
+                        >
+                            <input
+                                type="file"
+                                hidden
+                                ref={fileInputRef}
+                                onChange={handleFileChange}
+                                multiple
+                                accept="image/*"
+                            />
                             <div className="flex flex-col items-center">
                                 <div className="w-16 h-16 bg-orange-100 text-primary rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                                     <Upload className="w-8 h-8" />
                                 </div>
-                                <p className="font-bold text-gray-900">Click to upload images</p>
+                                <p className="font-bold text-gray-900">Click to upload base images</p>
                                 <p className="text-sm text-gray-500 mt-1">PNG, JPG or WEBP up to 5MB</p>
                             </div>
                         </div>
+
+                        {/* Image Preview */}
+                        {images.length > 0 && (
+                            <div className="mt-4 grid grid-cols-5 gap-4">
+                                {images.map((img, i) => (
+                                    <div key={i} className="relative aspect-square border rounded-xl overflow-hidden group">
+                                        <img src={URL.createObjectURL(img)} alt="preview" className="w-full h-full object-cover" />
+                                        <button
+                                            type="button"
+                                            onClick={(e) => { e.stopPropagation(); removeImage(i); }}
+                                            className="absolute top-1 right-1 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                                        >
+                                            <X className="w-4 h-4" />
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
 
                 <div className="flex justify-end gap-4 pb-12">
-                    <button
+                    <Button
                         type="button"
+                        variant="outline"
                         onClick={() => router.back()}
-                        className="px-8 py-3 bg-white text-gray-600 font-bold rounded-xl border border-gray-200 hover:bg-gray-50 transition-all"
                     >
                         Cancel
-                    </button>
-                    <button
+                    </Button>
+                    <Button
                         type="submit"
-                        className="px-12 py-3 bg-primary text-white font-bold rounded-xl shadow-lg shadow-orange-500/20 hover:bg-orange-600 transition-all"
+                        isLoading={loading}
+                        leftIcon={<Plus className="w-5 h-5" />}
+                        className="px-12"
                     >
                         Create Product
-                    </button>
+                    </Button>
                 </div>
             </form>
         </div>

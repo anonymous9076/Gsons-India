@@ -145,7 +145,7 @@ export default function AboutPage() {
             <section className="py-24 bg-gray-900 text-white text-center">
                 <div className="container-custom">
                     <h2 className="text-4xl md:text-5xl font-bold mb-8">Experience the Magic of Gsons</h2>
-                    <p className="max-w-2xl mx-auto text-gray-400 mb-12 text-lg">
+                    <p className="max-w-2xl mx-auto text-gray-500 mb-12 text-lg">
                         Join us on our quest to illuminate homes and hearts across the globe.
                         Whether you're a design enthusiast or a homeowner, we invite you to explore our world.
                     </p>

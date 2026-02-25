@@ -1,18 +1,27 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Phone, Mail, MapPin, Send } from "lucide-react";
+import { sendContactEmail } from '@/services/contactApi';
+import { useAuth } from '@/context/AuthContext';
+import toast from 'react-hot-toast';
 
 // Note: Installing lucide-react covers standard icons. 
 // Using a simpler approach for WhatsApp icon or standard SVG if needed, but for now using Lucide equivalent or text.
 
 export default function ContactPage() {
+    const { user } = useAuth();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        subject: '',
         message: ''
     });
-    const [status, setStatus] = useState<string>('');
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        if (user) {
+            setFormData(prev => ({ ...prev, email: user.email }));
+        }
+    }, [user]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -21,29 +30,22 @@ export default function ContactPage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setStatus('sending');
+        setLoading(true);
         try {
-            // Using standard fetch instead of axios to reduce dependencies if axios isn't installed
-            const response = await fetch('https://formsubmit.co/indiagsons@gmail.com', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
+            const contactData = {
+                name: formData.name,
+                email: formData.email,
+                message: formData.message
+            };
 
-            if (response.ok) {
-                setStatus('success');
-                setFormData({ name: '', email: '', subject: '', message: '' });
-                setTimeout(() => setStatus(''), 5000);
-            } else {
-                setStatus('error');
-            }
+            await sendContactEmail(contactData);
+            toast.success("Message sent successfully!");
+            setFormData({ name: '', email: user ? user.email : '', message: '' });
         } catch (err) {
             console.error(err);
-            setStatus('error');
-            setTimeout(() => setStatus(''), 5000);
+            toast.error("Something went wrong. Please try again.");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -86,7 +88,7 @@ export default function ContactPage() {
 
                         <div className="bg-gray-900 text-white p-8 rounded-3xl mt-10">
                             <h3 className="text-2xl font-bold mb-3">Quick Inquiry?</h3>
-                            <p className="text-gray-400 mb-6">Chat with our experts on WhatsApp for instant assistance.</p>
+                            <p className="text-gray-500 mb-6">Chat with our experts on WhatsApp for instant assistance.</p>
                             <a href="https://wa.me/9877917738" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 bg-[#25d366] text-white px-6 py-3 rounded-full font-bold hover:bg-[#128c7e] transition-all">
                                 Chat on WhatsApp
                             </a>
@@ -99,29 +101,23 @@ export default function ContactPage() {
                             <div className="mb-6">
                                 <label className="block font-bold mb-2 text-gray-900 text-sm">Full Name</label>
                                 <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="John Doe" required
-                                    className="w-full p-3.5 rounded-xl border border-gray-200 text-gray-400 bg-white focus:outline-none focus:border-primary focus:ring-4 focus:ring-orange-500/10 transition-all font-sans" />
+                                    className="w-full p-3.5 rounded-xl border border-gray-200 text-gray-500 bg-white focus:outline-none focus:border-primary focus:ring-4 focus:ring-orange-500/10 transition-all font-sans" />
                             </div>
                             <div className="mb-6">
                                 <label className="block font-bold mb-2 text-gray-900 text-sm">Email Address</label>
                                 <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="john@example.com" required
-                                    className="w-full p-3.5 rounded-xl border border-gray-200 text-gray-400 bg-white focus:outline-none focus:border-primary focus:ring-4 focus:ring-orange-500/10 transition-all font-sans" />
-                            </div>
-                            <div className="mb-6">
-                                <label className="block font-bold mb-2 text-gray-900 text-sm">Subject</label>
-                                <input type="text" name="subject" value={formData.subject} onChange={handleChange} placeholder="Inquiry about LED Strip" required
-                                    className="w-full p-3.5 rounded-xl border border-gray-200 text-gray-400 bg-white focus:outline-none focus:border-primary focus:ring-4 focus:ring-orange-500/10 transition-all font-sans" />
+                                    className="w-full p-3.5 rounded-xl border border-gray-200 text-gray-500 bg-white focus:outline-none focus:border-primary focus:ring-4 focus:ring-orange-500/10 transition-all font-sans" />
                             </div>
                             <div className="mb-6">
                                 <label className="block font-bold mb-2 text-gray-900 text-sm">Message</label>
                                 <textarea name="message" value={formData.message} onChange={handleChange} placeholder="How can we help you?" rows={5} required
-                                    className="w-full p-3.5 rounded-xl border border-gray-200 text-gray-400 bg-white focus:outline-none focus:border-primary focus:ring-4 focus:ring-orange-500/10 transition-all font-sans"></textarea>
+                                    className="w-full p-3.5 rounded-xl border border-gray-200 text-gray-500 bg-white focus:outline-none focus:border-primary focus:ring-4 focus:ring-orange-500/10 transition-all font-sans"></textarea>
                             </div>
-                            <button type="submit" className="w-full flex justify-center items-center gap-2 bg-primary text-white p-4 rounded-xl font-bold hover:bg-orange-600 transition-all disabled:opacity-70 disabled:cursor-not-allowed" disabled={status === 'sending'}>
-                                {status === 'sending' ? 'Sending...' : <><Send className="w-5 h-5" /> Send Message</>}
+                            <button type="submit" className="w-full flex justify-center items-center gap-2 bg-primary text-white p-4 rounded-xl font-bold hover:bg-orange-600 transition-all disabled:opacity-70 disabled:cursor-not-allowed" disabled={loading}>
+                                {loading ? 'Sending...' : <><Send className="w-5 h-5" /> Send Message</>}
                             </button>
 
-                            {status === 'success' && <p className="mt-5 p-3 rounded-lg text-center font-bold bg-green-50 text-green-600">Message sent successfully!</p>}
-                            {status === 'error' && <p className="mt-5 p-3 rounded-lg text-center font-bold bg-red-50 text-red-500">Something went wrong. Please try again.</p>}
+
                         </form>
                     </div>
                 </div>

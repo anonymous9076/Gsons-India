@@ -8,10 +8,10 @@ import { useAuth } from "@/context/AuthContext";
 import Link from 'next/link';
 
 export default function SavedPage() {
-    const { savedProducts } = useSaved();
-    const { isAuthenticated, loading } = useAuth();
+    const { savedProducts, loading: savedLoading } = useSaved();
+    const { isAuthenticated, loading: authLoading } = useAuth();
 
-    if (loading) {
+    if (authLoading || savedLoading) {
         return (
             <div className="min-h-[60vh] flex items-center justify-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
@@ -72,7 +72,8 @@ export default function SavedPage() {
                 ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                         {savedProducts.map((product, idx) => (
-                            <ProductCard key={idx} {...product} />
+                            // @ts-ignore - Handle potential robust typing issues gracefully
+                            <ProductCard key={product._id || idx} {...product} />
                         ))}
                     </div>
                 )}
@@ -80,3 +81,4 @@ export default function SavedPage() {
         </section>
     );
 }
+

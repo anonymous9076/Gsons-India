@@ -1,14 +1,9 @@
-import axios from "axios";
+import API from "./api";
 
 export interface LoginData {
     email: string;
     password: string;
 }
-
-const API = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL || "https://gsonsbackend.vercel.app/gsons",
-    withCredentials: true,
-});
 
 // User API
 export const registerUser = async (formData: FormData) => {
@@ -30,6 +25,28 @@ export const logoutUser = async () => {
 
 export const getMe = async () => {
     const { data } = await API.get("/me");
+    return data;
+};
+
+export const forgotPassword = async (email: string) => {
+    const { data } = await API.post("/password/forgot", { email });
+    return data;
+};
+
+export const resetPassword = async ({ token, passwords }: { token: string; passwords: any }) => {
+    const { data } = await API.put(`/password/reset/${token}`, passwords);
+    return data;
+};
+
+export const updatePassword = async (passwordData: any) => {
+    const { data } = await API.put("/password/update", passwordData);
+    return data;
+};
+
+export const updateProfile = async (profileData: FormData) => {
+    const { data } = await API.put("/me/update", profileData, {
+        headers: { "Content-Type": "multipart/form-data" },
+    });
     return data;
 };
 

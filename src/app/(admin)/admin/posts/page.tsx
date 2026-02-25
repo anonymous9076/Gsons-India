@@ -3,16 +3,45 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Plus, Search, Edit2, Trash2, Calendar, User, Eye } from "lucide-react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { getAllPosts, deletePost } from "@/services/postApi";
+import toast from "react-hot-toast";
+import Button from "@/components/Button";
+import { useRouter } from "next/navigation";
+import { cn } from "@/utils/cn";
 
 export default function PostsPage() {
     const [searchTerm, setSearchTerm] = useState("");
-    const [posts, setPosts] = useState([
-        { id: 1, title: "How to choose the perfect lighting for your living room", author: "Admin", date: "June 12, 2024", status: "Published", comments: 24 },
-        { id: 2, title: "The benefits of LED lighting for your home and office", author: "Tushar Gupta", date: "June 10, 2024", status: "Published", comments: 18 },
-        { id: 3, title: "Modern design trends in decorative lighting for 2024", author: "Admin", date: "June 05, 2024", status: "Draft", comments: 0 },
-    ]);
+    const queryClient = useQueryClient();
+    const router = useRouter();
 
-    const filteredPosts = posts.filter(post =>
+    // Fetch Posts
+    const { data, isLoading } = useQuery({
+        queryKey: ["posts"],
+        queryFn: getAllPosts,
+    });
+
+    // Delete Post Mutation
+    const deleteMutation = useMutation({
+        mutationFn: deletePost,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["posts"] });
+            toast.success("Post deleted successfully");
+        },
+        onError: (error: any) => {
+            toast.error(error.response?.data?.message || "Failed to delete post");
+        },
+    });
+
+    const handleDelete = (id: string) => {
+        if (window.confirm("Are you sure you want to delete this post?")) {
+            deleteMutation.mutate(id);
+        }
+    };
+
+    const posts = data?.posts || [];
+
+    const filteredPosts = posts.filter((post: any) =>
         post.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
@@ -23,73 +52,142 @@ export default function PostsPage() {
                     <h1 className="text-3xl font-bold text-gray-900">Posts Management</h1>
                     <p className="text-gray-500 mt-2">Create and manage blog posts and articles.</p>
                 </div>
-                <Link
-                    href="/admin/posts/new"
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white font-bold rounded-xl shadow-lg shadow-orange-500/20 hover:bg-orange-600 transition-all transform hover:-translate-y-0.5"
+                <Button
+                    variant="primary"
+                    onClick={() => router.push("/admin/posts/new")}
+                    leftIcon={<Plus className="w-5 h-5" />}
                 >
-                    <Plus className="w-5 h-5" />
-                    <span>New Post</span>
-                </Link>
+                    New Post
+                </Button>
             </div>
 
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
                 <div className="p-4 border-b border-gray-100">
                     <div className="relative max-w-md">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
                         <input
                             type="text"
                             placeholder="Search posts..."
-                            className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:bg-white transition-all"
+                            className="w-full pl-10 pr-4 py-2 text-gray-900 placeholder:text-gray-500 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:bg-white transition-all"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
                     </div>
                 </div>
 
-                <div className="overflow-x-auto">
-                    <table className="w-full text-left border-collapse">
-                        <thead>
-                            <tr className="bg-gray-50 text-gray-600 text-sm font-semibold uppercase tracking-wider">
-                                <th className="px-6 py-4">Post Title</th>
-                                <th className="px-6 py-4">Details</th>
-                                <th className="px-6 py-4">Status</th>
-                                <th className="px-6 py-4 text-right">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-gray-100">
-                            {filteredPosts.map((post) => (
-                                <tr key={post.id} className="hover:bg-orange-50/30 transition-colors group">
-                                    <td className="px-6 py-4">
-                                        <div className="max-w-md">
-                                            <div className="font-semibold text-gray-900 mb-1 group-hover:text-primary transition-colors cursor-pointer">{post.title}</div>
-                                            <div className="flex items-center gap-4 text-xs text-gray-500">
-                                                <span className="flex items-center gap-1"><User className="w-3 h-3" /> {post.author}</span>
-                                                <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {post.date}</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        <div className="text-sm text-gray-600">
-                                            <span className="font-medium text-gray-900">{post.comments}</span> Comments
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-4 text-sm">
-                                        <span className={`px-3 py-1 text-xs font-bold rounded-full ${post.status === 'Published' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'
-                                            }`}>
-                                            {post.status}
-                                        </span>
-                                    </td>
-                                    <td className="px-6 py-4 text-right">
-                                        <div className="flex items-center justify-end gap-2 text-gray-400">
-                                            <button className="p-2 hover:text-blue-600 transition-colors"><Eye className="w-5 h-5" /></button>
-                                            <button className="p-2 hover:text-orange-500 transition-colors"><Edit2 className="w-4 h-4" /></button>
-                                            <button className="p-2 hover:text-red-500 transition-colors"><Trash2 className="w-5 h-5" /></button>
-                                        </div>
-                                    </td>
+                <div className="overflow-x-auto min-h-[400px]">
+                    {isLoading ? (
+                        <div className="p-12 text-center text-gray-500 flex flex-col items-center justify-center">
+                            <Button variant="ghost" isLoading className="scale-150 mb-4" />
+                            <p>Loading posts...</p>
+                        </div>
+                    ) : filteredPosts.length > 0 ? (
+                        <table className="w-full text-left border-collapse">
+                            <thead className="sticky top-0 z-10">
+                                <tr className="bg-gray-50/80 backdrop-blur-md text-gray-900 text-xs font-black uppercase tracking-[0.2em] border-b border-gray-100">
+                                    <th className="px-6 py-5">Post Title</th>
+                                    <th className="px-6 py-5">Category</th>
+                                    <th className="px-6 py-5">Status</th>
+                                    <th className="px-6 py-5 text-right">Actions</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody className="divide-y divide-gray-100">
+                                {filteredPosts.map((post: any) => (
+                                    <tr key={post._id} className="hover:bg-orange-50/40 transition-all duration-300 group">
+                                        <td className="px-6 py-5">
+                                            <div className="flex items-start gap-4 max-w-lg">
+                                                {/* Post Image Thumbnail */}
+                                                <div className="w-16 h-16 rounded-xl bg-gray-100 overflow-hidden flex-shrink-0 border border-gray-100 group-hover:border-primary/20 transition-colors shadow-sm">
+                                                    {post.image?.url ? (
+                                                        <img
+                                                            src={post.image.url}
+                                                            alt={post.title}
+                                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                                        />
+                                                    ) : (
+                                                        <div className="w-full h-full flex items-center justify-center text-gray-300">
+                                                            <Eye className="w-6 h-6" />
+                                                        </div>
+                                                    )}
+                                                </div>
+
+                                                <div className="min-w-0 flex-1 py-1">
+                                                    <div
+                                                        onClick={() => router.push(`/admin/posts/edit/${post._id}`)}
+                                                        className="font-bold text-gray-900 group-hover:text-primary transition-colors cursor-pointer line-clamp-1 mb-1"
+                                                    >
+                                                        {post.title}
+                                                    </div>
+                                                    <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-wider text-gray-400">
+                                                        <span className="flex items-center gap-1 bg-gray-50 px-2 py-0.5 rounded-md border border-gray-100">
+                                                            <User className="w-2.5 h-2.5" />
+                                                            {post.user?.name || "Admin"}
+                                                        </span>
+                                                        <span className="flex items-center gap-1 bg-gray-50 px-2 py-0.5 rounded-md border border-gray-100">
+                                                            <Calendar className="w-2.5 h-2.5" />
+                                                            {new Date(post.createdAt).toLocaleDateString('en-GB')}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-5">
+                                            <div className="inline-flex items-center px-2.5 py-1 rounded-lg bg-gray-50 border border-gray-100 text-[11px] font-black text-gray-600 uppercase tracking-wider">
+                                                {post.category}
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-5">
+                                            <span className={cn(
+                                                "inline-flex items-center px-3 py-1 text-[10px] font-black rounded-full uppercase tracking-widest border shadow-sm",
+                                                post.status === 'Published'
+                                                    ? 'bg-green-50 text-green-700 border-green-100'
+                                                    : 'bg-orange-50 text-orange-700 border-orange-100'
+                                            )}>
+                                                <span className={cn(
+                                                    "w-1.5 h-1.5 rounded-full mr-1.5 animate-pulse",
+                                                    post.status === 'Published' ? "bg-green-500" : "bg-orange-500"
+                                                )} />
+                                                {post.status}
+                                            </span>
+                                        </td>
+                                        <td className="px-6 py-5 text-right">
+                                            <div className="flex items-center justify-end gap-1.5">
+                                                {/* <Button
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    onClick={() => window.open(`/posts/${post._id}`, '_blank')}
+                                                    className="w-8 h-8 p-0 rounded-lg hover:bg-white hover:shadow-md transition-all text-gray-400 hover:text-primary"
+                                                    title="Preview Post"
+                                                    leftIcon={<Eye className="w-4 h-4" />}
+                                                /> */}
+                                                <Button
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    onClick={() => router.push(`/admin/posts/edit/${post._id}`)}
+                                                    className="w-8 h-8 p-0 rounded-lg hover:bg-white hover:shadow-md transition-all text-gray-400 hover:text-indigo-600"
+                                                    title="Edit Post"
+                                                    leftIcon={<Edit2 className="w-4 h-4" />}
+                                                />
+                                                <Button
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    onClick={() => handleDelete(post._id)}
+                                                    className="w-8 h-8 p-0 rounded-lg hover:bg-white hover:shadow-md transition-all text-gray-400 hover:text-red-500"
+                                                    title="Delete Post"
+                                                    isLoading={deleteMutation.isPending && deleteMutation.variables === post._id}
+                                                    leftIcon={<Trash2 className="w-4 h-4" />}
+                                                />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    ) : (
+                        <div className="p-12 text-center text-gray-500 italic">
+                            No posts found.
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
