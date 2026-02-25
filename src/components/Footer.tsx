@@ -60,7 +60,7 @@ export default function Footer() {
                     </div>
 
                     {/* Newsletter */}
-                    <div>
+                    {/* <div>
                         <h4 className="font-bold text-gray-900 mb-6">Newsletter</h4>
                         <p className="text-sm text-gray-500 mb-4">
                             Subscribe to get special offers, free giveaways, and once-in-a-lifetime deals.
@@ -75,7 +75,7 @@ export default function Footer() {
                                 Join
                             </button>
                         </form>
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className="pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">

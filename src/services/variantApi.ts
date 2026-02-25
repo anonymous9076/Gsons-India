@@ -33,3 +33,8 @@ export const getVariantBySku = async (sku: string) => {
     const { data } = await API.get(`/variant/${sku}`);
     return data;
 };
+// Public: Get All Variants
+export const getAllVariants = async (query = "") => {
+    const { data } = await API.get(`/variants?${query}`);
+    return data;
+};

@@ -3,22 +3,22 @@
 import React, { useEffect, useState } from "react";
 import SectionHeading from "@/components/SectionHeading";
 import ProductCard from "@/components/ProductCard";
-import { getAllProducts } from "@/services/productApi";
-import type { Product } from "@/types/product";
+import { getAllVariants } from "@/services/variantApi";
+import type { Product, Variant } from "@/types/product";
 import * as productsData from "../data/products";
 
 export default function PopularProductsSection() {
-    const [popularProducts, setPopularProducts] = useState<Product[]>([]);
+    const [popularVariants, setPopularVariants] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchPopular = async () => {
             try {
-                const data = await getAllProducts("limit=4");
-                const products = Array.isArray(data.data) ? data.data : [];
-                setPopularProducts(products);
+                const data = await getAllVariants("limit=8");
+                const variants = Array.isArray(data.data) ? data.data : [];
+                setPopularVariants(variants);
             } catch (error) {
-                console.error("Failed to fetch popular products:", error);
+                console.error("Failed to fetch popular variants:", error);
             } finally {
                 setLoading(false);
             }
@@ -73,9 +73,21 @@ export default function PopularProductsSection() {
                             <div key={idx} className="bg-gray-50 rounded-xl h-64 animate-pulse"></div>
                         ))
                     ) : (
-                        popularProducts.map((product, idx) => (
-                            <ProductCard key={product._id || idx} {...product} />
-                        ))
+                        popularVariants.map((variant, idx) => {
+                            const product = variant.productId;
+                            return (
+                                <ProductCard
+                                    key={variant._id || idx}
+                                    {...product}
+                                    _id={product?._id}
+                                    name={product?.name || "Premium Lighting"}
+                                    price={variant.price}
+                                    images={variant.images?.length > 0 ? variant.images : product?.images}
+                                    sku={variant.sku}
+                                    variantId={variant._id}
+                                />
+                            );
+                        })
                     )}
                 </div>
 
