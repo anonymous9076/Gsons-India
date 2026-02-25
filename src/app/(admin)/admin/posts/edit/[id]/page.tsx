@@ -32,16 +32,17 @@ export default function EditPostPage() {
     });
 
     useEffect(() => {
-        if (data?.post) {
+        if (data) {
+            const p = data;
             setFormData({
-                title: data.post.title || "",
-                excerpt: data.post.excerpt || "",
-                content: data.post.content || "",
-                category: data.post.category || "Lighting Design",
-                status: data.post.status || "Draft",
+                title: p.title || "",
+                excerpt: p.excerpt || "",
+                content: p.content || "",
+                category: p.category || "Lighting Design",
+                status: p.status || "Draft",
             });
-            if (data.post.image?.url) {
-                setPreview(data.post.image.url);
+            if (p.image?.url) {
+                setPreview(p.image.url);
             }
         }
     }, [data]);

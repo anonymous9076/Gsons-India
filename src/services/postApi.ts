@@ -9,7 +9,7 @@ export const getAllPosts = async () => {
 // Public: Get Post By ID
 export const getPostById = async (id: string) => {
     const { data } = await API.get(`/post/${id}`);
-    return data;
+    return data.post || data.data || data;
 };
 
 // Admin: Create Post

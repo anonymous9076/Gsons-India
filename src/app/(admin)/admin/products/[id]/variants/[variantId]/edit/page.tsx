@@ -37,8 +37,8 @@ export default function EditVariantPage() {
     });
 
     useEffect(() => {
-        if (variantData?.success) {
-            const v = variantData.variant;
+        if (variantData) {
+            const v = variantData;
             setFormData({
                 sku: v.sku || "",
                 price: String(v.price || ""),

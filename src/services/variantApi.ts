@@ -25,7 +25,7 @@ export const deleteVariant = async (id: string) => {
 // Admin: Get Variant by ID
 export const getVariantById = async (id: string) => {
     const { data } = await API.get(`/admin/variant/${id}`);
-    return data;
+    return data.variant || data.data || data;
 };
 
 // Public: Get Variant by SKU

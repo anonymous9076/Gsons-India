@@ -43,8 +43,8 @@ export default function ProductVariantsPage() {
         }
     };
 
-    const variants = productData?.data?.variants || [];
-    const product = productData?.data;
+    const variants = productData?.variants || [];
+    const product = productData;
 
     const filteredVariants = variants.filter((v: any) =>
         v.sku.toLowerCase().includes(searchTerm.toLowerCase())

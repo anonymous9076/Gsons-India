@@ -43,14 +43,14 @@ export default function EditProductPage() {
     const categories = catData?.categories || [];
 
     useEffect(() => {
-        if (productData?.success) {
-            const p = productData.data;
+        if (productData) {
+            const p = productData;
             setFormData({
                 name: p.name || "",
                 slug: p.slug || "",
-                categoryId: p.categoryId?._id || p.categoryId || "",
+                categoryId: (p.categoryId as any)?._id || (p.categoryId as any) || "",
                 description: p.description || "",
-                isActive: p.isActive,
+                isActive: p.isActive ?? true,
             });
             setExistingImages(p.images || []);
         }

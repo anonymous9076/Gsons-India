@@ -28,6 +28,8 @@ export interface Product {
     stock?: number;
     createdAt?: string;
     variants?: Variant[];
+    isActive?: boolean;
+    categoryId?: { _id: string; name: string } | string;
     code?: string;
     material?: string;
     type?: string;
