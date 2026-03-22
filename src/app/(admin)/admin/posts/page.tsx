@@ -84,7 +84,7 @@ export default function PostsPage() {
                     ) : filteredPosts.length > 0 ? (
                         <table className="w-full text-left border-collapse">
                             <thead className="sticky top-0 z-10">
-                                <tr className="bg-gray-50/80 backdrop-blur-md text-gray-900 text-xs font-black uppercase tracking-[0.2em] border-b border-gray-100">
+                                <tr className="bg-gray-50/80 backdrop-blur-md text-gray-900 text-xs   tracking-[0.2em] border-b border-gray-100">
                                     <th className="px-6 py-5">Post Title</th>
                                     <th className="px-6 py-5">Category</th>
                                     <th className="px-6 py-5">Status</th>
@@ -118,7 +118,7 @@ export default function PostsPage() {
                                                     >
                                                         {post.title}
                                                     </div>
-                                                    <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-wider text-gray-400">
+                                                    <div className="flex items-center gap-3 text-[10px] font-bold  tracking-wider text-gray-400">
                                                         <span className="flex items-center gap-1 bg-gray-50 px-2 py-0.5 rounded-md border border-gray-100">
                                                             <User className="w-2.5 h-2.5" />
                                                             {post.user?.name || "Admin"}
@@ -132,13 +132,13 @@ export default function PostsPage() {
                                             </div>
                                         </td>
                                         <td className="px-6 py-5">
-                                            <div className="inline-flex items-center px-2.5 py-1 rounded-lg bg-gray-50 border border-gray-100 text-[11px] font-black text-gray-600 uppercase tracking-wider">
+                                            <div className="inline-flex items-center px-2.5 py-1 rounded-lg bg-gray-50 border border-gray-100 text-[11px]  text-gray-600  tracking-wider">
                                                 {post.category}
                                             </div>
                                         </td>
                                         <td className="px-6 py-5">
                                             <span className={cn(
-                                                "inline-flex items-center px-3 py-1 text-[10px] font-black rounded-full uppercase tracking-widest border shadow-sm",
+                                                "inline-flex items-center px-3 py-1 text-[10px]  rounded-full  tracking-widest border shadow-sm",
                                                 post.status === 'Published'
                                                     ? 'bg-green-50 text-green-700 border-green-100'
                                                     : 'bg-orange-50 text-orange-700 border-orange-100'

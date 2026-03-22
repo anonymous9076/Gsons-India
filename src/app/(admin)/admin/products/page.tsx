@@ -80,7 +80,7 @@ export default function ProductsPage() {
                     ) : products.length > 0 ? (
                         <table className="w-full text-left border-collapse">
                             <thead className="sticky top-0 z-10">
-                                <tr className="bg-gray-50/80 backdrop-blur-md text-gray-900 text-xs font-black uppercase tracking-[0.2em] border-b border-gray-100">
+                                <tr className="bg-gray-50/80 backdrop-blur-md text-gray-900 text-xs   tracking-[0.2em] border-b border-gray-100">
                                     <th className="px-6 py-5">Product</th>
                                     <th className="px-6 py-5">Category</th>
                                     <th className="px-6 py-5">Slug</th>
@@ -101,7 +101,7 @@ export default function ProductsPage() {
                                                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                                                         />
                                                     ) : (
-                                                        <div className="w-full h-full flex items-center justify-center bg-orange-50 text-primary font-black text-xl">
+                                                        <div className="w-full h-full flex items-center justify-center bg-orange-50 text-primary  text-xl">
                                                             {product.name.charAt(0)}
                                                         </div>
                                                     )}
@@ -110,14 +110,14 @@ export default function ProductsPage() {
                                                     <div className="font-bold text-gray-900 group-hover:text-primary transition-colors line-clamp-1 mb-0.5">
                                                         {product.name}
                                                     </div>
-                                                    <div className="text-[10px] font-black uppercase tracking-wider text-gray-400">
+                                                    <div className="text-[10px]   tracking-wider text-gray-400">
                                                         ID: {product._id.slice(-8)}
                                                     </div>
                                                 </div>
                                             </div>
                                         </td>
                                         <td className="px-6 py-5">
-                                            <div className="inline-flex items-center px-3 py-1 bg-gray-50 border border-gray-100 text-[11px] font-black text-gray-600 uppercase tracking-wider rounded-lg">
+                                            <div className="inline-flex items-center px-3 py-1 bg-gray-50 border border-gray-100 text-[11px]  text-gray-600  tracking-wider rounded-lg">
                                                 {product.categoryId?.name || 'Uncategorized'}
                                             </div>
                                         </td>
@@ -128,7 +128,7 @@ export default function ProductsPage() {
                                         </td>
                                         <td className="px-6 py-5">
                                             <span className={cn(
-                                                "inline-flex items-center px-3 py-1 text-[10px] font-black rounded-full uppercase tracking-widest border shadow-sm",
+                                                "inline-flex items-center px-3 py-1 text-[10px]  rounded-full  tracking-widest border shadow-sm",
                                                 product.isActive
                                                     ? 'bg-green-50 text-green-700 border-green-100'
                                                     : 'bg-red-50 text-red-700 border-red-100'

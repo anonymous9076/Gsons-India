@@ -259,7 +259,7 @@ export default function CategoriesPage() {
                                         <div className="flex items-center gap-4">
                                             <div className="w-12 h-12 rounded-xl overflow-hidden bg-gray-100 border border-gray-100">
                                                 {cat.image?.url ? (
-                                                    <img src={cat.image.url} alt={cat.name} className="w-full h-full object-cover" />
+                                                    <img src={cat.image.url || '/logo.png'} alt={cat.name} className="w-full h-full object-cover" />
                                                 ) : (
                                                     <div className="w-full h-full flex items-center justify-center text-primary font-bold">
                                                         {cat.name.charAt(0).toUpperCase()}

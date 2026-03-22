@@ -4,11 +4,12 @@ import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Search, Filter, ChevronRight, SlidersHorizontal, ChevronDown, X } from "lucide-react";
 import ProductCard from "@/components/ProductCard";
+import Pagination from "@/components/Pagination";
 import { useProducts } from "@/hooks/useProducts";
 import { useCategories } from "@/hooks/useCategories";
 import type { ProductFilters } from "@/types/product";
 
-const LIMIT = 12;
+const LIMIT = 15;
 
 const SORT_OPTIONS = [
     { label: "Newest First", value: "-createdAt" },
@@ -52,7 +53,7 @@ function FilterSidebar({
             `}>
                 {/* Mobile header */}
                 <div className="flex items-center justify-between mb-6 lg:hidden">
-                    <h2 className="text-lg font-black text-gray-900">Filters</h2>
+                    <h2 className="text-lg  text-gray-900">Filters</h2>
                     <button onClick={onClose} aria-label="Close filters">
                         <X className="w-5 h-5 text-gray-500" />
                     </button>
@@ -67,13 +68,13 @@ function FilterSidebar({
                             placeholder="Search products..."
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            className="w-full py-3 pl-10 pr-4 rounded-xl border border-gray-200 bg-white focus:outline-none focus:border-primary focus:ring-4 focus:ring-orange-500/10 transition-all text-sm"
+                            className="w-full py-3 pl-10 pr-4 rounded-xl border text-slate-900 border-gray-200 bg-white focus:outline-none focus:border-primary focus:ring-4 focus:ring-orange-500/10 transition-all text-sm"
                         />
                     </div>
 
                     {/* Categories */}
                     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-                        <h3 className="text-sm font-black text-gray-900 uppercase tracking-widest mb-4 flex items-center gap-2">
+                        <h3 className="text-sm  text-gray-900  tracking-widest mb-4 flex items-center gap-2">
                             <Filter className="w-3.5 h-3.5 text-primary" /> Categories
                         </h3>
                         <ul className="space-y-1">
@@ -96,12 +97,12 @@ function FilterSidebar({
 
                     {/* Price Range */}
                     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-                        <h3 className="text-sm font-black text-gray-900 uppercase tracking-widest mb-4">
+                        <h3 className="text-sm  text-gray-900  tracking-widest mb-4">
                             Price Range
                         </h3>
                         <input
                             type="range"
-                            min={0} max={50000} step={500}
+                            min={0} max={10000} step={500}
                             value={maxPrice}
                             onChange={(e) => setMaxPrice(Number(e.target.value))}
                             className="w-full accent-primary cursor-pointer"
@@ -142,36 +143,6 @@ function SkeletonGrid() {
     );
 }
 
-// ─── Pagination ───────────────────────────────────────────
-function Pagination({ page, totalPages, onChange }: { page: number; totalPages: number; onChange: (p: number) => void }) {
-    if (totalPages <= 1) return null;
-    return (
-        <div className="flex justify-center items-center gap-2 mt-12">
-            <button onClick={() => onChange(page - 1)} disabled={page === 1}
-                className="px-4 py-2 rounded-xl border border-gray-200 bg-white text-sm font-bold text-gray-700 disabled:opacity-40 hover:bg-gray-50 transition-all">
-                ← Prev
-            </button>
-            {[...Array(totalPages)].map((_, i) => {
-                const p = i + 1;
-                if (p === 1 || p === totalPages || Math.abs(p - page) <= 1) {
-                    return (
-                        <button key={p} onClick={() => onChange(p)}
-                            className={`w-10 h-10 rounded-xl text-sm font-bold transition-all ${page === p ? "bg-gray-900 text-white" : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"
-                                }`}>
-                            {p}
-                        </button>
-                    );
-                }
-                if (Math.abs(p - page) === 2) return <span key={p} className="text-gray-400">…</span>;
-                return null;
-            })}
-            <button onClick={() => onChange(page + 1)} disabled={page === totalPages}
-                className="px-4 py-2 rounded-xl border border-gray-200 bg-white text-sm font-bold text-gray-700 disabled:opacity-40 hover:bg-gray-50 transition-all">
-                Next →
-            </button>
-        </div>
-    );
-}
 
 // ─── Main Page Content ────────────────────────────────────
 function ProductsContent() {
@@ -214,7 +185,7 @@ function ProductsContent() {
     const { data, isLoading } = useProducts(filters);
     const products = data?.data ?? [];
     const totalProducts = data?.total ?? 0;
-    const totalPages = Math.ceil(totalProducts / LIMIT);
+    const totalPages = data?.totalPages || Math.ceil(totalProducts / LIMIT);
 
     const hasActiveFilters = !!(search || activeCategoryId || sort !== "-createdAt" || maxPrice < 50000);
 
@@ -222,45 +193,50 @@ function ProductsContent() {
     const handleClear = () => { setSearch(""); setActiveCategoryId(""); setSort("-createdAt"); setMaxPrice(50000); setPage(1); };
 
     return (
-        <div className="bg-gray-50 min-h-screen pt-8 pb-24">
+        <div className="bg-[#FAF9F6] min-h-screen pt-24 pb-24">
             <div className="container-custom">
-                {/* Page Header */}
-                <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                    <div>
-                        <h1 className="text-3xl font-black text-gray-900">
-                            {activeCategoryName || "All Products"}
+                {/* Page Navigation & Context */}
+                <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+                    <div className="space-y-2">
+                        <div className="flex items-center gap-2 text-[10px]   tracking-[0.2em] text-slate-400">
+                            <span>Collection</span>
+                            <ChevronRight className="w-3 h-3" />
+                            <span className="text-primary">{activeCategoryName || "All Archives"}</span>
+                        </div>
+                        <h1 className="text-4xl md:text-5xl  text-slate-900 tracking-tighter font-display leading-none">
+                            {activeCategoryName || "The Collection"}
                         </h1>
-                        <p className="text-sm text-gray-500 mt-1">
-                            {isLoading ? "Loading..." : `${totalProducts} product${totalProducts !== 1 ? "s" : ""} found`}
+                        <p className="text-sm text-slate-500 font-medium">
+                            {isLoading ? "Curating..." : `${totalProducts} Architectural Pieces`}
                         </p>
                     </div>
 
-                    <div className="flex items-center gap-3">
-                        {/* Sort */}
-                        <div className="relative">
+                    <div className="flex items-center gap-4">
+                        {/* Sort - Refined Dropdown */}
+                        <div className="relative group">
                             <select
                                 value={sort}
                                 onChange={(e) => { setSort(e.target.value); setPage(1); }}
-                                className="appearance-none pl-4 pr-10 py-2.5 bg-white border border-gray-200 rounded-xl text-sm font-semibold text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer shadow-sm"
+                                className="appearance-none pl-6 pr-12 py-4 bg-white border border-slate-100 rounded-2xl text-[11px]   tracking-widest text-slate-900 focus:outline-none focus:ring-4 focus:ring-primary/5 cursor-pointer shadow-luxe transition-all hover:border-primary/20"
                             >
                                 {SORT_OPTIONS.map((o) => (
                                     <option key={o.value} value={o.value}>{o.label}</option>
                                 ))}
                             </select>
-                            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
+                            <ChevronDown className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none group-hover:text-primary transition-colors" />
                         </div>
 
                         {/* Mobile filter toggle */}
                         <button
                             onClick={() => setSidebarOpen(true)}
-                            className="lg:hidden flex items-center gap-2 px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm font-semibold text-gray-700 shadow-sm"
+                            className="lg:hidden flex items-center gap-3 px-6 py-4 bg-slate-900 text-white rounded-2xl text-[11px]   tracking-widest shadow-luxe-lg active:scale-95"
                         >
                             <SlidersHorizontal className="w-4 h-4" /> Filters
                         </button>
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-8">
+                <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-12 items-start">
                     <FilterSidebar
                         search={search} setSearch={setSearch}
                         activeCategoryId={activeCategoryId} onCategoryClick={handleCategoryClick}
@@ -269,29 +245,50 @@ function ProductsContent() {
                         open={sidebarOpen} onClose={() => setSidebarOpen(false)}
                     />
 
-                    <main>
+                    <main className="space-y-12">
                         {isLoading ? (
                             <SkeletonGrid />
                         ) : products.length > 0 ? (
                             <>
-                                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
                                     {products.flatMap((product) => {
-                                        // If product has variants, create a card for each active variant
                                         if (product.variants && product.variants.length > 0) {
                                             return product.variants
-                                                .filter((v) => v.isActive !== false)
+                                                .filter((v) => {
+                                                    const isActive = v.isActive !== false;
+                                                    const isUnderPrice = v.price <= maxPrice;
+                                                    if (!isActive || !isUnderPrice) return false;
+                                                    if (!debouncedSearch) return true;
+
+                                                    const s = debouncedSearch.toLowerCase().trim();
+                                                    const nameMatch = product.name.toLowerCase().includes(s);
+                                                    const skuMatch = v.sku.toLowerCase().includes(s);
+                                                    const attrMatch = Object.values(v.attributes).some(val =>
+                                                        String(val).toLowerCase().includes(s)
+                                                    );
+                                                    return nameMatch || skuMatch || attrMatch;
+                                                })
                                                 .map((variant) => ({
                                                     ...product,
-                                                    _id: variant._id, // Use variant ID for routing/key
-                                                    productId: product._id, // Keep reference to parent
+                                                    _id: variant._id,
+                                                    productId: product._id,
                                                     name: `${product.name} - ${Object.values(variant.attributes).join(' / ')}`,
                                                     price: variant.price,
                                                     images: variant.images && variant.images.length > 0 ? variant.images : product.images,
                                                     sku: variant.sku
                                                 }));
                                         }
-                                        // Fallback to the base product if no variants
-                                        return [product];
+                                        return [product].filter(p => {
+                                            if (!debouncedSearch) return true;
+                                            const s = debouncedSearch.toLowerCase().trim();
+                                            return p.name.toLowerCase().includes(s);
+                                        });
+                                    }).sort((a, b) => {
+                                        // Additional frontend sort to perfect the order of variants within the same backend page
+                                        if (sort === 'price') return a.price - b.price;
+                                        if (sort === '-price') return b.price - a.price;
+                                        if (sort === 'name') return a.name.localeCompare(b.name);
+                                        return 0;
                                     }).map((displayItem) => (
                                         <ProductCard key={displayItem._id} {...displayItem} />
                                     ))}
@@ -299,13 +296,15 @@ function ProductsContent() {
                                 <Pagination page={page} totalPages={totalPages} onChange={setPage} />
                             </>
                         ) : (
-                            <div className="py-32 text-center bg-white rounded-3xl border border-dashed border-gray-200">
-                                <div className="text-5xl mb-4">🔍</div>
-                                <h3 className="text-2xl font-black text-gray-900 mb-2">No products found</h3>
-                                <p className="text-gray-500 mb-6">Try adjusting your filters or search query.</p>
+                            <div className="py-40 text-center bg-white rounded-4xl border border-dashed border-slate-200 shadow-luxe">
+                                <div className="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-8 border border-slate-100">
+                                    <Search className="w-8 h-8 text-slate-300" />
+                                </div>
+                                <h3 className="text-3xl  text-slate-900 mb-4 font-display tracking-tight">Visions Not Found</h3>
+                                <p className="text-slate-500 mb-10 max-w-xs mx-auto font-medium">We couldn't find any pieces matching your current filters. Try adjusting your parameters.</p>
                                 <button onClick={handleClear}
-                                    className="px-6 py-3 bg-primary text-white rounded-xl font-bold text-sm hover:bg-orange-600 transition-all">
-                                    Clear Filters
+                                    className="px-10 py-4 bg-slate-900 text-white rounded-2xl  text-xs  tracking-widest hover:bg-primary transition-all shadow-luxe-lg active:scale-95">
+                                    Reset Discovery
                                 </button>
                             </div>
                         )}

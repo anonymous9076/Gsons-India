@@ -1,93 +1,58 @@
-
 import Link from "next/link";
-import * as productsData from "../data/products";
+import { ArrowRight } from "lucide-react";
 
 export default function Hero() {
     return (
-        <section className="bg-orange-50 pt-10 pb-16 md:pt-16 md:pb-24 overflow-hidden relative">
-            <div className="container-custom grid md:grid-cols-2 gap-12 items-center relative z-10">
-                {/* Text Content */}
-                <div className="space-y-8">
-                    <div className="space-y-4">
-                        <span className="inline-block px-4 py-1.5 bg-orange-100/50 text-orange-600 text-xs font-bold tracking-widest uppercase rounded-full shadow-sm border border-orange-200/50">
-                            Professional Lighting Solutions
-                        </span>
-                        <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 leading-[1.1]">
-                            Lighting That <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-orange-400">Defines Your Space</span>
-                        </h1>
-                        <p className="text-gray-600 text-lg max-w-lg leading-relaxed font-medium">
-                            Experience the perfect blend of innovation and elegance. Our curated collection brings professional-grade lighting to your projects.
-                        </p>
-                    </div>
+        <section className="relative bg-[#FAFAFA] min-h-[70vh] flex items-center overflow-hidden py-16 lg:py-0">
+            {/* Soft decorative shapes */}
+            <div className="absolute top-0 right-0 w-[40%] h-full bg-[#FEF4EB] rounded-l-[10rem] hidden lg:block" />
 
-                    <div className="flex flex-col sm:flex-row items-center gap-4">
-                        <Link
-                            href="/products"
-                            className="w-full sm:w-auto inline-flex items-center justify-center px-10 py-4 text-base font-bold text-white transition-all bg-primary rounded-xl hover:bg-orange-600 shadow-xl shadow-orange-500/25 hover:-translate-y-1 active:scale-95"
-                        >
-                            Explore Products
-                        </Link>
-                        <Link
-                            href="/catalogues"
-                            className="w-full sm:w-auto inline-flex items-center justify-center px-10 py-4 text-base font-bold text-gray-900 transition-all bg-white border border-gray-200 rounded-xl hover:bg-gray-50 hover:border-gray-300 active:scale-95"
-                        >
-                            View Catalogues
-                        </Link>
-                    </div>
-
-                    <div className="flex items-center gap-6 pt-4 border-t border-orange-200/30">
-                        <div className="flex -space-x-3">
-                            {[1, 2, 3, 4].map((i) => (
-                                <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-gray-200 overflow-hidden shadow-sm">
-                                    <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="user" />
-                                </div>
-                            ))}
+            <div className="container-custom relative z-10 w-full">
+                <div className="grid lg:grid-cols-2 gap-12 items-center">
+                    {/* Left: Text Content */}
+                    <div className="space-y-8 animate-in fade-in slide-in-from-left duration-700">
+                        <div className="space-y-4">
+                            <p className="text-primary font-bold  tracking-[0.2em] text-[11px]">Professional Series 2024</p>
+                            <h1 className="text-4xl md:text-5xl  text-slate-800 leading-[1.1] tracking-tight">
+                                Unique & <br />
+                                <span className="text-slate-900">Stylish Lighting</span>
+                            </h1>
+                            <p className="text-slate-500 max-w-lg text-[13px] leading-relaxed font-medium">
+                                Assertively elevate your architectural spaces with our mastercrafted lighting solutions.
+                                Designed for those who demand both performance and aesthetic excellence.
+                            </p>
                         </div>
-                        <div className="text-sm">
-                            <p className="font-bold text-gray-900">500+ Architects</p>
-                            <p className="text-gray-500">Trust our quality</p>
+
+                        <div className="pt-4">
+                            <Link
+                                href="/products"
+                                className="inline-flex items-center justify-center px-8 py-3.5 text-xs font-bold  tracking-widest text-white bg-primary rounded-xl shadow-xl shadow-primary/20 transition-all hover:bg-primary/90 hover:-translate-y-1 active:scale-95"
+                            >
+                                Shop Now
+                                <ArrowRight className="w-3.5 h-3.5 ml-3" />
+                            </Link>
                         </div>
                     </div>
-                </div>
 
-                {/* Hero Image / Composition */}
-                <div className="relative h-[500px] lg:h-[600px] flex items-center justify-center">
-                    {/* Abstract Background Shapes */}
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-orange-300/30 rounded-full blur-[100px] -z-10 animate-pulse"></div>
-                    <div className="absolute top-1/4 right-0 w-32 h-32 bg-primary/20 rounded-full blur-[60px] -z-10"></div>
-
-                    {/* Main Image Container */}
-                    <div className="relative z-10 w-full h-full flex items-center justify-center group/hero">
-                        <div className="relative w-4/5 h-4/5 overflow-hidden rounded-[2rem] shadow-2xl transition-transform duration-700 hover:rotate-1">
-                            <img
-                                src="https://images.unsplash.com/photo-1540932239986-30128078f3c5?q=80&w=2574&auto=format&fit=crop"
-                                alt="Premium Lighting Design"
-                                className="w-full h-full object-cover transition-transform duration-700 group-hover/hero:scale-110"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-tr from-black/40 via-transparent to-transparent"></div>
-                        </div>
-
-                        {/* Floating Product Cards - More Professional */}
-                        <div className="absolute -top-4 -right-2 bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-2xl flex items-center gap-4 animate-float border border-white/50 group hover:scale-105 transition-transform cursor-pointer">
-                            <div className="w-14 h-14 rounded-xl bg-orange-50 flex items-center justify-center p-2">
-                                <img src={productsData.hanging[0]} className="w-full h-full object-contain" alt="Hanging" />
+                    {/* Right: Focused Visual Content */}
+                    <div className="relative animate-in fade-in slide-in-from-right duration-700">
+                        <div className="relative group">
+                            {/* Main Product Image - High End Furniture/Light look */}
+                            <div className="relative aspect-4/5 md:aspect-4/3 rounded-4xl overflow-hidden shadow-2xl group w-full max-w-sm md:max-w-none mx-auto">
+                                <img
+                                    src="https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?q=80&w=2574&auto=format&fit=crop"
+                                    alt="Premium Lighting Fixture"
+                                    className="w-full h-full object-contain filter drop-shadow-2xl transition-transform duration-1000 group-hover:scale-105"
+                                />
                             </div>
-                            <div className="pr-4">
-                                <p className="text-sm font-bold text-gray-900">Premium Series</p>
-                                <div className="flex gap-1">
-                                    {[...Array(5)].map((_, i) => <div key={i} className="w-2 h-2 bg-orange-400 rounded-full"></div>)}
-                                </div>
-                            </div>
-                        </div>
 
-                        <div className="absolute -bottom-6 -left-2 bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-2xl flex items-center gap-4 animate-float-delayed border border-white/50 group hover:scale-105 transition-transform cursor-pointer">
-                            <div className="w-14 h-14 rounded-xl bg-gray-50 flex items-center justify-center p-2">
-                                <img src={productsData.fancyWall[2]} className="w-full h-full object-contain" alt="Wall" />
-                            </div>
-                            <div className="pr-4">
-                                <p className="text-sm font-bold text-gray-900">New Arrivals</p>
-                                <p className="text-xs text-primary font-semibold">Special Offer</p>
+                            {/* Decorative elements to match reference image */}
+                            <div className="absolute -top-10 -right-10 w-40 h-40 hidden md:block">
+                                <img
+                                    src="https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?q=80&w=2667&auto=format&fit=crop"
+                                    className="w-full h-full object-cover rounded-3xl shadow-lg border-4 border-white"
+                                    alt="Detail view"
+                                />
                             </div>
                         </div>
                     </div>

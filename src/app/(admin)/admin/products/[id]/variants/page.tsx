@@ -97,7 +97,7 @@ export default function ProductVariantsPage() {
                     {filteredVariants.length > 0 ? (
                         <table className="w-full text-left border-collapse">
                             <thead className="sticky top-0 z-10">
-                                <tr className="bg-gray-50/80 backdrop-blur-md text-gray-900 text-xs font-black uppercase tracking-[0.2em] border-b border-gray-100">
+                                <tr className="bg-gray-50/80 backdrop-blur-md text-gray-900 text-xs   tracking-[0.2em] border-b border-gray-100">
                                     <th className="px-6 py-5">Image</th>
                                     <th className="px-6 py-5">SKU</th>
                                     <th className="px-6 py-5">Price</th>
@@ -119,7 +119,7 @@ export default function ProductVariantsPage() {
                                                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                                                     />
                                                 ) : (
-                                                    <div className="w-full h-full flex items-center justify-center text-[10px] font-black uppercase text-gray-400">
+                                                    <div className="w-full h-full flex items-center justify-center text-[10px]   text-gray-400">
                                                         No Image
                                                     </div>
                                                 )}
@@ -130,19 +130,19 @@ export default function ProductVariantsPage() {
                                                 {variant.sku}
                                             </code>
                                         </td>
-                                        <td className="px-6 py-5 font-black text-gray-900">
+                                        <td className="px-6 py-5  text-gray-900">
                                             ₹{variant.price.toLocaleString()}
                                         </td>
                                         <td className="px-6 py-5">
                                             <div className="flex flex-col gap-1">
                                                 <span className={cn(
-                                                    "text-xs font-black uppercase tracking-wider",
+                                                    "text-xs   tracking-wider",
                                                     variant.stock < 10 ? 'text-red-600' : 'text-green-600'
                                                 )}>
                                                     {variant.stock} units
                                                 </span>
                                                 {variant.stock < 10 && (
-                                                    <span className="text-[9px] font-black uppercase text-red-400 animate-pulse">
+                                                    <span className="text-[9px]   text-red-400 animate-pulse">
                                                         Low Stock
                                                     </span>
                                                 )}
@@ -152,7 +152,7 @@ export default function ProductVariantsPage() {
                                             <div className="flex flex-wrap gap-1.5">
                                                 {variant.attributes && Object.entries(variant.attributes).map(([key, val]: [string, any]) => (
                                                     <div key={key} className="flex items-center bg-gray-50 px-2 py-0.5 rounded-md border border-gray-100">
-                                                        <span className="text-[9px] font-black text-gray-400 uppercase mr-1">{key}:</span>
+                                                        <span className="text-[9px]  text-gray-400  mr-1">{key}:</span>
                                                         <span className="text-[10px] font-bold text-gray-700">{val}</span>
                                                     </div>
                                                 ))}
@@ -160,7 +160,7 @@ export default function ProductVariantsPage() {
                                         </td>
                                         <td className="px-6 py-5">
                                             <span className={cn(
-                                                "inline-flex items-center px-3 py-1 text-[10px] font-black rounded-full uppercase tracking-widest border shadow-sm",
+                                                "inline-flex items-center px-3 py-1 text-[10px]  rounded-full  tracking-widest border shadow-sm",
                                                 variant.isActive
                                                     ? 'bg-green-50 text-green-700 border-green-100'
                                                     : 'bg-red-50 text-red-700 border-red-100'

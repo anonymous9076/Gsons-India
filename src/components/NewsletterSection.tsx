@@ -1,48 +1,56 @@
 "use client";
 
 import React from "react";
-import { Send } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 export default function NewsletterSection() {
     return (
-        <section className="py-20 relative overflow-hidden">
-            {/* Background with decorative elements */}
-            <div className="absolute inset-0 bg-gray-900">
-                <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl -mr-48 -mt-48"></div>
-                <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/5 rounded-full blur-2xl -ml-32 -mb-32"></div>
-            </div>
+        <section className="py-24 md:py-32 bg-white relative overflow-hidden">
+            {/* Architectural Background Detail */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120%] h-px bg-linear-to-r from-transparent via-slate-200 to-transparent"></div>
 
             <div className="container-custom relative z-10">
-                <div className="max-w-4xl mx-auto bg-linear-to-br from-gray-800 to-gray-900 p-8 md:p-16 rounded-[2.5rem] border border-gray-700 shadow-2xl overflow-hidden relative">
-                    {/* Animated accent line */}
-                    <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-primary to-transparent opacity-50"></div>
+                <div className="max-w-5xl mx-auto rounded-4xl p-1 md:p-1 transparent">
+                    <div className="bg-slate-900 rounded-4xl p-12 md:p-16 text-center relative overflow-hidden shadow-luxe-lg">
+                        {/* Decorative Glow */}
+                        <div className="absolute -top-24 -left-24 w-64 h-64 bg-primary/20 rounded-full blur-[100px] pointer-events-none"></div>
+                        <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-primary/10 rounded-full blur-[100px] pointer-events-none"></div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                        <div>
-                            <h2 className="text-3xl md:text-4xl font-black text-white mb-4 leading-tight">
-                                Don't Miss Out On <br /> <span className="text-primary italic">Exclusive Deals.</span>
-                            </h2>
-                            <p className="text-gray-400 text-lg font-medium">
-                                Subscribe to our newsletter and get updates on new arrivals and special offers.
-                            </p>
-                        </div>
+                        <div className="relative z-10 max-w-2xl mx-auto space-y-8">
+                            <div className="space-y-4">
+                                <span className="text-[10px]  tracking-[0.4em]  text-primary">
+                                    Strategic Updates
+                                </span>
+                                <h2 className="text-4xl md:text-5xl  text-white leading-none font-display tracking-tighter">
+                                    Illuminating Your <span className="text-gradient">Inbox.</span>
+                                </h2>
+                                <p className="text-slate-400 text-[13px] font-medium leading-relaxed">
+                                    Join our architectural circle for exclusive previews of next-gen lighting systems and curated design insights.
+                                </p>
+                            </div>
 
-                        <div>
-                            <form className="relative flex items-center group" onSubmit={(e) => e.preventDefault()}>
-                                <input
-                                    type="email"
-                                    placeholder="Your email address"
-                                    className="w-full bg-gray-800 border-2 border-gray-700 rounded-2xl py-5 px-6 text-white focus:outline-none focus:border-primary transition-all duration-300 placeholder:text-gray-500"
-                                />
+                            <form
+                                className="relative flex flex-col sm:flex-row items-center gap-4 mt-12 group"
+                                onSubmit={(e) => e.preventDefault()}
+                            >
+                                <div className="relative grow w-full">
+                                    <input
+                                        type="email"
+                                        placeholder="Architectural Registry (Email)"
+                                        className="w-full bg-white/5 border border-white/10 rounded-2xl py-5 px-8 text-white focus:outline-none focus:border-primary/50 focus:bg-white/10 transition-all duration-500 placeholder:text-slate-500 font-medium"
+                                    />
+                                </div>
                                 <button
                                     type="submit"
-                                    className="absolute right-2 bg-primary text-gray-900 p-3.5 rounded-xl hover:bg-white transition-all duration-300 active:scale-95 group-hover:shadow-[0_0_20px_rgba(255,165,0,0.4)]"
+                                    className="w-full sm:w-auto bg-white text-slate-900 px-10 py-5 rounded-2xl  text-xs  tracking-widest hover:bg-primary hover:text-white transition-all duration-500 shadow-luxe group/btn active:scale-95 flex items-center justify-center gap-3"
                                 >
-                                    <Send size={24} strokeWidth={2.5} />
+                                    Subscribe
+                                    <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
                                 </button>
                             </form>
-                            <p className="text-gray-500 text-xs mt-4 ml-2">
-                                * We respect your privacy. Unsubscribe at any time.
+
+                            <p className="text-slate-500 text-[10px]   tracking-[0.2em]">
+                                curated frequency • absolute privacy
                             </p>
                         </div>
                     </div>

@@ -70,7 +70,7 @@ export default function UsersPage() {
                     ) : (
                         <table className="w-full text-left border-collapse">
                             <thead>
-                                <tr className="bg-gray-50 text-gray-600 text-sm font-semibold uppercase tracking-wider">
+                                <tr className="bg-gray-50 text-gray-600 text-sm font-semibold  tracking-wider">
                                     <th className="px-6 py-4">User Details</th>
                                     <th className="px-6 py-4">Contact</th>
                                     <th className="px-6 py-4">Role</th>

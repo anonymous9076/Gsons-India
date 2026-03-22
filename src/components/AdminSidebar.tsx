@@ -42,7 +42,7 @@ export default function AdminSidebar() {
     };
 
     return (
-        <aside className="w-50 bg-white border-r border-gray-200 flex flex-col h-screen sticky top-0">
+        <aside className="w-[270px] bg-white border-r border-gray-200 flex flex-col h-screen sticky top-0">
             <div className="p-6">
                 <Link href="/admin" className="flex items-center gap-3 group">
                     <Image
@@ -50,7 +50,7 @@ export default function AdminSidebar() {
                         alt="Gsons Logo"
                         width={150}
                         height={50}
-                        className="h-12 w-auto object-contain"
+                        className="h-17 pl-2 w-auto object-contain"
                         priority
                     />
                 </Link>
@@ -90,7 +90,7 @@ export default function AdminSidebar() {
 
             <div className="p-4 border-t border-gray-100 space-y-2">
                 <div className="px-4 py-3 bg-gray-50 rounded-xl mb-2">
-                    <p className="text-xs text-gray-500 font-bold uppercase tracking-wider">Logged in as</p>
+                    <p className="text-xs text-gray-500 font-bold  tracking-wider">Logged in as</p>
                     <p className="text-sm font-bold text-gray-900 truncate">{user?.name || "Admin"}</p>
                 </div>
                 <button

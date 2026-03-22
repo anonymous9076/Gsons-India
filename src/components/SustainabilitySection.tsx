@@ -1,69 +1,70 @@
 
 import Link from "next/link";
 import * as productsData from "../data/products";
+import { Leaf, ShieldCheck, Zap } from "lucide-react";
 
 export default function SustainabilitySection() {
     return (
-        <section className="py-16 md:py-24 bg-white">
+        <section className="py-24 md:py-32 bg-[#FAF9F6]">
             <div className="container-custom">
-                <div className="grid md:grid-cols-2 gap-16 items-center">
-                    {/* Image side */}
-                    <div className="relative h-[450px] md:h-[550px] group">
-                        <div className="absolute inset-0 bg-orange-100 rounded-[3rem] -rotate-3 transition-transform group-hover:rotate-0 duration-500"></div>
-                        <div className="relative h-full w-full rounded-[3rem] overflow-hidden shadow-2xl transition-transform group-hover:-translate-y-2 duration-500">
+                <div className="grid md:grid-cols-2 gap-20 items-center">
+                    {/* Visual Composition */}
+                    <div className="relative aspect-4/5 group">
+                        <div className="absolute inset-0 bg-slate-200 rounded-4xl translate-x-3 translate-y-3 transition-transform group-hover:translate-x-0 group-hover:translate-y-0 duration-700"></div>
+                        <div className="relative h-full w-full rounded-4xl overflow-hidden shadow-luxe-lg">
                             <img
                                 src={productsData.wall[0]}
-                                alt="Sustainable Lighting"
+                                alt="Sustainable Architectural Lighting"
                                 className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                             />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+                            <div className="absolute inset-0 bg-linear-to-t from-slate-900/40 via-transparent to-transparent"></div>
 
-                            {/* Floating Badge */}
-                            <div className="absolute bottom-8 left-8 bg-white/90 backdrop-blur-md px-6 py-4 rounded-2xl shadow-xl">
-                                <p className="text-gray-900 font-bold text-lg">Eco-Friendly</p>
-                                <p className="text-gray-500 text-sm font-medium">100% Recyclable Materials</p>
+                            {/* Impact Badge */}
+                            <div className="absolute bottom-10 left-10 right-10 p-8 glass-effect rounded-3xl border-white/30">
+                                <p className="text-black/90  text-xl font-display mb-1  tracking-tighter">Carbon Conscious</p>
+                                <p className="text-black/70 text-[10px]   tracking-[0.2em]">100% Recyclable Frameworks</p>
                             </div>
                         </div>
                     </div>
 
-                    {/* Content side */}
-                    <div className="space-y-8">
-                        <div className="space-y-4">
-                            <span className="text-primary font-bold tracking-[0.2em] uppercase text-xs">
-                                Our Vision
+                    {/* Narrative Content */}
+                    <div className="space-y-12">
+                        <div className="space-y-6">
+                            <span className="text-[10px]  tracking-[0.3em]  text-primary">
+                                Our Architectural Ethos
                             </span>
-                            <h2 className="text-4xl md:text-5xl font-black text-gray-900 leading-tight">
-                                Commitment <br />
-                                To <span className="text-primary">Our Planet</span>
+                            <h2 className="text-4xl md:text-5xl  text-slate-900 leading-none font-display tracking-tighter">
+                                Harmony In <br />
+                                <span className="text-gradient">Luminescence.</span>
                             </h2>
+                            <p className="text-[13px] text-slate-500 leading-relaxed font-medium max-w-lg">
+                                We engineer light with a responsibility to the environment. Our commitment extends beyond design—into the very soul of the materials we use.
+                            </p>
                         </div>
 
-                        <div className="space-y-6">
-                            <p className="text-gray-600 leading-relaxed text-lg font-medium">
-                                We believe in meeting today's needs without compromising the future. Every product at Gsons is a testament to our dedication to sustainable living.
-                            </p>
-
-                            <ul className="space-y-3">
-                                {[
-                                    "Ethically Sourced Materials",
-                                    "Minimal Waste Packaging",
-                                    "Energy Efficient Technology"
-                                ].map((item, i) => (
-                                    <li key={i} className="flex items-center gap-3 text-gray-700 font-bold">
-                                        <div className="w-5 h-5 rounded-full bg-orange-100 flex items-center justify-center">
-                                            <div className="w-2 h-2 rounded-full bg-primary"></div>
-                                        </div>
-                                        {item}
-                                    </li>
-                                ))}
-                            </ul>
+                        <div className="grid gap-8">
+                            {[
+                                { icon: Leaf, title: "Pure Origin", desc: "Ethically extracted premium metals" },
+                                { icon: ShieldCheck, title: "Zero Waste", desc: "Minimized architectural packaging" },
+                                { icon: Zap, title: "Luxe Efficiency", desc: "Next-gen low energy components" }
+                            ].map((item, i) => (
+                                <div key={i} className="flex items-start gap-5 group">
+                                    <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center border border-slate-100 shadow-luxe transition-colors group-hover:border-primary/30">
+                                        <item.icon className="w-5 h-5 text-primary" />
+                                    </div>
+                                    <div className="space-y-1">
+                                        <h4 className="text-sm  text-slate-900  tracking-widest">{item.title}</h4>
+                                        <p className="text-xs text-slate-400 font-bold">{item.desc}</p>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
 
                         <Link
                             href="/about"
-                            className="inline-flex items-center justify-center px-10 py-4 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-all shadow-xl shadow-gray-900/20 hover:-translate-y-1 active:scale-95"
+                            className="inline-flex items-center justify-center px-12 py-5 bg-slate-900 text-white text-xs   tracking-widest rounded-2xl hover:bg-primary transition-all shadow-luxe-lg hover:-translate-y-1 active:scale-95"
                         >
-                            Our Story
+                            Explore Our Story
                         </Link>
                     </div>
                 </div>

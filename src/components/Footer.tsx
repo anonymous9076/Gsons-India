@@ -1,88 +1,93 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from "lucide-react";
 
 export default function Footer() {
     return (
-        <footer className="bg-gray-50 pt-16 pb-8 border-t border-gray-100">
+        <footer className="bg-[#f8fafc] pt-24 pb-12 border-t border-slate-100">
             <div className="container-custom">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-                    {/* Brand */}
-                    <div className="space-y-4">
-                        <Link href="/">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
+                    {/* Brand Section */}
+                    <div className="space-y-2">
+                        <Link href="/" className="inline-block transition-transform active:scale-95">
                             <Image
                                 src="/logo.png"
                                 alt="Gsons Logo"
                                 width={120}
                                 height={40}
-                                className="h-10 w-auto object-contain"
+                                className="h-17 w-auto object-contain"
                             />
                         </Link>
-                        <p className="text-gray-500 text-sm leading-relaxed">
-                            Premium skincare products designed to bring out your natural beauty.
-                            Sustainably sourced and scientifically proven.
+                        <p className="text-slate-500 text-sm leading-relaxed font-medium">
+                            Premium architectural lighting solutions engineered for excellence.
+                            Defining spaces with light and innovation since 1995.
                         </p>
-                        <div className="flex space-x-4">
-                            <Link href="#" className="text-gray-500 hover:text-primary transition-colors">
-                                <Facebook className="w-5 h-5" />
-                            </Link>
-                            <Link href="#" className="text-gray-500 hover:text-primary transition-colors">
-                                <Twitter className="w-5 h-5" />
-                            </Link>
-                            <Link href="#" className="text-gray-500 hover:text-primary transition-colors">
-                                <Instagram className="w-5 h-5" />
-                            </Link>
-                            <Link href="#" className="text-gray-500 hover:text-primary transition-colors">
-                                <Linkedin className="w-5 h-5" />
-                            </Link>
+                        <div className="flex pt-2 gap-4">
+                            {[Facebook, Twitter, Instagram, Linkedin].map((Icon, idx) => (
+                                <Link key={idx} href="#" className="w-9 h-9 rounded-full bg-white border border-slate-100 flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary transition-all duration-300 shadow-sm">
+                                    <Icon className="w-4 h-4" />
+                                </Link>
+                            ))}
                         </div>
                     </div>
 
-                    {/* Links 1 */}
-                    <div>
-                        <h4 className="font-bold text-gray-900 mb-6">Shop</h4>
-                        <ul className="space-y-3 text-sm text-gray-500">
-                            <li><Link href="/products" className="hover:text-primary">All Products</Link></li>
-                            <li><Link href="/products" className="hover:text-primary">Best Sellers</Link></li>
-                            <li><Link href="/products" className="hover:text-primary">New Arrivals</Link></li>
+                    {/* Quick Access */}
+                    <div className="space-y-8">
+                        <h4 className="text-xs   tracking-[0.2em] text-slate-900 border-l-2 border-primary pl-4">Collection</h4>
+                        <ul className="space-y-4">
+                            {["Spotlights", "Pendant Lights", "Wall Fixtures", "Outdoor Series", "New Arrivals"].map((item) => (
+                                <li key={item}>
+                                    <Link href="/products" className="text-sm font-semibold text-slate-500 hover:text-primary transition-colors">
+                                        {item}
+                                    </Link>
+                                </li>
+                            ))}
                         </ul>
                     </div>
 
-                    {/* Links 2 */}
-                    <div>
-                        <h4 className="font-bold text-gray-900 mb-6">Company</h4>
-                        <ul className="space-y-3 text-sm text-gray-500">
-                            <li><Link href="/about" className="hover:text-primary">About Us</Link></li>
-                            <li><Link href="#" className="hover:text-primary">Careers</Link></li>
-                            <li><Link href="#" className="hover:text-primary">Blog</Link></li>
-                            <li><Link href="/contact" className="hover:text-primary">Contact</Link></li>
+                    {/* Company */}
+                    <div className="space-y-8">
+                        <h4 className="text-xs   tracking-[0.2em] text-slate-900 border-l-2 border-primary pl-4">Enterprise</h4>
+                        <ul className="space-y-4">
+                            {["Our Story", "Catalogues", "Project Gallery", "Sustainability", "Contact"].map((item) => (
+                                <li key={item}>
+                                    <Link href={item === "Our Story" ? "/about" : "/contact"} className="text-sm font-semibold text-slate-500 hover:text-primary transition-colors">
+                                        {item}
+                                    </Link>
+                                </li>
+                            ))}
                         </ul>
                     </div>
 
-                    {/* Newsletter */}
-                    {/* <div>
-                        <h4 className="font-bold text-gray-900 mb-6">Newsletter</h4>
-                        <p className="text-sm text-gray-500 mb-4">
-                            Subscribe to get special offers, free giveaways, and once-in-a-lifetime deals.
-                        </p>
-                        <form className="flex">
-                            <input
-                                type="email"
-                                placeholder="Enter your email"
-                                className="flex-1 px-4 py-2 border border-gray-200 rounded-l-lg focus:outline-none focus:border-primary text-sm"
-                            />
-                            <button type="button" className="bg-primary text-white px-4 py-2 rounded-r-lg font-medium hover:bg-orange-600 transition-colors">
-                                Join
-                            </button>
-                        </form>
-                    </div> */}
+                    {/* Newsletter & Contact */}
+                    <div className="space-y-8">
+                        <h4 className="text-xs   tracking-[0.2em] text-slate-900 border-l-2 border-primary pl-4">Newsletter</h4>
+                        <div className="space-y-6">
+                            <p className="text-sm font-medium text-slate-400 leading-relaxed">
+                                Subscribe to receive professional updates and exclusive exhibition invites.
+                            </p>
+                            <div className="flex gap-2">
+                                <input
+                                    type="email"
+                                    placeholder="your@email.com"
+                                    className="bg-white border-slate-100 border rounded-xl py-3 px-4 text-xs w-full text-slate-900 focus:ring-2 focus:ring-primary/20 transition-all outline-none"
+                                />
+                                <button className="bg-primary text-white p-3 rounded-xl hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 active:scale-95">
+                                    <Mail className="w-4 h-4" />
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div className="pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
-                    <p>&copy; {new Date().getFullYear()} Gsons. All rights reserved.</p>
-                    <div className="flex space-x-6 mt-4 md:mt-0">
-                        <Link href="#" className="hover:text-gray-600">Privacy Policy</Link>
-                        <Link href="#" className="hover:text-gray-600">Terms of Service</Link>
+                <div className="pt-12 border-t border-slate-200/60 flex flex-col md:flex-row justify-between items-center gap-8">
+                    <div className="text-[11px] font-bold text-slate-400  tracking-widest">
+                        &copy; {new Date().getFullYear()} Gsons India. Mastercrafted in Delhi.
+                    </div>
+                    <div className="flex gap-8 text-[11px]  text-slate-400  tracking-widest">
+                        <Link href="#" className="hover:text-slate-900 transition-colors">Privacy Privacy</Link>
+                        <Link href="#" className="hover:text-slate-900 transition-colors">Terms of Service</Link>
+                        <Link href="#" className="hover:text-slate-900 transition-colors">Cookie Policy</Link>
                     </div>
                 </div>
             </div>

@@ -1,12 +1,11 @@
 "use client";
+
 import React, { useState, useEffect } from 'react';
-import { Phone, Mail, MapPin, Send } from "lucide-react";
+import { Phone, Mail, MapPin, Send, MessageSquareText, ShieldCheck } from "lucide-react";
 import { sendContactEmail } from '@/services/contactApi';
 import { useAuth } from '@/context/AuthContext';
 import toast from 'react-hot-toast';
-
-// Note: Installing lucide-react covers standard icons. 
-// Using a simpler approach for WhatsApp icon or standard SVG if needed, but for now using Lucide equivalent or text.
+import { cn } from '@/utils/cn';
 
 export default function ContactPage() {
     const { user } = useAuth();
@@ -50,75 +49,139 @@ export default function ContactPage() {
     };
 
     const contactInfo = [
-        { icon: <Phone className="w-6 h-6" />, title: "Call Us", details: "+91 98779 17738", link: "tel:+9877917738" },
-        { icon: <Mail className="w-6 h-6" />, title: "Email Us", details: "indiagsons@gmail.com", link: "mailto:indiagsons@gmail.com" },
-        { icon: <MapPin className="w-6 h-6" />, title: "Visit Us", details: "Batala, Punjab, India", link: "https://maps.google.com" },
+        { icon: <Phone className="w-5 h-5" />, title: "Archive Line", details: "+91 98779 17738", link: "tel:+919877917738", desc: "Mon—Sat, 10am—8pm" },
+        { icon: <Mail className="w-5 h-5" />, title: "Digital Dossier", details: "indiagsons@gmail.com", link: "mailto:indiagsons@gmail.com", desc: "Response within 24h" },
+        { icon: <MapPin className="w-5 h-5" />, title: "The Studio", details: "Batala, Punjab, India", link: "https://maps.google.com", desc: "Flagship Showroom" },
     ];
 
     return (
-        <div className="bg-gray-50 min-h-screen pt-20 pb-24">
-            <div className="container-custom">
-                <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-16 items-start">
-                    {/* Info Section */}
-                    <div>
-                        <span className="inline-block px-4 py-1.5 bg-orange-100 text-primary border border-orange-200 rounded-lg text-xs font-bold uppercase tracking-wider mb-4">
-                            Get In Touch
-                        </span>
-                        <h1 className="text-4xl md:text-6xl font-bold leading-tight my-6 text-gray-900">
-                            Let's Illuminate <br /><span className="text-primary">Your Space</span>
-                        </h1>
-                        <p className="text-lg text-gray-600 leading-relaxed mb-12 max-w-lg">
-                            Have questions about our products or need a custom lighting solution?
-                            Our team is here to help you find the perfect illumination.
-                        </p>
+        <div className="bg-[#FAF9F6] min-h-screen pt-32 pb-48 relative overflow-hidden">
+            {/* Pattern Accent */}
+            <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 -z-10"></div>
 
-                        <div className="grid gap-6 mb-12">
-                            {contactInfo.map((info, i) => (
-                                <a href={info.link} key={i} className="flex items-center gap-6 p-6 bg-white rounded-2xl border border-gray-100 transition-all hover:translate-x-2 hover:border-orange-200 hover:shadow-md group">
-                                    <div className="w-14 h-14 bg-orange-50 text-primary rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                                        {info.icon}
-                                    </div>
-                                    <div>
-                                        <h4 className="text-lg font-bold text-gray-900 mb-1">{info.title}</h4>
-                                        <p className="text-gray-500">{info.details}</p>
-                                    </div>
-                                </a>
-                            ))}
+            <div className="container-custom">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-start">
+                    {/* Left: Brand Narrative & Info */}
+                    <div className="space-y-12">
+                        <div className="space-y-6">
+                            <span className="inline-block px-4 py-1.5 bg-slate-900/5 text-[9px]   tracking-[0.4em] text-slate-400 border border-slate-900/10 rounded-full">
+                                Concierge Inquiry
+                            </span>
+                            <h1 className="text-4xl md:text-5xl  text-slate-900 leading-none font-display tracking-tighter">
+                                Begin the <br />
+                                <span className="text-primary italic">Dialogue.</span>
+                            </h1>
+                            <p className="text-slate-500 text-[13px] leading-relaxed font-medium max-w-lg pt-2">
+                                Whether you're a professional specifier or a private collector, our architectural advisors are available for technical consultation and bespoke lighting solutions.
+                            </p>
                         </div>
 
-                        <div className="bg-gray-900 text-white p-8 rounded-3xl mt-10">
-                            <h3 className="text-2xl font-bold mb-3">Quick Inquiry?</h3>
-                            <p className="text-gray-500 mb-6">Chat with our experts on WhatsApp for instant assistance.</p>
-                            <a href="https://wa.me/9877917738" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 bg-[#25d366] text-white px-6 py-3 rounded-full font-bold hover:bg-[#128c7e] transition-all">
-                                Chat on WhatsApp
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            {contactInfo.map((info, i) => (
+                                <a
+                                    href={info.link}
+                                    key={i}
+                                    className="p-8 bg-white/40 backdrop-blur-md rounded-4xl border border-slate-100 shadow-luxe transition-all duration-500 hover:bg-white hover:-translate-y-2 hover:shadow-luxe-lg group"
+                                >
+                                    <div className="w-12 h-12 bg-slate-900 text-white rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary transition-colors">
+                                        {info.icon}
+                                    </div>
+                                    <h4 className="text-[10px]   tracking-[0.3em] text-slate-900 mb-1">{info.title}</h4>
+                                    <p className="text-sm  text-slate-900 truncate">{info.details}</p>
+                                    <p className="text-[9px]   tracking-widest text-slate-400 mt-2">{info.desc}</p>
+                                </a>
+                            ))}
+
+                            {/* WhatsApp Special Access */}
+                            <a
+                                href="https://wa.me/9877917738"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="p-8 bg-slate-900 text-white rounded-4xl shadow-luxe-lg transition-all duration-500 hover:bg-slate-800 hover:-translate-y-2 group"
+                            >
+                                <div className="w-12 h-12 bg-white/10 text-primary rounded-2xl flex items-center justify-center mb-6">
+                                    <MessageSquareText className="w-6 h-6" />
+                                </div>
+                                <h4 className="text-[10px]   tracking-[0.3em] text-white/50 mb-1">Instant Liaison</h4>
+                                <p className="text-sm ">WhatsApp Priority</p>
+                                <span className="inline-flex items-center gap-2 text-[9px]   tracking-widest text-primary mt-4 group-hover:gap-4 transition-all">
+                                    Initialize Chat <Send className="w-3 h-3" />
+                                </span>
                             </a>
+                        </div>
+
+                        <div className="p-8 bg-white rounded-4xl border border-slate-50 shadow-luxe flex items-center gap-6">
+                            <div className="w-16 h-16 rounded-3xl bg-primary/10 flex items-center justify-center text-primary">
+                                <ShieldCheck className="w-8 h-8" />
+                            </div>
+                            <div>
+                                <h4 className="text-[10px]   tracking-[0.3em] text-slate-900">Professional Verification</h4>
+                                <p className="text-xs text-slate-500 font-medium">All technical inquiries are handled by our certified lighting engineers.</p>
+                            </div>
                         </div>
                     </div>
 
-                    {/* Form Section */}
-                    <div className="bg-white p-8 md:p-10 rounded-3xl border border-gray-100 shadow-xl sticky top-24">
-                        <form onSubmit={handleSubmit}>
-                            <div className="mb-6">
-                                <label className="block font-bold mb-2 text-gray-900 text-sm">Full Name</label>
-                                <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="John Doe" required
-                                    className="w-full p-3.5 rounded-xl border border-gray-200 text-gray-500 bg-white focus:outline-none focus:border-primary focus:ring-4 focus:ring-orange-500/10 transition-all font-sans" />
+                    {/* Right: Architectural Inquiry Form */}
+                    <div className="relative group">
+                        <div className="absolute inset-0 bg-primary/20 blur-[100px] -z-10 opacity-0 group-hover:opacity-40 transition-opacity duration-1000"></div>
+                        <div className="bg-white p-10 md:p-12 rounded-4xl border border-slate-100 shadow-luxe-lg sticky top-32">
+                            <div className="mb-8">
+                                <h3 className="text-2xl  text-slate-900 font-display  tracking-tight">Technical Inquiry</h3>
+                                <p className="text-slate-400 text-[10px]   tracking-[0.3em] mt-2">Dossier Initialization</p>
                             </div>
-                            <div className="mb-6">
-                                <label className="block font-bold mb-2 text-gray-900 text-sm">Email Address</label>
-                                <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="john@example.com" required
-                                    className="w-full p-3.5 rounded-xl border border-gray-200 text-gray-500 bg-white focus:outline-none focus:border-primary focus:ring-4 focus:ring-orange-500/10 transition-all font-sans" />
-                            </div>
-                            <div className="mb-6">
-                                <label className="block font-bold mb-2 text-gray-900 text-sm">Message</label>
-                                <textarea name="message" value={formData.message} onChange={handleChange} placeholder="How can we help you?" rows={5} required
-                                    className="w-full p-3.5 rounded-xl border border-gray-200 text-gray-500 bg-white focus:outline-none focus:border-primary focus:ring-4 focus:ring-orange-500/10 transition-all font-sans"></textarea>
-                            </div>
-                            <button type="submit" className="w-full flex justify-center items-center gap-2 bg-primary text-white p-4 rounded-xl font-bold hover:bg-orange-600 transition-all disabled:opacity-70 disabled:cursor-not-allowed" disabled={loading}>
-                                {loading ? 'Sending...' : <><Send className="w-5 h-5" /> Send Message</>}
-                            </button>
 
+                            <form onSubmit={handleSubmit} className="space-y-8">
+                                <div className="space-y-2">
+                                    <label className="block text-[10px]   tracking-[0.2em] text-slate-400 ml-1">Principal Name</label>
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        value={formData.name}
+                                        onChange={handleChange}
+                                        placeholder="Identification"
+                                        required
+                                        className="w-full bg-slate-50 border border-slate-100 p-5 rounded-2xl focus:outline-none focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all  text-xs  tracking-widest text-slate-900 placeholder:text-slate-200"
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="block text-[10px]   tracking-[0.2em] text-slate-400 ml-1">Email Coordinates</label>
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                        placeholder="Digital Address"
+                                        required
+                                        className="w-full bg-slate-50 border border-slate-100 p-5 rounded-2xl focus:outline-none focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all  text-xs  tracking-widest text-slate-900 placeholder:text-slate-200"
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="block text-[10px]   tracking-[0.2em] text-slate-400 ml-1">Inquiry Narrative</label>
+                                    <textarea
+                                        name="message"
+                                        value={formData.message}
+                                        onChange={handleChange}
+                                        placeholder="Detail your architectural requirements..."
+                                        rows={5}
+                                        required
+                                        className="w-full bg-slate-50 border border-slate-100 p-5 rounded-2xl focus:outline-none focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all  text-xs  tracking-widest text-slate-900 placeholder:text-slate-200 resize-none"
+                                    ></textarea>
+                                </div>
 
-                        </form>
+                                <button
+                                    type="submit"
+                                    className="w-full bg-slate-900 text-white p-6 rounded-2xl  text-[10px]  tracking-[0.4em] hover:bg-primary transition-all focus:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-luxe-lg flex items-center justify-center gap-4 group"
+                                    disabled={loading}
+                                >
+                                    {loading ? 'Transmitting...' : (
+                                        <>
+                                            Submit Dossier
+                                            <Send className="w-4 h-4 transition-transform group-hover:translate-x-2 group-hover:-translate-y-1" />
+                                        </>
+                                    )}
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

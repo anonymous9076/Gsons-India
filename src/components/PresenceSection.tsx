@@ -2,91 +2,97 @@
 
 import React from "react";
 import SectionHeading from "./SectionHeading";
-import { MapPin, Building2, Globe2 } from "lucide-react";
+import { MapPin, Compass, ArrowRight } from "lucide-react";
 
 const cities = [
-    { name: "Jalandhar", type: "Expanded", description: "Modern lighting hub" },
-    { name: "Gurdaspur", type: "Expanded", description: "Rising architectural focus" },
-    { name: "Amritsar", type: "Expanded", description: "Premium lighting solutions" },
-    { name: "Ludhiana", type: "Expanded", description: "Industrial & Luxury" },
-    { name: "Pathankot", type: "Expanded", description: "Gateway presence" },
+    { name: "Jalandhar", type: "Region Store", description: "Strategic Lighting Hub" },
+    { name: "Gurdaspur", type: "Design Studio", description: "Architectural Showcase" },
+    { name: "Amritsar", type: "Flagship", description: "Premium Solutions" },
+    { name: "Ludhiana", type: "Luxe Center", description: "Luxury & Innovation" },
+    { name: "Pathankot", type: "Satellite", description: "Northern Reach" },
 ];
 
 export default function PresenceSection() {
     return (
-        <section className="py-24 bg-linear-to-b from-gray-50 to-white relative overflow-hidden">
-            {/* Decorative Background Elements */}
-            <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-primary/5 rounded-full blur-[120px] -mr-32 -mt-32 uppercase"></div>
-            <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-primary/5 rounded-full blur-[120px] -ml-32 -mb-32 uppercase"></div>
+        <section className="py-10 bg-white relative overflow-hidden text-slate-900 leading-tight">
+            {/* Minimalist Grid Pattern */}
+            <div className="absolute inset-0 opacity-[0.01] pointer-events-none"
+                style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
 
             <div className="container-custom relative z-10">
-                <div className="text-center mb-16">
-                    <SectionHeading title="Our Growing Presence in Punjab" />
-                    <p className="text-gray-500 max-w-2xl mx-auto font-medium mt-4">
-                        From our central headquarters to the most vibrant cities, Gsons is bringing premium architectural lighting to every corner of Punjab.
-                    </p>
-                </div>
+                <SectionHeading title="Spatial Footprint" />
 
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-stretch">
-                    {/* Headquarters - Batala */}
-                    <div className="md:col-span-5 flex">
-                        <div className="bg-gray-900 rounded-4xl p-8 md:p-12 text-white relative overflow-hidden flex flex-col justify-between group flex-grow shadow-2xl">
-                            <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
-                                <Building2 size={160} strokeWidth={1} />
-                            </div>
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-stretch">
+                    {/* Headquarters - High Contrast Architectural Card */}
+                    <div className="md:col-span-4 flex">
+                        <div className="bg-slate-900 rounded-3xl p-6 text-white relative overflow-hidden flex flex-col justify-between group grow shadow-luxe-lg">
+                            <div className="absolute -bottom-12 -right-12 w-60 h-60 bg-primary/10 rounded-full blur-[70px] pointer-events-none"></div>
 
                             <div className="relative z-10">
-                                <span className="inline-block px-4 py-1.5 bg-primary text-gray-900 text-xs font-black rounded-full mb-6 tracking-widest uppercase">
-                                    Headquarters
-                                </span>
-                                <h3 className="text-5xl font-black mb-4 tracking-tighter">Batala, Punjab</h3>
-                                <p className="text-gray-400 text-lg leading-relaxed mb-8 max-w-xs">
-                                    The heart of our operations, where innovation meets tradition in lighting design.
+                                <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-primary/20 border border-primary/30 mb-4">
+                                    <div className="w-1 h-1 rounded-full bg-primary animate-pulse"></div>
+                                    <span className="text-[7px]   tracking-[0.2em] text-primary">Headquarters</span>
+                                </div>
+                                <h3 className="text-4xl  mb-3 tracking-tighter font-display">Batala, Punjab</h3>
+                                <p className="text-slate-400 text-[13px] leading-relaxed mb-6  font-medium">
+                                    Epicenter of Gsons engineering. Tradition meets futuristic architectural design.
                                 </p>
                             </div>
 
-                            <div className="relative z-10 flex items-center gap-4 text-primary font-bold">
-                                <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center backdrop-blur-md">
-                                    <MapPin size={24} />
+                            <div className="relative z-10 space-y-3">
+                                <div className="h-px w-full bg-slate-800"></div>
+                                <div className="flex items-center gap-3">
+                                    <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center border border-white/10 backdrop-blur-xl group-hover:border-primary/50 transition-colors">
+                                        <MapPin className="w-4 h-4 text-primary" />
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <span className="text-[11px] font-bold">Design Studio</span>
+                                        <span className="text-[7px]   tracking-widest text-slate-500">Innovation Center</span>
+                                    </div>
                                 </div>
-                                <span>Main Office & Design Studio</span>
                             </div>
                         </div>
                     </div>
 
-                    {/* Cities Grid */}
-                    <div className="md:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    {/* Modern City Grid */}
+                    <div className="md:col-span-8 grid grid-cols-2 md:grid-cols-3 gap-2">
                         {cities.map((city, index) => (
                             <div
                                 key={index}
-                                className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm hover:shadow-xl hover:border-primary/20 transition-all duration-500 group relative overflow-hidden"
+                                className="luxe-card p-4 flex flex-col justify-between group bg-[#FAFAFA]"
                             >
-                                <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full -mr-12 -mt-12 group-hover:scale-150 transition-transform duration-700"></div>
-
-                                <div className="relative z-10">
-                                    <div className="flex items-center gap-3 mb-4">
-                                        <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-primary group-hover:text-gray-900 transition-colors duration-300">
-                                            <Globe2 size={20} />
+                                <div className="space-y-3">
+                                    <div className="flex items-center justify-between">
+                                        <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-slate-400 group-hover:bg-primary group-hover:text-white transition-all duration-300 shadow-sm">
+                                            <Compass className="w-3.5 h-3.5" />
                                         </div>
-                                        <span className="text-[10px] font-black tracking-widest text-primary uppercase">{city.type}</span>
+                                        <span className="text-[7px]  tracking-[0.15em] text-slate-400  group-hover:text-primary transition-colors">{city.type}</span>
                                     </div>
 
-                                    <h4 className="text-2xl font-black text-gray-900 mb-2">{city.name}</h4>
-                                    <p className="text-sm text-gray-500 font-medium">{city.description}</p>
+                                    <div>
+                                        <h4 className="text-lg  text-slate-900 font-display tracking-tight">{city.name}</h4>
+                                        <p className="text-[9px] text-slate-400 font-bold  tracking-widest">{city.description}</p>
+                                    </div>
+                                </div>
+                                <div className="mt-4 flex justify-end opacity-0 group-hover:opacity-100 transition-all duration-300">
+                                    <ArrowRight className="w-3.5 h-3.5 text-primary" />
                                 </div>
                             </div>
                         ))}
 
-                        {/* Future Expansion Placeholder */}
-                        <div className="bg-gray-50 border-2 border-dashed border-gray-200 rounded-3xl p-8 flex flex-col justify-center items-center text-center group">
-                            <div className="w-12 h-12 rounded-full border-2 border-gray-300 flex items-center justify-center text-gray-400 mb-4 group-hover:border-primary group-hover:text-primary transition-colors">
-                                <span className="text-2xl font-bold">+</span>
-                            </div>
-                            <p className="text-sm font-bold text-gray-400 group-hover:text-gray-600">More Cities Coming Soon</p>
-                        </div>
+                        {/* Future Expansion Card */}
+
                     </div>
                 </div>
             </div>
         </section>
+    );
+}
+
+function PlusIcon({ className }: { className?: string }) {
+    return (
+        <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+        </svg>
     );
 }

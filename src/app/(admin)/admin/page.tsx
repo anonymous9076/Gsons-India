@@ -84,9 +84,9 @@ export default function AdminDashboard() {
                         <table className="w-full text-left border-collapse">
                             <thead>
                                 <tr className="bg-gray-50/50">
-                                    <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Product</th>
-                                    <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Category</th>
-                                    <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Added</th>
+                                    <th className="px-6 py-4 text-xs font-bold text-gray-500  tracking-wider">Product</th>
+                                    <th className="px-6 py-4 text-xs font-bold text-gray-500  tracking-wider">Category</th>
+                                    <th className="px-6 py-4 text-xs font-bold text-gray-500  tracking-wider">Added</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-50">
@@ -96,7 +96,7 @@ export default function AdminDashboard() {
                                             <div className="flex items-center gap-3">
                                                 <div className="w-12 h-12 bg-gray-100 rounded-lg overflow-hidden shrink-0 border border-gray-100 flex items-center justify-center">
                                                     {product.images?.[0] ? (
-                                                        <img src={product.images[0].url} alt={product.name} className="w-full h-full object-cover" />
+                                                        <img src={product.images[0].url || '/logo.png'} alt={product.name} className="w-full h-full object-cover" />
                                                     ) : (
                                                         <Package size={20} className="text-gray-400" />
                                                     )}
@@ -131,7 +131,7 @@ export default function AdminDashboard() {
                             <AlertTriangle className="text-orange-500" size={20} />
                             <h2 className="text-xl font-bold text-gray-900">Low Stock Alert</h2>
                         </div>
-                        <span className="text-xs font-bold text-orange-600 bg-orange-50 px-2 py-1 rounded-md uppercase tracking-wide">
+                        <span className="text-xs font-bold text-orange-600 bg-orange-50 px-2 py-1 rounded-md  tracking-wide">
                             Top 5 Critical
                         </span>
                     </div>
@@ -139,9 +139,9 @@ export default function AdminDashboard() {
                         <table className="w-full text-left border-collapse">
                             <thead>
                                 <tr className="bg-gray-50/50">
-                                    <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Product Variant</th>
-                                    <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Stock</th>
-                                    <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th className="px-6 py-4 text-xs font-bold text-gray-500  tracking-wider">Product Variant</th>
+                                    <th className="px-6 py-4 text-xs font-bold text-gray-500  tracking-wider">Stock</th>
+                                    <th className="px-6 py-4 text-xs font-bold text-gray-500  tracking-wider">Status</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-50">
@@ -201,14 +201,14 @@ export default function AdminDashboard() {
                                 <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
                                 <span className="text-sm font-medium text-gray-700">Database Core</span>
                             </div>
-                            <span className="text-xs font-bold text-green-700 uppercase tracking-tight">Active</span>
+                            <span className="text-xs font-bold text-green-700  tracking-tight">Active</span>
                         </div>
                         <div className="flex items-center justify-between p-4 rounded-xl bg-gray-50/50">
                             <div className="flex items-center gap-3">
                                 <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
                                 <span className="text-sm font-medium text-gray-700">Digital Assets</span>
                             </div>
-                            <span className="text-xs font-bold text-green-700 uppercase tracking-tight">Active</span>
+                            <span className="text-xs font-bold text-green-700  tracking-tight">Active</span>
                         </div>
                     </div>
                 </div>

@@ -249,11 +249,11 @@ export default function EditVariantPage() {
 
                         {existingImages.length > 0 && images.length === 0 && (
                             <div className="mb-4">
-                                <p className="text-xs text-gray-500 mb-2 font-medium uppercase tracking-wider">Current Images</p>
+                                <p className="text-xs text-gray-500 mb-2 font-medium  tracking-wider">Current Images</p>
                                 <div className="grid grid-cols-5 gap-4">
                                     {existingImages.map((img, i) => (
                                         <div key={i} className="aspect-square border rounded-xl overflow-hidden bg-gray-50">
-                                            <img src={img.url} alt="existing" className="w-full h-full object-cover" />
+                                            <img src={img.url || '/logo.png'} alt="existing" className="w-full h-full object-cover" />
                                         </div>
                                     ))}
                                 </div>
@@ -284,7 +284,7 @@ export default function EditVariantPage() {
 
                         {images.length > 0 && (
                             <div className="mt-4">
-                                <p className="text-xs mb-2 font-medium uppercase tracking-wider text-primary">New Selection</p>
+                                <p className="text-xs mb-2 font-medium  tracking-wider text-primary">New Selection</p>
                                 <div className="grid grid-cols-5 gap-4">
                                     {images.map((img, i) => (
                                         <div key={i} className="relative aspect-square border rounded-xl overflow-hidden group">

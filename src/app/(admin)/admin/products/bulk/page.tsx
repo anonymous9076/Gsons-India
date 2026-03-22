@@ -27,8 +27,8 @@ export default function BulkImportPage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!files.images_zip || !files.products_data) {
-            return toast.error("Please upload both images ZIP and products data file.");
+        if (!files.products_data) {
+            return toast.error("Please upload products data file.");
         }
 
         setLoading(true);
@@ -36,7 +36,9 @@ export default function BulkImportPage() {
 
         try {
             const formData = new FormData();
-            formData.append("images_zip", files.images_zip);
+            if (files.images_zip) {
+                formData.append("images_zip", files.images_zip);
+            }
             formData.append("products_data", files.products_data);
             if (files.variants_data) {
                 formData.append("variants_data", files.variants_data);
@@ -62,7 +64,7 @@ export default function BulkImportPage() {
         <div className="max-w-4xl mx-auto space-y-8">
             <div>
                 <h1 className="text-3xl font-bold text-gray-900">Bulk Product Import</h1>
-                <p className="text-gray-500 mt-2">Upload ZIP images and product/variant data to import in bulk.</p>
+                <p className="text-gray-500 mt-2">Upload product/variant data (and optional ZIP images) to import in bulk.</p>
             </div>
 
             {!result ? (
@@ -72,7 +74,7 @@ export default function BulkImportPage() {
                         <div className="space-y-4">
                             <label className="text-sm font-bold text-gray-900 flex items-center gap-2">
                                 <Archive className="w-4 h-4 text-primary" />
-                                Images ZIP File
+                                Images ZIP File (Optional)
                             </label>
                             <div className="relative group">
                                 <input
@@ -80,7 +82,6 @@ export default function BulkImportPage() {
                                     accept=".zip"
                                     onChange={(e) => handleFileChange(e, "images_zip")}
                                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                                    required
                                 />
                                 <div className="border-2 border-dashed border-gray-200 group-hover:border-primary rounded-2xl p-6 text-center transition-all bg-gray-50/50">
                                     {files.images_zip ? (
@@ -91,7 +92,7 @@ export default function BulkImportPage() {
                                     ) : (
                                         <div className="text-gray-500">
                                             <UploadCloud className="w-8 h-8 mx-auto mb-2 opacity-50" />
-                                            <p className="text-sm">Click or drag to upload <span className="font-bold text-gray-900">images.zip</span></p>
+                                            <p className="text-sm">Click or drag to upload <span className="font-bold text-gray-900">images.zip</span> (optional)</p>
                                         </div>
                                     )}
                                 </div>
@@ -185,12 +186,12 @@ export default function BulkImportPage() {
 
                         <div className="grid grid-cols-2 gap-4">
                             <div className="p-6 bg-green-50 rounded-2xl border border-green-100">
-                                <p className="text-sm text-green-600 font-bold uppercase tracking-wider">Products Created</p>
-                                <p className="text-4xl font-black text-green-700">{result.productsCreated}</p>
+                                <p className="text-sm text-green-600 font-bold  tracking-wider">Products Created</p>
+                                <p className="text-4xl  text-green-700">{result.productsCreated}</p>
                             </div>
                             <div className="p-6 bg-blue-50 rounded-2xl border border-blue-100">
-                                <p className="text-sm text-blue-600 font-bold uppercase tracking-wider">Variants Created</p>
-                                <p className="text-4xl font-black text-blue-700">{result.variantsCreated}</p>
+                                <p className="text-sm text-blue-600 font-bold  tracking-wider">Variants Created</p>
+                                <p className="text-4xl  text-blue-700">{result.variantsCreated}</p>
                             </div>
                         </div>
 

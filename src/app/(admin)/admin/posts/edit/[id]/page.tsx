@@ -122,7 +122,7 @@ export default function EditPostPage() {
                     <div className="lg:col-span-2 space-y-6">
                         <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm space-y-6">
                             <div className="space-y-2">
-                                <label className="text-sm font-bold text-gray-900 uppercase tracking-wider">Post Title</label>
+                                <label className="text-sm font-bold text-gray-900  tracking-wider">Post Title</label>
                                 <input
                                     type="text"
                                     name="title"
@@ -135,7 +135,7 @@ export default function EditPostPage() {
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-sm font-bold text-gray-900 uppercase tracking-wider">Excerpt</label>
+                                <label className="text-sm font-bold text-gray-900  tracking-wider">Excerpt</label>
                                 <textarea
                                     name="excerpt"
                                     value={formData.excerpt}
@@ -147,7 +147,7 @@ export default function EditPostPage() {
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-sm font-bold text-gray-900 uppercase tracking-wider">Content</label>
+                                <label className="text-sm font-bold text-gray-900  tracking-wider">Content</label>
                                 <textarea
                                     name="content"
                                     value={formData.content}
@@ -167,7 +167,7 @@ export default function EditPostPage() {
                             <h3 className="font-bold text-gray-900 border-b border-gray-50 pb-4">Publish Settings</h3>
 
                             <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-700 uppercase">Status</label>
+                                <label className="text-xs font-bold text-gray-700 ">Status</label>
                                 <select
                                     name="status"
                                     value={formData.status}
@@ -181,7 +181,7 @@ export default function EditPostPage() {
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-700 uppercase">Category</label>
+                                <label className="text-xs font-bold text-gray-700 ">Category</label>
                                 <select
                                     name="category"
                                     value={formData.category}

@@ -1,161 +1,199 @@
-import Link from "next/link";
+"use client";
+
+import React from "react";
 import Image from "next/image";
-import { Lightbulb, Eye, Map, Handshake } from "lucide-react";
+import Link from "next/link";
+import { Lightbulb, Eye, ShieldCheck, Heart, ArrowRight } from "lucide-react";
+import SectionHeading from "@/components/SectionHeading";
 
 export default function AboutPage() {
     const milestones = [
-        { icon: <Lightbulb className="w-8 h-8" />, title: "Founded in 2021", desc: "Started with a vision to redefine lighting in Batala, Punjab." },
-        { icon: <Eye className="w-8 h-8" />, title: "Our Vision", desc: "Lighting as an art form that transforms ordinary moments." },
-        { icon: <Map className="w-8 h-8" />, title: "Premium Quality", desc: "Meticulously handpicked products meeting stringent standards." },
-        { icon: <Handshake className="w-8 h-8" />, title: "Customer First", desc: "Dedicated experts providing personalized service." },
+        {
+            icon: <Lightbulb className="w-6 h-6" />,
+            title: "Established 2021",
+            desc: "Founded with a singular vision to elevate architectural lighting standards in the heart of Punjab."
+        },
+        {
+            icon: <Eye className="w-6 h-6" />,
+            title: "The Vision",
+            desc: "Treating light not as a utility, but as a transformative architectural medium."
+        },
+        {
+            icon: <ShieldCheck className="w-6 h-6" />,
+            title: "Luxe Integrity",
+            desc: "Every piece undergoes rigorous architectural vetting for material purity and performance."
+        },
+        {
+            icon: <Heart className="w-6 h-6" />,
+            title: "Concierge Care",
+            desc: "Providing a bespoke consultation experience for discerning homeowners and designers."
+        },
     ];
 
     return (
-        <div className="bg-white">
-            {/* Hero Header */}
-            <section className="bg-orange-50/50 text-center py-20 px-4 md:py-24">
-                <div className="container-custom">
-                    <span className="inline-block px-4 py-2 bg-orange-100 text-primary border border-orange-200 rounded-full text-xs font-bold tracking-wider uppercase mb-6">
-                        Our Story
+        <div className="bg-[#FAF9F6] min-h-screen">
+            {/* Immersive Vision Header */}
+            <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
+                <div className="absolute inset-0 bg-slate-900">
+                    <img
+                        src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=2069&auto=format&fit=crop"
+                        alt="Architectural Studio"
+                        className="w-full h-full object-cover opacity-40 grayscale group-hover:grayscale-0 transition-all duration-1000"
+                    />
+                    <div className="absolute inset-0 bg-linear-to-b from-slate-950/20 via-slate-950/60 to-slate-950/90"></div>
+                </div>
+
+                <div className="container-custom relative z-10 text-center space-y-8">
+                    <span className="inline-block px-6 py-2 bg-primary/20 backdrop-blur-md text-primary border border-primary/30 rounded-full text-[10px]  tracking-[0.4em]  shadow-luxe">
+                        Our Architectural Narrative
                     </span>
-                    <h1 className="text-5xl md:text-7xl font-bold text-gray-900">
-                        Illuminating Lives <br />
-                        <span className="text-primary">Since 2021</span>
+                    <h1 className="text-6xl md:text-8xl  text-white leading-tight font-display tracking-tighter">
+                        Illuminating <br />
+                        <span className="text-primary italic">Atmospheres</span>
                     </h1>
-                </div>
-            </section>
-
-            {/* Main Story Section */}
-            <section className="py-20">
-                <div className="container-custom grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                    <div className="relative">
-                        <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-                            <Image
-                                src="https://i.pinimg.com/564x/5b/fe/2c/5bfe2c2ed20f936fcce7617a68abe3f0.jpg"
-                                alt="Gsons Philosophy"
-                                width={600}
-                                height={800}
-                                className="w-full h-auto max-h-[600px] object-cover"
-                            />
-                        </div>
-                        <div className="absolute -bottom-6 -right-6 bg-primary text-white p-8 rounded-2xl text-center shadow-xl hidden md:block">
-                            <h3 className="text-3xl font-bold mb-1">3+ Years</h3>
-                            <p className="text-sm font-bold uppercase tracking-wider">Of Excellence</p>
-                        </div>
-                    </div>
-
-                    <div className="space-y-8">
-                        <h2 className="text-4xl font-bold text-gray-900">The Gsons Journey</h2>
-                        <div className="space-y-6 text-lg text-gray-600 leading-relaxed">
-                            <p className="font-medium text-gray-900">
-                                Welcome to Gsons, your ultimate destination for illuminating spaces and enhancing ambiances!
-                                At Gsons, we're passionate about brightening up your world with our exquisite range of lights and accessories.
-                            </p>
-                            <p>
-                                Founded in 2021 by Rakesh Goel and Sumit Goel, Gsons was born in the vibrant city of Batala, Punjab.
-                                Our mission is to blend creativity with innovation, curating lighting solutions that evoke emotions
-                                and enhance experiences.
-                            </p>
-                            <p>
-                                We believe that lighting is more than just functional; it's an art form. Each piece in our collection
-                                is selected to resonate with our philosophy of blending form with function perfectly.
-                            </p>
-                        </div>
+                    <div className="flex items-center justify-center gap-6 pt-8">
+                        <div className="h-px w-16 bg-white/20"></div>
+                        <p className="text-white/60  text-[10px]  tracking-[0.5em]">Curating Excellence Since 2021</p>
+                        <div className="h-px w-16 bg-white/20"></div>
                     </div>
                 </div>
             </section>
 
-            {/* Founders Section */}
-            <section className="py-20 bg-orange-50/30">
+            {/* The Philosophy Section - Editorial Layout */}
+            <section className="py-32 overflow-hidden">
                 <div className="container-custom">
-                    <div className="text-center mb-16">
-                        <span className="inline-block px-3 py-1 bg-white text-xs font-semibold tracking-wider uppercase rounded-full text-primary shadow-sm border border-orange-100 mb-4">
-                            Leadership
-                        </span>
-                        <h2 className="text-4xl md:text-5xl font-bold text-gray-900">Meet The Founders</h2>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-4xl mx-auto">
-                        {/* Sumit Goel */}
-                        <div className="bg-white rounded-3xl overflow-hidden shadow-lg border border-gray-100 group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                            <div className="h-80 w-full overflow-hidden relative">
-                                {/* Using img for local public assets if needed or Image if configured.
-                                     Since copied to public/images, we can use simple img or next/Image.
-                                     Using img tag for simplicity with the copied jpeg files. */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+                        <div className="relative group">
+                            <div className="relative rounded-4xl overflow-hidden shadow-luxe-lg aspect-4/5">
                                 <img
-                                    src="/images/sumit-goel.jpg"
-                                    alt="Sumit Goel"
-                                    className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                                    src="https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?q=80&w=2070&auto=format&fit=crop"
+                                    alt="Gsons Philosophy"
+                                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                                    <p className="text-white font-medium">"Innovation involves finding a new and better way to do something."</p>
+                                <div className="absolute inset-0 bg-linear-to-t from-slate-900/60 to-transparent"></div>
+                                <div className="absolute bottom-12 left-12 right-12">
+                                    <p className="text-white text-xl font-medium leading-relaxed italic">
+                                        "Light is the first of architectural materials; it defines the space we inhabit."
+                                    </p>
                                 </div>
                             </div>
-                            <div className="p-8">
-                                <h3 className="text-2xl font-bold text-gray-900 mb-1">Sumit Goel</h3>
-                                <span className="text-sm font-bold text-primary uppercase tracking-wider mb-4 block">CEO</span>
-                                <p className="text-gray-600 leading-relaxed">
-                                    The visionary founder of Gsons, bringing a passion for innovation and a keen eye for design to every aspect of the company. As CEO, he leads with a commitment to excellence.
-                                </p>
-                            </div>
+                            <div className="absolute -top-12 -left-12 w-48 h-48 bg-primary rounded-4xl -z-10 opacity-10 animate-pulse"></div>
                         </div>
 
-                        {/* Rakesh Goel */}
-                        <div className="bg-white rounded-3xl overflow-hidden shadow-lg border border-gray-100 group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                            <div className="h-80 w-full overflow-hidden relative">
-                                <img
-                                    src="/images/rakesh-goel.jpg"
-                                    alt="Rakesh Goel"
-                                    className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                                    <p className="text-white font-medium">"Success is not just about making money. It's about making a difference."</p>
-                                </div>
+                        <div className="space-y-12">
+                            <div className="space-y-6">
+                                <span className="text-primary  text-[10px]  tracking-[0.3em]">The Gsons Studio</span>
+                                <h2 className="text-5xl  text-slate-900 font-display tracking-tight leading-none">
+                                    Crafting Light with <br />Architectural Precision.
+                                </h2>
                             </div>
-                            <div className="p-8">
-                                <h3 className="text-2xl font-bold text-gray-900 mb-1">Rakesh Goel</h3>
-                                <span className="text-sm font-bold text-primary uppercase tracking-wider mb-4 block">Founder</span>
-                                <p className="text-gray-600 leading-relaxed">
-                                    The main founder of the empire. A visionary entrepreneur known for his innovative spirit and strategic leadership. With a relentless drive for success, he has built a global powerhouse.
+
+                            <div className="space-y-8 text-slate-500 text-lg leading-relaxed font-medium">
+                                <p>
+                                    Founded in 2021 by visionaries Rakesh and Sumit Goel, Gsons emerged from a desire to bridge the gap between functional lighting and architectural art.
                                 </p>
+                                <p>
+                                    Based in Batala, we have spent the last three years curating a collection that doesn't just illuminate rooms—it elevates lives. Every piece in our dossier is selected for its material integrity, technical precision, and aesthetic purity.
+                                </p>
+                                <div className="pt-8 grid grid-cols-2 gap-8">
+                                    <div>
+                                        <h4 className="text-3xl  text-slate-900 font-display">3+</h4>
+                                        <p className="text-[10px]   tracking-widest text-slate-400">Years of Mastery</p>
+                                    </div>
+                                    <div>
+                                        <h4 className="text-3xl  text-slate-900 font-display">500+</h4>
+                                        <p className="text-[10px]   tracking-widest text-slate-400">Projects Illuminated</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* Milestones / Core Values */}
-            <section className="bg-gray-50 py-20">
+            {/* Leadership Dossier */}
+            <section className="py-32 bg-white">
                 <div className="container-custom">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {milestones.map((m, i) => (
-                            <div key={i} className="bg-white p-8 rounded-2xl text-center border border-gray-100 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all group">
-                                <div className="text-primary mb-6 flex justify-center group-hover:scale-110 transition-transform">
-                                    {m.icon}
+                    <div className="flex flex-col items-center text-center mb-24 space-y-6">
+                        <SectionHeading title="Leadership Dossier" />
+                        <p className="text-slate-500 max-w-xl font-medium">
+                            The visionaries behind the Gsons architectural lighting movement.
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-16 max-w-6xl mx-auto">
+                        {[
+                            { name: "Sumit Goel", role: "Chief Executive Officer", image: "/images/sumit-goel.jpg", bio: "Leading with a commitment to innovation and architectural purity in every design." },
+                            { name: "Rakesh Goel", role: "Founding Principal", image: "/images/rakesh-goel.jpg", bio: "The strategic force behind the Gsons legacy, ensuring excellence across every project." }
+                        ].map((leader, i) => (
+                            <div key={i} className="group space-y-8">
+                                <div className="relative aspect-square rounded-4xl overflow-hidden shadow-luxe transition-all duration-700 group-hover:shadow-luxe-lg group-hover:-translate-y-2 bg-[#FAF9F6] p-4 border border-slate-50">
+                                    <div className="w-full h-full rounded-[2.5rem] overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-1000">
+                                        <img
+                                            src={leader.image}
+                                            alt={leader.name}
+                                            className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                                        />
+                                    </div>
+                                    <div className="absolute inset-0 bg-linear-to-t from-slate-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-12">
+                                        <p className="text-white/80 text-sm font-medium italic">"Excellence is not an act, but a habit of architectural precision."</p>
+                                    </div>
                                 </div>
-                                <h3 className="text-xl font-bold mb-3 text-gray-900">{m.title}</h3>
-                                <p className="text-gray-500 text-sm leading-relaxed">{m.desc}</p>
+                                <div className="space-y-2">
+                                    <h3 className="text-3xl  text-slate-900 font-display  tracking-tight">{leader.name}</h3>
+                                    <span className="text-[10px]  text-primary  tracking-[0.3em] block">{leader.role}</span>
+                                    <p className="text-slate-500 font-medium leading-relaxed max-w-md pt-4">{leader.bio}</p>
+                                </div>
                             </div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* Philosophy Section */}
-            <section className="py-24 bg-gray-900 text-white text-center">
+            {/* Core Values Matrix */}
+            <section className="py-32 bg-[#FAF9F6]">
                 <div className="container-custom">
-                    <h2 className="text-4xl md:text-5xl font-bold mb-8">Experience the Magic of Gsons</h2>
-                    <p className="max-w-2xl mx-auto text-gray-500 mb-12 text-lg">
-                        Join us on our quest to illuminate homes and hearts across the globe.
-                        Whether you're a design enthusiast or a homeowner, we invite you to explore our world.
-                    </p>
-                    <div className="flex flex-col sm:flex-row gap-5 justify-center">
-                        <Link href="/products" className="bg-primary text-white px-8 py-3 rounded-full font-bold hover:bg-orange-600 transition-colors">
-                            Explore Collection
-                        </Link>
-                        <Link href="/contact" className="bg-white/10 text-white px-8 py-3 rounded-full font-bold border border-white/20 hover:bg-white/20 transition-colors">
-                            Get In Touch
-                        </Link>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                        {milestones.map((m, i) => (
+                            <div key={i} className="bg-white p-10 rounded-4xl border border-slate-50 shadow-luxe hover:shadow-luxe-lg hover:-translate-y-2 transition-all group">
+                                <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-8 group-hover:scale-110 transition-transform">
+                                    {m.icon}
+                                </div>
+                                <h3 className="text-xl  mb-4 text-slate-900 font-display  tracking-tight">{m.title}</h3>
+                                <p className="text-slate-400 text-xs leading-relaxed font-bold  tracking-widest">{m.desc}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Experience Bridge */}
+            <section className="py-40 bg-slate-900 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-1/2 h-full opacity-10">
+                    <img
+                        src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop"
+                        alt=""
+                        className="w-full h-full object-cover grayscale"
+                    />
+                </div>
+                <div className="container-custom relative z-10">
+                    <div className="max-w-3xl space-y-12">
+                        <h2 className="text-5xl md:text-7xl  text-white font-display tracking-tighter leading-none">
+                            The Journey to <br />
+                            <span className="text-primary italic">Light Continues.</span>
+                        </h2>
+                        <p className="text-white/40 text-xl font-medium leading-relaxed">
+                            Whether you are reimagining a private residence or curating a commercial environment, our architectural advisors are ready to assist.
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-6 pt-8">
+                            <Link href="/products" className="group bg-primary text-white px-12 py-6 rounded-2xl  text-xs  tracking-widest hover:bg-white hover:text-slate-900 transition-all shadow-luxe flex items-center justify-center gap-4">
+                                Explore Collection
+                                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-2" />
+                            </Link>
+                            <Link href="/contact" className="bg-white/10 text-white px-12 py-6 rounded-2xl  text-xs  tracking-widest border border-white/20 hover:bg-white/20 transition-all flex items-center justify-center">
+                                Initialize Inquiry
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </section>
