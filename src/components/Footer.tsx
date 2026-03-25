@@ -1,8 +1,23 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from "lucide-react";
+import { useCategories } from "@/hooks/useCategories";
 
 export default function Footer() {
+    const { categories } = useCategories();
+    
+    // Use the first 5 dynamic categories, fallback to static defaults if loading
+    const displayCategories = categories && categories.length > 0 
+        ? categories.slice(0, 5) 
+        : [
+            { _id: "1", name: "Spotlights" },
+            { _id: "2", name: "Pendant Lights" },
+            { _id: "3", name: "Wall Fixtures" },
+            { _id: "4", name: "Outdoor Series" },
+            { _id: "5", name: "New Arrivals" }
+          ];
     return (
         <footer className="bg-[#f8fafc] pt-24 pb-12 border-t border-slate-100">
             <div className="container-custom">
@@ -35,10 +50,10 @@ export default function Footer() {
                     <div className="space-y-8">
                         <h4 className="text-xs   tracking-[0.2em] text-slate-900 border-l-2 border-primary pl-4">Collection</h4>
                         <ul className="space-y-4">
-                            {["Spotlights", "Pendant Lights", "Wall Fixtures", "Outdoor Series", "New Arrivals"].map((item) => (
-                                <li key={item}>
-                                    <Link href="/products" className="text-sm font-semibold text-slate-500 hover:text-primary transition-colors">
-                                        {item}
+                            {displayCategories.map((cat) => (
+                                <li key={cat._id}>
+                                    <Link href={cat._id.length > 5 ? `/products?category=${cat._id}` : "/products"} className="text-sm font-semibold text-slate-500 hover:text-primary transition-colors">
+                                        {cat.name}
                                     </Link>
                                 </li>
                             ))}

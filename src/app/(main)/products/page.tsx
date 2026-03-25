@@ -2,7 +2,8 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { Search, Filter, ChevronRight, SlidersHorizontal, ChevronDown, X } from "lucide-react";
+import { Search, ChevronRight, ChevronDown, X, ArrowUp, ArrowDown } from "lucide-react";
+import { cn } from "@/utils/cn";
 import ProductCard from "@/components/ProductCard";
 import Pagination from "@/components/Pagination";
 import { useProducts } from "@/hooks/useProducts";
@@ -11,122 +12,23 @@ import type { ProductFilters } from "@/types/product";
 
 const LIMIT = 15;
 
-const SORT_OPTIONS = [
-    { label: "Newest First", value: "-createdAt" },
-    { label: "Price: Low to High", value: "price" },
-    { label: "Price: High to Low", value: "-price" },
-    { label: "Name: A–Z", value: "name" },
+const SORT_CATEGORIES = [
+    { id: "createdAt", label: "Date Added" },
+    { id: "price", label: "Price" },
+    { id: "name", label: "Name" },
 ];
 
-// ─── Filter Sidebar ───────────────────────────────────────
-function FilterSidebar({
-    search, setSearch,
-    activeCategoryId, onCategoryClick,
-    maxPrice, setMaxPrice,
-    hasActiveFilters, onClear,
-    open, onClose,
-}: {
-    search: string;
-    setSearch: (v: string) => void;
-    activeCategoryId: string;
-    onCategoryClick: (id: string) => void;
-    maxPrice: number;
-    setMaxPrice: (v: number) => void;
-    hasActiveFilters: boolean;
-    onClear: () => void;
-    open: boolean;
-    onClose: () => void;
-}) {
-    const { categories } = useCategories();
-
-    return (
-        <>
-            {/* Mobile overlay */}
-            {open && (
-                <div className="fixed inset-0 bg-black/40 z-40 lg:hidden" onClick={onClose} />
-            )}
-
-            <aside className={`
-                fixed top-0 left-0 h-full w-72 bg-white z-50 shadow-2xl p-6 overflow-y-auto transition-transform duration-300
-                lg:static lg:h-auto lg:w-auto lg:shadow-none lg:p-0 lg:translate-x-0 lg:z-auto lg:overflow-visible lg:bg-transparent
-                ${open ? "translate-x-0" : "-translate-x-full"}
-            `}>
-                {/* Mobile header */}
-                <div className="flex items-center justify-between mb-6 lg:hidden">
-                    <h2 className="text-lg  text-gray-900">Filters</h2>
-                    <button onClick={onClose} aria-label="Close filters">
-                        <X className="w-5 h-5 text-gray-500" />
-                    </button>
-                </div>
-
-                <div className="space-y-6 lg:sticky lg:top-24">
-                    {/* Search */}
-                    <div className="relative">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
-                        <input
-                            type="text"
-                            placeholder="Search products..."
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                            className="w-full py-3 pl-10 pr-4 rounded-xl border text-slate-900 border-gray-200 bg-white focus:outline-none focus:border-primary focus:ring-4 focus:ring-orange-500/10 transition-all text-sm"
-                        />
-                    </div>
-
-                    {/* Categories */}
-                    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-                        <h3 className="text-sm  text-gray-900  tracking-widest mb-4 flex items-center gap-2">
-                            <Filter className="w-3.5 h-3.5 text-primary" /> Categories
-                        </h3>
-                        <ul className="space-y-1">
-                            {[{ _id: "", name: "All Products" }, ...categories].map((cat) => (
-                                <li key={cat._id}>
-                                    <button
-                                        onClick={() => onCategoryClick(cat._id)}
-                                        className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-semibold transition-all ${activeCategoryId === cat._id
-                                            ? "bg-gray-900 text-white"
-                                            : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                                            }`}
-                                    >
-                                        <span>{cat.name}</span>
-                                        {activeCategoryId === cat._id && <ChevronRight className="w-3.5 h-3.5" />}
-                                    </button>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    {/* Price Range */}
-                    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-                        <h3 className="text-sm  text-gray-900  tracking-widest mb-4">
-                            Price Range
-                        </h3>
-                        <input
-                            type="range"
-                            min={0} max={10000} step={500}
-                            value={maxPrice}
-                            onChange={(e) => setMaxPrice(Number(e.target.value))}
-                            className="w-full accent-primary cursor-pointer"
-                        />
-                        <div className="flex justify-between text-sm font-bold text-gray-700 mt-2">
-                            <span>₹0</span>
-                            <span className="text-primary">Up to ₹{maxPrice.toLocaleString("en-IN")}</span>
-                        </div>
-                    </div>
-
-                    {/* Clear */}
-                    {hasActiveFilters && (
-                        <button
-                            onClick={onClear}
-                            className="w-full flex items-center justify-center gap-2 py-2.5 border-2 border-dashed border-gray-300 rounded-xl text-sm font-bold text-gray-500 hover:border-primary hover:text-primary transition-all"
-                        >
-                            <X className="w-4 h-4" /> Clear All Filters
-                        </button>
-                    )}
-                </div>
-            </aside>
-        </>
-    );
-}
+const getSortLabel = (val: string) => {
+    switch (val) {
+        case "-createdAt": return "Newest First";
+        case "createdAt": return "Oldest First";
+        case "price": return "Price: Low to High";
+        case "-price": return "Price: High to Low";
+        case "name": return "Name: A–Z";
+        case "-name": return "Name: Z–A";
+        default: return "Sort";
+    }
+};
 
 // ─── Skeleton Grid ────────────────────────────────────────
 function SkeletonGrid() {
@@ -153,9 +55,23 @@ function ProductsContent() {
     const [debouncedSearch, setDebouncedSearch] = useState(search);
     const [activeCategoryId, setActiveCategoryId] = useState(searchParams.get("category") || "");
     const [sort, setSort] = useState("-createdAt");
+    const [isSortOpen, setIsSortOpen] = useState(false);
+
+    // Custom sort toggle handler
+    const handleSortChange = (categoryId: string) => {
+        const activeBase = sort.replace("-", "");
+        if (activeBase === categoryId) {
+            setSort(sort.startsWith("-") ? categoryId : `-${categoryId}`);
+        } else {
+            if (categoryId === "createdAt") setSort("-createdAt");
+            else if (categoryId === "price") setSort("price");
+            else setSort("name");
+        }
+        setPage(1);
+        setIsSortOpen(false);
+    };
     const [maxPrice, setMaxPrice] = useState(50000);
     const [page, setPage] = useState(1);
-    const [sidebarOpen, setSidebarOpen] = useState(false);
 
     // Category data for the header label
     const { categories } = useCategories();
@@ -165,6 +81,9 @@ function ProductsContent() {
     useEffect(() => {
         const cat = searchParams.get("category");
         setActiveCategoryId(cat || "");
+
+        const key = searchParams.get("keyword");
+        setSearch(key || "");
     }, [searchParams]);
 
     // Debounce search — reset to page 1 when keyword changes
@@ -187,111 +106,121 @@ function ProductsContent() {
     const totalProducts = data?.total ?? 0;
     const totalPages = data?.totalPages || Math.ceil(totalProducts / LIMIT);
 
-    const hasActiveFilters = !!(search || activeCategoryId || sort !== "-createdAt" || maxPrice < 50000);
-
-    const handleCategoryClick = (id: string) => { setActiveCategoryId(id); setPage(1); setSidebarOpen(false); };
     const handleClear = () => { setSearch(""); setActiveCategoryId(""); setSort("-createdAt"); setMaxPrice(50000); setPage(1); };
 
     return (
-        <div className="bg-[#FAF9F6] min-h-screen pt-24 pb-24">
+        <div className="bg-[#FAF9F6] min-h-screen pt-8 pb-24">
             <div className="container-custom">
                 {/* Page Navigation & Context */}
-                <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
-                    <div className="space-y-2">
-                        <div className="flex items-center gap-2 text-[10px]   tracking-[0.2em] text-slate-400">
+                <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6 font-display">
+                    <div className="space-y-4">
+                        <div className="flex items-center gap-2 text-[10px] tracking-[0.2em] text-slate-400 uppercase">
                             <span>Collection</span>
                             <ChevronRight className="w-3 h-3" />
                             <span className="text-primary">{activeCategoryName || "All Archives"}</span>
                         </div>
-                        <h1 className="text-4xl md:text-5xl  text-slate-900 tracking-tighter font-display leading-none">
-                            {activeCategoryName || "The Collection"}
-                        </h1>
-                        <p className="text-sm text-slate-500 font-medium">
-                            {isLoading ? "Curating..." : `${totalProducts} Architectural Pieces`}
-                        </p>
+                       
+                        <h2 className="text-sm text-slate-500 font-medium">
+                            {isLoading ? "Curating..." : `${totalProducts} Products Available`}
+                        </h2>
                     </div>
 
                     <div className="flex items-center gap-4">
-                        {/* Sort - Refined Dropdown */}
-                        <div className="relative group">
-                            <select
-                                value={sort}
-                                onChange={(e) => { setSort(e.target.value); setPage(1); }}
-                                className="appearance-none pl-6 pr-12 py-4 bg-white border border-slate-100 rounded-2xl text-[11px]   tracking-widest text-slate-900 focus:outline-none focus:ring-4 focus:ring-primary/5 cursor-pointer shadow-luxe transition-all hover:border-primary/20"
-                            >
-                                {SORT_OPTIONS.map((o) => (
-                                    <option key={o.value} value={o.value}>{o.label}</option>
-                                ))}
-                            </select>
-                            <ChevronDown className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none group-hover:text-primary transition-colors" />
+                        {/* Price Range - Refined Header UI */}
+                        <div className="relative group flex items-center gap-4 px-6 py-3.5 bg-white border border-slate-100 rounded-2xl shadow-luxe hover:border-primary/20 transition-all">
+                             <div className="flex flex-col">
+                                <span className="text-[9px] uppercase tracking-widest text-slate-400 mb-1 font-bold">Max Price</span>
+                                <div className="flex items-center gap-4">
+                                     <input
+                                        type="range"
+                                        min={0} max={5000} step={100}
+                                        value={maxPrice}
+                                        onChange={(e) => { setMaxPrice(Number(e.target.value)); setPage(1); }}
+                                        className="w-24 sm:w-40 h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-primary"
+                                    />
+                                    <span className="text-[11px] font-bold text-slate-900 min-w-[70px] text-right">
+                                        ₹{maxPrice >= 50000 ? "Any" : maxPrice.toLocaleString("en-IN")}
+                                    </span>
+                                </div>
+                             </div>
                         </div>
 
-                        {/* Mobile filter toggle */}
-                        <button
-                            onClick={() => setSidebarOpen(true)}
-                            className="lg:hidden flex items-center gap-3 px-6 py-4 bg-slate-900 text-white rounded-2xl text-[11px]   tracking-widest shadow-luxe-lg active:scale-95"
-                        >
-                            <SlidersHorizontal className="w-4 h-4" /> Filters
-                        </button>
+                        {/* Sort - Custom Dropdown */}
+                        <div className="relative group z-20">
+                            {isSortOpen && (
+                                <div 
+                                    className="fixed inset-0 z-10" 
+                                    onClick={() => setIsSortOpen(false)} 
+                                />
+                            )}
+                            <button
+                                onClick={() => setIsSortOpen(!isSortOpen)}
+                                className="relative z-20 flex items-center justify-between min-w-[180px] sm:min-w-[210px] pl-[68px] pr-4 py-3.5 bg-white border border-slate-100 rounded-2xl shadow-luxe transition-all hover:border-primary/20 border-l-4 border-l-primary"
+                            >
+                                <div className="absolute left-0 top-0 bottom-0 flex flex-col justify-center px-4 pointer-events-none border-r border-slate-50">
+                                    <span className="text-[9px] uppercase tracking-widest text-slate-400 font-bold">Sort By</span>
+                                </div>
+                                <span className="text-[11px] font-bold tracking-widest text-slate-900 truncate ml-2">
+                                    {getSortLabel(sort)}
+                                </span>
+                                <ChevronDown className={cn("w-4 h-4 text-slate-400 transition-transform ml-2 shrink-0", isSortOpen && "rotate-180")} />
+                            </button>
+
+                            {isSortOpen && (
+                                <div className="absolute right-0 top-full mt-2 w-full bg-white rounded-2xl shadow-2xl border border-slate-100 py-2 ring-1 ring-black/5 animate-in fade-in zoom-in-95 duration-200 z-30">
+                                    {SORT_CATEGORIES.map((cat) => {
+                                        const activeBase = sort.replace("-", "");
+                                        const isActive = activeBase === cat.id;
+                                        const isDesc = sort.startsWith("-");
+
+                                        return (
+                                            <button
+                                                key={cat.id}
+                                                onClick={() => handleSortChange(cat.id)}
+                                                className={cn(
+                                                    "w-full text-left px-5 py-3 flex items-center justify-between text-[11px] font-bold tracking-widest transition-colors",
+                                                    isActive ? "text-primary bg-primary/5" : "text-slate-600 hover:bg-slate-50"
+                                                )}
+                                            >
+                                                <span>{cat.label}</span>
+                                                {isActive && (
+                                                    <span className="flex items-center text-primary">
+                                                        {isDesc ? <ArrowDown className="w-3.5 h-3.5" /> : <ArrowUp className="w-3.5 h-3.5" />}
+                                                    </span>
+                                                )}
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-12 items-start">
-                    <FilterSidebar
-                        search={search} setSearch={setSearch}
-                        activeCategoryId={activeCategoryId} onCategoryClick={handleCategoryClick}
-                        maxPrice={maxPrice} setMaxPrice={(v) => { setMaxPrice(v); setPage(1); }}
-                        hasActiveFilters={hasActiveFilters} onClear={handleClear}
-                        open={sidebarOpen} onClose={() => setSidebarOpen(false)}
-                    />
-
+                <div className="grid grid-cols-1 gap-12 items-start">
                     <main className="space-y-12">
                         {isLoading ? (
                             <SkeletonGrid />
                         ) : products.length > 0 ? (
                             <>
-                                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
-                                    {products.flatMap((product) => {
-                                        if (product.variants && product.variants.length > 0) {
-                                            return product.variants
-                                                .filter((v) => {
-                                                    const isActive = v.isActive !== false;
-                                                    const isUnderPrice = v.price <= maxPrice;
-                                                    if (!isActive || !isUnderPrice) return false;
-                                                    if (!debouncedSearch) return true;
+                                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
+                                    {products.map((product) => {
+                                        // Pick the first variant or use product base data
+                                        const mainVariant = product.variants && product.variants.length > 0 ? product.variants[0] : null;
 
-                                                    const s = debouncedSearch.toLowerCase().trim();
-                                                    const nameMatch = product.name.toLowerCase().includes(s);
-                                                    const skuMatch = v.sku.toLowerCase().includes(s);
-                                                    const attrMatch = Object.values(v.attributes).some(val =>
-                                                        String(val).toLowerCase().includes(s)
-                                                    );
-                                                    return nameMatch || skuMatch || attrMatch;
-                                                })
-                                                .map((variant) => ({
-                                                    ...product,
-                                                    _id: variant._id,
-                                                    productId: product._id,
-                                                    name: `${product.name} - ${Object.values(variant.attributes).join(' / ')}`,
-                                                    price: variant.price,
-                                                    images: variant.images && variant.images.length > 0 ? variant.images : product.images,
-                                                    sku: variant.sku
-                                                }));
-                                        }
-                                        return [product].filter(p => {
-                                            if (!debouncedSearch) return true;
-                                            const s = debouncedSearch.toLowerCase().trim();
-                                            return p.name.toLowerCase().includes(s);
-                                        });
-                                    }).sort((a, b) => {
-                                        // Additional frontend sort to perfect the order of variants within the same backend page
-                                        if (sort === 'price') return a.price - b.price;
-                                        if (sort === '-price') return b.price - a.price;
-                                        if (sort === 'name') return a.name.localeCompare(b.name);
-                                        return 0;
-                                    }).map((displayItem) => (
-                                        <ProductCard key={displayItem._id} {...displayItem} />
-                                    ))}
+                                        const displayItem = {
+                                            ...product,
+                                            _id: mainVariant ? mainVariant._id : product._id,
+                                            productId: product._id,
+                                            // Optional: Simplified name to avoid variant suffix in the main grid
+                                            name: product.name,
+                                            price: mainVariant ? mainVariant.price : product.price,
+                                            images: mainVariant && mainVariant.images && mainVariant.images.length > 0 ? mainVariant.images : product.images,
+                                            sku: mainVariant ? mainVariant.sku : (product.sku || product.code)
+                                        };
+
+                                        return <ProductCard key={displayItem._id} {...displayItem} />;
+                                    })}
                                 </div>
                                 <Pagination page={page} totalPages={totalPages} onChange={setPage} />
                             </>
@@ -300,10 +229,10 @@ function ProductsContent() {
                                 <div className="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-8 border border-slate-100">
                                     <Search className="w-8 h-8 text-slate-300" />
                                 </div>
-                                <h3 className="text-3xl  text-slate-900 mb-4 font-display tracking-tight">Visions Not Found</h3>
+                                <h3 className="text-3xl text-slate-900 mb-4 font-display tracking-tight">Visions Not Found</h3>
                                 <p className="text-slate-500 mb-10 max-w-xs mx-auto font-medium">We couldn't find any pieces matching your current filters. Try adjusting your parameters.</p>
                                 <button onClick={handleClear}
-                                    className="px-10 py-4 bg-slate-900 text-white rounded-2xl  text-xs  tracking-widest hover:bg-primary transition-all shadow-luxe-lg active:scale-95">
+                                    className="px-10 py-4 bg-slate-900 text-white rounded-2xl text-xs tracking-widest hover:bg-primary transition-all shadow-luxe-lg active:scale-95">
                                     Reset Discovery
                                 </button>
                             </div>

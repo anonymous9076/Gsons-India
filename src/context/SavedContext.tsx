@@ -38,7 +38,7 @@ export const SavedProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         initialData: { savedItems: [] } // Fallback
     });
 
-    const savedProducts: Product[] = data?.savedItems || [];
+    const savedProducts: Product[] = data?.data?.products || [];
 
     const toggleMutation = useMutation({
         mutationFn: toggleSavedItem,

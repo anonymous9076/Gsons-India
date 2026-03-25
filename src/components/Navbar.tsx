@@ -1,19 +1,35 @@
 "use client"
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Search, User, Menu, LogOut, ChevronDown, X, Phone, Mail, MapPin, Heart, ShoppingBag, Home, Info, BookOpen } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import { useSaved } from "../context/SavedContext";
 import { cn } from "@/utils/cn";
 
-export default function Navbar() {
+function NavbarContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [searchQuery, setSearchQuery] = useState(searchParams.get("keyword") || "");
   const { user, isAuthenticated, logout } = useAuth();
   const { savedProducts } = useSaved();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+
+  // Sync with URL changes
+  useEffect(() => {
+    const keyword = searchParams.get("keyword");
+    setSearchQuery(keyword || "");
+  }, [searchParams]);
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    router.push(`/products?keyword=${encodeURIComponent(searchQuery)}`);
+    setIsMobileMenuOpen(false);
+  };
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -62,7 +78,7 @@ export default function Navbar() {
 
         {/* Tier 2: Main Bar */}
         <div className="py-3 border-b border-slate-50">
-          <div className="container-custom flex items-center justify-between gap-8">
+          <div className="container-custom flex items-center justify-between gap-2 sm:gap-8">
             {/* Logo */}
             <Link href="/" className="shrink-0 transition-transform active:scale-95">
               <Image
@@ -77,16 +93,14 @@ export default function Navbar() {
 
             {/* Large Search Bar */}
             <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                const query = (e.target as any).search.value;
-                if (query) window.location.href = `/products?search=${encodeURIComponent(query)}`;
-              }}
-              className="hidden lg:flex flex-1 max-w-sm relative"
+              onSubmit={handleSearch}
+              className="flex flex-1 max-w-[150px] sm:max-w-sm relative"
             >
               <input
                 name="search"
                 type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search..."
                 className="w-full text-slate-900 bg-slate-50 border-none rounded-xl py-2.5 pl-5 pr-12 text-sm focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-slate-400"
               />
@@ -217,5 +231,13 @@ export default function Navbar() {
         </div>
       )}
     </>
+  );
+}
+
+export default function Navbar() {
+  return (
+    <Suspense fallback={<div className="h-[74px] lg:h-[115px] bg-white border-b border-white/5" />}>
+      <NavbarContent />
+    </Suspense>
   );
 }

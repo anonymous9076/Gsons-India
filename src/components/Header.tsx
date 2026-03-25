@@ -22,7 +22,7 @@ const Header = () => {
     return (
         <div className='bg-white border-b border-slate-100 w-full overflow-hidden'>
             <div className="container-custom">
-                <nav className="flex items-center justify-center gap-2 md:gap-8 h-12">
+                <nav className="flex md:overflow-hidden space-x-3 md:space-x-0 overflow-x-auto items-center justify-start md:justify-center gap-2 md:gap-8 h-12 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                     {categories.map((category) => (
                         <Link
                             key={category._id}

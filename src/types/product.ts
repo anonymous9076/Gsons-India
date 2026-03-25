@@ -31,6 +31,7 @@ export interface Product {
     isActive?: boolean;
     categoryId?: { _id: string; name: string } | string;
     code?: string;
+    sku?: string;
     material?: string;
     type?: string;
 }

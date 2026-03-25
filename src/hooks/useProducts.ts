@@ -7,7 +7,7 @@ const LIMIT = 12;
 
 export function useProducts(filters: ProductFilters) {
     const queryString = buildQueryString({
-        name: filters.keyword || undefined,
+        keyword: filters.keyword || undefined,
         categoryId: filters.category || undefined,
         maxPrice: filters.maxPrice,
         sort: filters.sort,

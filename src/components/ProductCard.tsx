@@ -7,12 +7,24 @@ import { formatPrice } from "@/utils/formatters";
 import type { Product } from "@/types/product";
 import { cn } from "@/utils/cn";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function ProductCard({ _id, name, price, images, productId, sku, rating, reviews, isNew, isSale, variantId }: Product & { productId?: string, sku?: string, rating?: number, reviews?: number, isNew?: boolean, isSale?: boolean, variantId?: string }) {
     const { toggleSave, isSaved } = useSaved();
     const { isAuthenticated } = useAuth();
+    const router = useRouter();
     const targetId = variantId || productId || _id;
     const saved = isSaved(targetId);
+
+    const handleSave = (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (!isAuthenticated) {
+            router.push("/auth/login");
+            return;
+        }
+        toggleSave(targetId);
+    };
 
     const imageUrl = images?.[0]?.url || "/logo.png";
 
@@ -22,17 +34,15 @@ export default function ProductCard({ _id, name, price, images, productId, sku, 
             <div className="relative aspect-square bg-linear-to-br from-primary/10
              via-primary/10 to-white overflow-hidden">
                 {/* Heart Button */}
-                {isAuthenticated && (
-                    <button
-                        onClick={(e) => { e.preventDefault(); toggleSave(targetId); }}
-                        className={cn(
-                            "absolute top-3 right-3 z-20 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-500",
-                            saved ? "bg-primary text-white scale-110 shadow-lg shadow-primary/40" : "bg-white/10 backdrop-blur-md text-white/70 hover:text-white hover:bg-white/20 border border-white/10"
-                        )}
-                    >
-                        <Heart className={cn("w-3.5 h-3.5", saved && "fill-current")} />
-                    </button>
-                )}
+                <button
+                    onClick={handleSave}
+                    className={cn(
+                        "absolute top-3 right-3 z-20 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-500",
+                        saved ? "bg-primary text-white scale-110 shadow-lg shadow-primary/40" : "bg-white/10 backdrop-blur-md text-white/70 hover:text-white hover:bg-white/20 border border-white/10"
+                    )}
+                >
+                    <Heart className={cn("w-3.5 h-3.5", saved && "fill-current")} />
+                </button>
 
                 {/* Floating Image */}
                 <Link href={`/products/${targetId}`} className="block w-full h-full p-4">
@@ -81,9 +91,19 @@ export default function ProductCard({ _id, name, price, images, productId, sku, 
                         <p className="text-base  text-slate-900 tracking-tighter">{formatPrice(price)}</p>
                     </div>
 
-                    <button className="px-4 py-2 bg-primary/60 text-white rounded-xl text-[9px]   tracking-widest hover:bg-primary transition-all shadow-lg active:scale-95 flex items-center gap-2 group/btn">
-                        <span>Shop</span>
-                        <Plus className="w-3 h-3 transition-transform group-hover/btn:rotate-90" />
+                    <button 
+                        onClick={handleSave}
+                        className={cn(
+                            "px-4 py-2 rounded-xl text-[10px] font-semibold transition-all shadow-lg active:scale-95 flex items-center gap-2 group/btn",
+                            saved ? "bg-primary text-white hover:bg-primary/90" : "bg-primary/60 text-white hover:bg-primary"
+                        )}
+                    >
+                        <span>{saved ? "Saved" : "Save"}</span>
+                        {saved ? (
+                            <Heart className="w-3 h-3 fill-current" />
+                        ) : (
+                            <Plus className="w-3 h-3 transition-transform group-hover/btn:rotate-90" />
+                        )}
                     </button>
                 </div>
             </div>

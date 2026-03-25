@@ -132,7 +132,7 @@ export default function ContactPage() {
 
                             <form onSubmit={handleSubmit} className="space-y-8">
                                 <div className="space-y-2">
-                                    <label className="block text-[10px]   tracking-[0.2em] text-slate-400 ml-1">Principal Name</label>
+                                    <label className="block text-[10px]   tracking-[0.2em] text-slate-400 ml-1">Full Name</label>
                                     <input
                                         type="text"
                                         name="name"
@@ -170,12 +170,12 @@ export default function ContactPage() {
 
                                 <button
                                     type="submit"
-                                    className="w-full bg-slate-900 text-white p-6 rounded-2xl  text-[10px]  tracking-[0.4em] hover:bg-primary transition-all focus:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-luxe-lg flex items-center justify-center gap-4 group"
+                                    className="w-full bg-slate-900 text-white p-6 py-3 rounded-2xl  text-[13px]   hover:bg-primary transition-all focus:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-luxe-lg flex items-center justify-center gap-4 group"
                                     disabled={loading}
                                 >
                                     {loading ? 'Transmitting...' : (
                                         <>
-                                            Submit Dossier
+                                            Submit 
                                             <Send className="w-4 h-4 transition-transform group-hover:translate-x-2 group-hover:-translate-y-1" />
                                         </>
                                     )}

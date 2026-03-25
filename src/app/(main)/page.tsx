@@ -1,7 +1,6 @@
 import Hero from "@/components/Hero";
 import CategoryList from "@/components/CategoryList";
 import FeaturesSection from "@/components/FeaturesSection";
-
 import SustainabilitySection from "@/components/SustainabilitySection";
 import PopularProductsSection from "@/components/PopularProductsSection";
 import TestimonialsSection from "@/components/TestimonialsSection";

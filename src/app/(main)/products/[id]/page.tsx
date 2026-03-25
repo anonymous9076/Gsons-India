@@ -79,16 +79,12 @@ export default function ProductDetailPage() {
                         <ArrowLeft className="w-4 h-4 mr-3 transition-transform group-hover:-translate-x-1" />
                         Back to Selection
                     </button>
-                    <div className="hidden lg:block flex-1 max-w-lg truncate">
-                        <h2 className="text-xs font-bold text-slate-900  tracking-widest font-display">
-                            {product.name}
-                        </h2>
-                    </div>
+                   
                     <div className="flex items-center gap-6 lg:gap-10">
                         <span className="text-xl font-bold text-slate-900 font-display tracking-tight">
                             {formatPrice(currentPrice)}
                         </span>
-                        <button className="hidden sm:flex bg-primary text-white px-8 py-3 rounded-xl text-[9px]   tracking-widest hover:bg-primary/90 transition-all shadow-xl shadow-primary/20 active:scale-95">
+                        <button className="hidden sm:flex bg-primary text-white px-8 py-3 rounded-xl text-[12px]   tracking-widest hover:bg-primary/90 transition-all shadow-xl shadow-primary/20 active:scale-95">
                             Add to Cart
                         </button>
                     </div>
@@ -136,11 +132,13 @@ export default function ProductDetailPage() {
                     <div className="space-y-16">
                         <div className="space-y-8">
                             <div className="flex items-center gap-6">
-                                <span className="px-5 py-2 bg-slate-100 text-slate-500 text-[9px]   tracking-[0.25em] rounded-full border border-slate-200">
-                                    {typeof product.category === 'object' ? product.category.name : product.category}
+                                <span className="px-5 py-2 bg-slate-100 text-slate-500 text-[10px]  font-bold  tracking-[0.25em] rounded-full border border-slate-200">
+                                    {typeof product.categoryId === 'object' 
+                                        ? product.categoryId.name 
+                                        : (typeof product.category === 'object' ? product.category.name : (product.category || 'Uncategorized'))}
                                 </span>
                                 {currentSKU && (
-                                    <span className="text-[10px]  text-slate-300  tracking-[0.2em] border-l border-slate-200 pl-6">
+                                    <span className="text-[14px]  text-slate-500 font-bold  tracking-[0.2em] border-l border-slate-200 pl-6">
                                         ID: {currentSKU}
                                     </span>
                                 )}
@@ -148,13 +146,11 @@ export default function ProductDetailPage() {
                             <h1 className="text-4xl md:text-5xl  text-slate-800 leading-[1.1] tracking-tighter text-balance">
                                 {product.name}
                             </h1>
-                            <div className="flex items-baseline gap-6">
-                                <span className="text-3xl  text-primary tracking-tight">{formatPrice(currentPrice)}</span>
-                                {product.originalPrice && (
-                                    <span className="text-xl text-slate-200 line-through  italic">
-                                        {formatPrice(product.originalPrice)}
-                                    </span>
-                                )}
+                            <div className="flex items-baseline gap-5">
+                                <span className="text-3xl font-bold text-primary tracking-tight">{formatPrice(currentPrice)}</span>
+                                 <span className="text-md text-red-400 line-through  italic">
+                                     {formatPrice(currentPrice * 1.15)}
+                                 </span>
                             </div>
                             <div className="h-px w-16 bg-primary/20" />
                             <p className="text-slate-500 text-[13px] leading-relaxed font-medium max-w-lg">
@@ -265,11 +261,11 @@ export default function ProductDetailPage() {
                         </div>
 
                         <div className="flex flex-col sm:flex-row gap-6 pt-12 border-t border-slate-100">
-                            <button className="flex-2 bg-primary text-white py-6 rounded-3xl   tracking-[0.2em] text-[11px] shadow-2xl shadow-primary/30 transition-all duration-500 hover:bg-primary/90 hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-4 group">
+                            <button className="flex-2 bg-primary text-white py-6 rounded-3xl   tracking-[0.2em] text-[14px] font-semibold shadow-2xl shadow-primary/30 transition-all duration-500 hover:bg-primary/90 hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-4 group">
                                 <ShoppingCart className="w-5 h-5 transition-transform group-hover:scale-110" />
                                 Add to Cart
                             </button>
-                            <button className="flex-1 bg-white border border-slate-100 text-slate-900 py-6 rounded-3xl   tracking-[0.2em] text-[11px] transition-all duration-500 hover:border-primary hover:text-primary active:scale-95 flex items-center justify-center gap-4 group shadow-xl shadow-slate-200/20">
+                            <button className="flex-1 bg-white border border-slate-100 text-slate-900 py-6 rounded-3xl   tracking-[0.2em] text-[12px] transition-all duration-500 hover:border-primary hover:text-primary active:scale-95 flex items-center justify-center gap-4 group shadow-xl shadow-slate-200/20">
                                 <Heart className="w-5 h-5 group-hover:fill-current transition-transform group-hover:scale-110" />
                                 Save List
                             </button>

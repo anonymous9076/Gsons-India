@@ -8,6 +8,6 @@ export const getSavedItems = async () => {
 
 // Toggle Saved Item
 export const toggleSavedItem = async (id: string) => {
-    const { data } = await API.post(`/toggle-save-item/${id}`);
+    const { data } = await API.post(`/toggle-save-item/${id}`, { type: "product" });
     return data;
 };
