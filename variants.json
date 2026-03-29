@@ -1,0 +1,388 @@
+[
+  {
+    "product_sku": "PLUTO-CONCEALED",
+    "sku": "CN001",
+    "dlp": "238",
+    "attributes": {
+      "watt": "7W",
+      "cutout": "75",
+      "color": "ALL"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "SPRITE-SPOT",
+    "sku": "SPRITE003",
+    "dlp": "2420",
+    "attributes": {
+      "watt": "35W",
+      "cutout": "143"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "TULIP-PANEL",
+    "sku": "DL0041",
+    "dlp": "200",
+    "attributes": {
+      "watt": "6W",
+      "size": "3 inch",
+      "shape": "SQ"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "TULIP-PANEL",
+    "sku": "DL0042",
+    "dlp": "200",
+    "attributes": {
+      "watt": "6W",
+      "size": "3 inch",
+      "shape": "RD"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "TULIP-PANEL",
+    "sku": "DL0043",
+    "dlp": "240",
+    "attributes": {
+      "watt": "12W",
+      "size": "4 inch",
+      "shape": "SQ"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "TULIP-PANEL",
+    "sku": "DL0044",
+    "dlp": "240",
+    "attributes": {
+      "watt": "12W",
+      "size": "4 inch",
+      "shape": "RD"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "TULIP-PANEL",
+    "sku": "DL0045",
+    "dlp": "350",
+    "attributes": {
+      "watt": "18W",
+      "size": "5 inch",
+      "shape": "SQ"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "TULIP-PANEL",
+    "sku": "DL0046",
+    "dlp": "350",
+    "attributes": {
+      "watt": "18W",
+      "size": "5 inch",
+      "shape": "RD"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "TULIP-PANEL",
+    "sku": "DL0047",
+    "dlp": "440",
+    "attributes": {
+      "watt": "22W",
+      "size": "6 inch",
+      "shape": "SQ"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "TULIP-PANEL",
+    "sku": "DL0048",
+    "dlp": "440",
+    "attributes": {
+      "watt": "22W",
+      "size": "6 inch",
+      "shape": "RD"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "TREE-SPOT",
+    "sku": "SPOT001",
+    "dlp": "104",
+    "attributes": {
+      "watt": "2W",
+      "cutout": "42x14",
+      "color": "ALL"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "REDIANT-PANEL",
+    "sku": "CN0021",
+    "dlp": "340",
+    "attributes": {
+      "watt": "12W",
+      "cutout": "7 inch"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "CUP-CONCEALED",
+    "sku": "WBCN0015",
+    "dlp": "300",
+    "attributes": {
+      "watt": "7W",
+      "cutout": "75",
+      "color": "ALL"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "CUP-CONCEALED",
+    "sku": "WBCN0015",
+    "dlp": "300",
+    "attributes": {
+      "watt": "7W",
+      "cutout": "75",
+      "color": "ALL"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "SOKO-PANEL",
+    "sku": "DL0051",
+    "dlp": "2130",
+    "attributes": {
+      "watt": "48W",
+      "cutout": "2x2",
+      "color": "CW/NW/WW"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "CUP-COB",
+    "sku": "COBCUP002",
+    "dlp": "900",
+    "attributes": {
+      "watt": "12W",
+      "body": "WB/BB",
+      "color": "CW,WW,NW"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "CUP-COB",
+    "sku": "COBCUP001",
+    "dlp": "800",
+    "attributes": {
+      "watt": "7W",
+      "body": "WB/BB",
+      "color": "CW,WW,NW"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "RADION-DOWNLIGHT",
+    "sku": "DEEP004",
+    "dlp": "180",
+    "attributes": {
+      "watt": "3W",
+      "cutout": "45",
+      "color": "CW"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "SURFACE-SMILE",
+    "sku": "SURFACE007",
+    "dlp": "1000",
+    "attributes": {
+      "watt": "12W",
+      "color": "3IN1"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "SURFACE-SMILE",
+    "sku": "SURFACE008",
+    "dlp": "1200",
+    "attributes": {
+      "watt": "18W",
+      "color": "3IN1"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "KABANA-COB",
+    "sku": "BBKABANA001",
+    "dlp": "890",
+    "attributes": {
+      "watt": "7W",
+      "cutout": "65",
+      "color": "BRG"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "KABANA-COB",
+    "sku": "WBKABANA001",
+    "dlp": "890",
+    "attributes": {
+      "watt": "7W",
+      "cutout": "65",
+      "color": "BRG"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "KABANA-COB",
+    "sku": "BBKABANA002",
+    "dlp": "990",
+    "attributes": {
+      "watt": "12W",
+      "cutout": "65",
+      "color": "CW"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "KABANA-COB",
+    "sku": "WBKABANA002",
+    "dlp": "990",
+    "attributes": {
+      "watt": "12W",
+      "cutout": "65",
+      "color": "CW"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "ZEST-DEEP-COB",
+    "sku": "ZEST001",
+    "dlp": "600",
+    "attributes": {
+      "watt": "7W",
+      "cutout": "54",
+      "color": "CW"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "ZEST-DEEP-COB",
+    "sku": "ZEST002",
+    "dlp": "750",
+    "attributes": {
+      "watt": "12W",
+      "cutout": "65",
+      "color": "CW"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "ZEST-DEEP-COB",
+    "sku": "ZEST003",
+    "dlp": "1100",
+    "attributes": {
+      "watt": "18W",
+      "cutout": "85",
+      "color": "CW"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "SALSA-PANEL",
+    "sku": "DL0052",
+    "dlp": "500",
+    "attributes": {
+      "watt": "12W",
+      "size": "4 inch",
+      "color": "CW"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "SALSA-PANEL",
+    "sku": "DL0053",
+    "dlp": "750",
+    "attributes": {
+      "watt": "20W",
+      "size": "6 inch",
+      "color": "CW"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "DEEP-LIGHT",
+    "sku": "DEEP002",
+    "dlp": "110",
+    "attributes": {
+      "watt": "3W",
+      "cutout": "45",
+      "color": "CW"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "ROUND-SHINE",
+    "sku": "DEEP003",
+    "dlp": "220",
+    "attributes": {
+      "watt": "7W",
+      "cutout": "45",
+      "color": "CW"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "VIVID-VIBES",
+    "sku": "CN0010",
+    "dlp": "120",
+    "attributes": {
+      "model": "VIBES",
+      "watt": "6W",
+      "cutout": "75",
+      "color": "ALL"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "VIVID-VIBES",
+    "sku": "CN0012",
+    "dlp": "130",
+    "attributes": {
+      "model": "VIVID",
+      "watt": "7W",
+      "cutout": "75",
+      "color": "WW"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "VIVID-VIBES",
+    "sku": "CN0013",
+    "dlp": "190",
+    "attributes": {
+      "model": "VIVID",
+      "watt": "7W",
+      "cutout": "75",
+      "color": "WH,WW,NW"
+    },
+    "images": []
+  },
+  {
+    "product_sku": "VIVID-VIBES",
+    "sku": "CN0014",
+    "dlp": "190",
+    "attributes": {
+      "model": "VIVID",
+      "watt": "7W",
+      "cutout": "75",
+      "color": "RGB"
+    },
+    "images": []
+  }
+
+]

@@ -26,7 +26,7 @@ const features = [
         icon: <Globe className="w-6 h-6" />,
         title: "Global Standards",
         desc: "Every component is verified against international architectural safety and performance protocols.",
-        accent: "bg-slate-900/10 text-slate-900"
+        accent: "bg-primary/10 text-primary"
     }
 ];
 

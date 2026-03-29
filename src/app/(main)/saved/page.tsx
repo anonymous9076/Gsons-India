@@ -25,7 +25,6 @@ export default function SavedPage() {
         return (
             <div className="bg-[#FAF9F6] min-h-screen pt-32 pb-48">
                 <div className="container-custom">
-                    <SectionHeading title="Archived Collection" />
                     <div className="text-center py-32 flex flex-col items-center max-w-2xl mx-auto space-y-10">
                         <div className="relative group">
                             <div className="w-32 h-32 bg-white rounded-4xl flex items-center justify-center shadow-luxe transition-all duration-700 group-hover:scale-110 group-hover:rotate-6">
@@ -65,9 +64,8 @@ export default function SavedPage() {
     }
 
     return (
-        <div className="bg-[#FAF9F6] min-h-screen pt-32 pb-48">
+        <div className="bg-[#FAF9F6] min-h-screen pt-10 pb-15">
             <div className="container-custom">
-                <SectionHeading title="Archived Collection" />
 
                 {savedProducts.length === 0 ? (
                     <div className="text-center py-32 flex flex-col items-center max-w-2xl mx-auto space-y-10">

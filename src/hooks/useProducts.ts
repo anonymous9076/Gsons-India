@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchProducts } from "@/services/product.service";
+import { fetchVariants } from "@/services/product.service";
 import { buildQueryString } from "@/utils/formatters";
 import type { ProductFilters, ProductsResponse } from "@/types/product";
 
@@ -17,7 +17,7 @@ export function useProducts(filters: ProductFilters) {
 
     return useQuery<ProductsResponse>({
         queryKey: ["products", filters],
-        queryFn: () => fetchProducts(queryString),
+        queryFn: () => fetchVariants(queryString),
         placeholderData: (prev) => prev, // keeps old data while fetching new page (no flicker)
     });
 }

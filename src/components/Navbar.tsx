@@ -4,7 +4,7 @@ import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Search, User, Menu, LogOut, ChevronDown, X, Phone, Mail, MapPin, Heart, ShoppingBag, Home, Info, BookOpen } from "lucide-react";
+import { Search, User, Menu, LogOut, X, Phone, Mail, MapPin, Heart, ShoppingBag, Home, Info, BookOpen } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import { useSaved } from "../context/SavedContext";
 import { cn } from "@/utils/cn";
@@ -40,7 +40,7 @@ function NavbarContent() {
   const navLinks = [
     // { name: "Home", href: "/", icon: Home },
     { name: "Our Story", href: "/about", icon: Info },
-    { name: "Collection", href: "/products", icon: ShoppingBag },
+    // { name: "Collection", href: "/products", icon: ShoppingBag },
     { name: "Saved", href: "/saved", icon: Heart },
     { name: "Catalogues", href: "/catalogues", icon: BookOpen },
     { name: "Contact", href: "/contact", icon: Phone },
@@ -78,7 +78,7 @@ function NavbarContent() {
 
         {/* Tier 2: Main Bar */}
         <div className="py-3 border-b border-slate-50">
-          <div className="container-custom flex items-center justify-between gap-2 sm:gap-8">
+          <div className="container-custom flex flex-wrap sm:flex-nowrap items-center justify-between gap-y-3 gap-x-2 sm:gap-x-8">
             {/* Logo */}
             <Link href="/" className="shrink-0 transition-transform active:scale-95">
               <Image
@@ -94,7 +94,7 @@ function NavbarContent() {
             {/* Large Search Bar */}
             <form
               onSubmit={handleSearch}
-              className="flex flex-1 max-w-[150px] sm:max-w-sm relative"
+              className="flex w-full sm:w-auto sm:flex-1 relative order-last sm:order-0"
             >
               <input
                 name="search"
@@ -131,21 +131,20 @@ function NavbarContent() {
             </nav>
 
             {/* User Actions */}
-            <div className="flex items-center gap-4 lg:gap-6">
+            <div className="flex items-center gap-1 lg:gap-6">
               {isAuthenticated ? (
                 <div className="relative">
                   <button
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                    className="flex items-center gap-3 p-1 rounded-full hover:bg-slate-50 transition-colors"
+                    className="flex items-center gap-3 p-1 rounded-full hover:bg-slate-50 transition-colors group"
                   >
-                    <div className="w-9 h-9 rounded-full bg-slate-900 flex items-center justify-center">
-                      <User className="w-4 h-4 text-white" />
+                    <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary transition-colors">
+                      <User className="w-4 h-4 text-primary group-hover:text-white transition-colors" />
                     </div>
                     <div className="hidden lg:block text-left">
                       <p className="text-[10px]   text-slate-400 leading-none mb-1">Welcome</p>
-                      <p className="text-sm font-bold text-slate-900 leading-none">{user?.name?.split(' ')[0]}</p>
+                      <p className="text-sm font-bold text-slate-900 leading-none group-hover:text-primary transition-colors">{user?.name?.split(' ')[0]}</p>
                     </div>
-                    <ChevronDown className={cn("w-4 h-4 text-slate-400 transition-transform", isDropdownOpen && "rotate-180")} />
                   </button>
 
                   {isDropdownOpen && (
@@ -188,15 +187,15 @@ function NavbarContent() {
       </header>
 
       {/* Spacer to push content below fixed header */}
-      <div className="h-[74px] lg:h-[115px]" />
+      <div className="h-[120px] sm:h-[74px] lg:h-[115px]" />
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-100 bg-white p-8 animate-in slide-in-from-right duration-500 overflow-y-auto">
           <div className="flex justify-between items-center mb-12">
-            <Image src="/logo.png" alt="Logo" width={100} height={30} className="h-7 w-auto object-contain" />
+            <Image src="/logo.png" alt="Logo" width={100} height={30} className="h-12 w-auto object-contain" />
             <button onClick={() => setIsMobileMenuOpen(false)} className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center">
-              <X className="w-5 h-5" />
+              <X className="w-5 h-5 text-slate-900" />
             </button>
           </div>
 
@@ -221,11 +220,11 @@ function NavbarContent() {
           <div className="border-t border-slate-100 pt-8 flex flex-col gap-6">
             <div className="flex items-center gap-4 text-slate-500">
               <Phone className="w-5 h-5" />
-              <span className="font-bold">+91 123 456 7890</span>
+              <span className="font-bold">+91 98779-17738</span>
             </div>
             <div className="flex items-center gap-4 text-slate-500">
               <Mail className="w-5 h-5" />
-              <span className="font-bold  text-xs">info@gsons.in</span>
+              <span className="font-bold  text-xs">Indiagsons@gmail.com</span>
             </div>
           </div>
         </div>
@@ -236,7 +235,7 @@ function NavbarContent() {
 
 export default function Navbar() {
   return (
-    <Suspense fallback={<div className="h-[74px] lg:h-[115px] bg-white border-b border-white/5" />}>
+    <Suspense fallback={<div className="h-[120px] sm:h-[74px] lg:h-[115px] bg-white border-b border-white/5" />}>
       <NavbarContent />
     </Suspense>
   );

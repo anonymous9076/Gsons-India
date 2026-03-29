@@ -33,7 +33,7 @@ export default function AboutPage() {
     return (
         <div className="bg-[#FAF9F6] min-h-screen">
             {/* Immersive Vision Header */}
-            <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
+            {/* <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
                 <div className="absolute inset-0 bg-slate-900">
                     <img
                         src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=2069&auto=format&fit=crop"
@@ -57,7 +57,7 @@ export default function AboutPage() {
                         <div className="h-px w-16 bg-white/20"></div>
                     </div>
                 </div>
-            </section>
+            </section> */}
 
             {/* The Philosophy Section - Editorial Layout */}
             <section className="py-32 overflow-hidden">

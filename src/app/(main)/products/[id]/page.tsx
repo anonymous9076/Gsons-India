@@ -148,9 +148,11 @@ export default function ProductDetailPage() {
                             </h1>
                             <div className="flex items-baseline gap-5">
                                 <span className="text-3xl font-bold text-primary tracking-tight">{formatPrice(currentPrice)}</span>
-                                 <span className="text-md text-red-400 line-through  italic">
-                                     {formatPrice(currentPrice * 1.15)}
-                                 </span>
+                                {currentPrice > 0 && (
+                                    <span className="text-md text-red-400 line-through italic">
+                                        {formatPrice(currentPrice * 1.15)}
+                                    </span>
+                                )}
                             </div>
                             <div className="h-px w-16 bg-primary/20" />
                             <p className="text-slate-500 text-[13px] leading-relaxed font-medium max-w-lg">

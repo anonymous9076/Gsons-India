@@ -37,11 +37,13 @@ export default function ProductCard({ _id, name, price, images, productId, sku, 
                 <button
                     onClick={handleSave}
                     className={cn(
-                        "absolute top-3 right-3 z-20 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-500",
-                        saved ? "bg-primary text-white scale-110 shadow-lg shadow-primary/40" : "bg-white/10 backdrop-blur-md text-white/70 hover:text-white hover:bg-white/20 border border-white/10"
+                        "absolute top-3 right-3 z-20 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300",
+                        saved 
+                            ? "bg-white text-primary shadow-md scale-110" 
+                            : "bg-white/60 backdrop-blur-md text-slate-400 hover:text-primary hover:bg-white shadow-sm hover:scale-110 border border-white"
                     )}
                 >
-                    <Heart className={cn("w-3.5 h-3.5", saved && "fill-current")} />
+                    <Heart className={cn("w-4 h-4", saved && "fill-current")} />
                 </button>
 
                 {/* Floating Image */}
@@ -84,27 +86,12 @@ export default function ProductCard({ _id, name, price, images, productId, sku, 
                     </p>
                 </div>
 
-                {/* Footer: Price + Button */}
-                <div className="flex items-end justify-between mt-4  border-t border-slate-50">
+                {/* Footer: Price */}
+                <div className="flex items-end justify-between mt-4 border-t border-slate-50 pt-4">
                     <div className="space-y-0.5">
-                        <span className="text-[9px]   tracking-[0.2em] text-slate-300 block">Price</span>
-                        <p className="text-base  text-slate-900 tracking-tighter">{formatPrice(price)}</p>
+                        <span className="text-[9px] tracking-[0.2em] text-slate-300 block">Price</span>
+                        <p className="text-base text-slate-900 tracking-tighter font-bold">{formatPrice(price)}</p>
                     </div>
-
-                    <button 
-                        onClick={handleSave}
-                        className={cn(
-                            "px-4 py-2 rounded-xl text-[10px] font-semibold transition-all shadow-lg active:scale-95 flex items-center gap-2 group/btn",
-                            saved ? "bg-primary text-white hover:bg-primary/90" : "bg-primary/60 text-white hover:bg-primary"
-                        )}
-                    >
-                        <span>{saved ? "Saved" : "Save"}</span>
-                        {saved ? (
-                            <Heart className="w-3 h-3 fill-current" />
-                        ) : (
-                            <Plus className="w-3 h-3 transition-transform group-hover/btn:rotate-90" />
-                        )}
-                    </button>
                 </div>
             </div>
         </div>

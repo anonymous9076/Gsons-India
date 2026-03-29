@@ -25,29 +25,29 @@ export default function PresenceSection() {
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-stretch">
                     {/* Headquarters - High Contrast Architectural Card */}
                     <div className="md:col-span-4 flex">
-                        <div className="bg-slate-900 rounded-3xl p-6 text-white relative overflow-hidden flex flex-col justify-between group grow shadow-luxe-lg">
-                            <div className="absolute -bottom-12 -right-12 w-60 h-60 bg-primary/10 rounded-full blur-[70px] pointer-events-none"></div>
+                        <div className="bg-primary rounded-3xl p-6 text-white relative overflow-hidden flex flex-col justify-between group grow shadow-xl shadow-primary/20">
+                            <div className="absolute -bottom-12 -right-12 w-60 h-60 bg-white/20 rounded-full blur-[70px] pointer-events-none"></div>
 
                             <div className="relative z-10">
-                                <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-primary/20 border border-primary/30 mb-4">
-                                    <div className="w-1 h-1 rounded-full bg-primary animate-pulse"></div>
-                                    <span className="text-[7px]   tracking-[0.2em] text-primary">Headquarters</span>
+                                <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/20 border border-white/30 mb-4">
+                                    <div className="w-1 h-1 rounded-full bg-white animate-pulse"></div>
+                                    <span className="text-[7px] tracking-[0.2em] text-white">Headquarters</span>
                                 </div>
-                                <h3 className="text-4xl  mb-3 tracking-tighter font-display">Batala, Punjab</h3>
-                                <p className="text-slate-400 text-[13px] leading-relaxed mb-6  font-medium">
+                                <h3 className="text-4xl mb-3 tracking-tighter font-display text-white">Batala, Punjab</h3>
+                                <p className="text-white/80 text-[13px] leading-relaxed mb-6 font-medium">
                                     Epicenter of Gsons engineering. Tradition meets futuristic architectural design.
                                 </p>
                             </div>
 
                             <div className="relative z-10 space-y-3">
-                                <div className="h-px w-full bg-slate-800"></div>
+                                <div className="h-px w-full bg-white/30"></div>
                                 <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center border border-white/10 backdrop-blur-xl group-hover:border-primary/50 transition-colors">
-                                        <MapPin className="w-4 h-4 text-primary" />
+                                    <div className="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center border border-white/30 backdrop-blur-xl group-hover:bg-white group-hover:text-primary transition-colors text-white">
+                                        <MapPin className="w-4 h-4 stroke-current" />
                                     </div>
                                     <div className="flex flex-col">
-                                        <span className="text-[11px] font-bold">Design Studio</span>
-                                        <span className="text-[7px]   tracking-widest text-slate-500">Innovation Center</span>
+                                        <span className="text-[11px] font-bold text-white">Design Studio</span>
+                                        <span className="text-[7px] tracking-widest text-white/70">Innovation Center</span>
                                     </div>
                                 </div>
                             </div>

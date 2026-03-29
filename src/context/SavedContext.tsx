@@ -28,14 +28,13 @@ interface SavedContextType {
 const SavedContext = createContext<SavedContextType | undefined>(undefined);
 
 export const SavedProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated, user } = useAuth();
     const queryClient = useQueryClient();
 
     const { data, isLoading } = useQuery({
-        queryKey: ['savedItems'],
+        queryKey: ['savedItems', user?._id],
         queryFn: getSavedItems,
-        enabled: isAuthenticated,
-        initialData: { savedItems: [] } // Fallback
+        enabled: isAuthenticated && !!user?._id,
     });
 
     const savedProducts: Product[] = data?.data?.products || [];
@@ -43,7 +42,7 @@ export const SavedProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const toggleMutation = useMutation({
         mutationFn: toggleSavedItem,
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['savedItems'] });
+            queryClient.invalidateQueries({ queryKey: ['savedItems', user?._id] });
         },
     });
 

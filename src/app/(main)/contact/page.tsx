@@ -83,7 +83,7 @@ export default function ContactPage() {
                                     key={i}
                                     className="p-8 bg-white/40 backdrop-blur-md rounded-4xl border border-slate-100 shadow-luxe transition-all duration-500 hover:bg-white hover:-translate-y-2 hover:shadow-luxe-lg group"
                                 >
-                                    <div className="w-12 h-12 bg-slate-900 text-white rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary transition-colors">
+                                    <div className="w-12 h-12 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
                                         {info.icon}
                                     </div>
                                     <h4 className="text-[10px]   tracking-[0.3em] text-slate-900 mb-1">{info.title}</h4>
@@ -97,14 +97,14 @@ export default function ContactPage() {
                                 href="https://wa.me/9877917738"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="p-8 bg-slate-900 text-white rounded-4xl shadow-luxe-lg transition-all duration-500 hover:bg-slate-800 hover:-translate-y-2 group"
+                                className="p-8 bg-primary text-white rounded-4xl shadow-luxe-lg transition-all duration-500 hover:bg-primary/90 hover:-translate-y-2 group"
                             >
-                                <div className="w-12 h-12 bg-white/10 text-primary rounded-2xl flex items-center justify-center mb-6">
+                                <div className="w-12 h-12 bg-white/20 text-white rounded-2xl flex items-center justify-center mb-6">
                                     <MessageSquareText className="w-6 h-6" />
                                 </div>
-                                <h4 className="text-[10px]   tracking-[0.3em] text-white/50 mb-1">Instant Liaison</h4>
-                                <p className="text-sm ">WhatsApp Priority</p>
-                                <span className="inline-flex items-center gap-2 text-[9px]   tracking-widest text-primary mt-4 group-hover:gap-4 transition-all">
+                                <h4 className="text-[10px]   tracking-[0.3em] text-white/70 mb-1">Instant Liaison</h4>
+                                <p className="text-sm font-bold opacity-100">WhatsApp Priority</p>
+                                <span className="inline-flex items-center gap-2 text-[9px]   tracking-widest text-white mt-4 group-hover:gap-4 transition-all">
                                     Initialize Chat <Send className="w-3 h-3" />
                                 </span>
                             </a>
@@ -170,7 +170,7 @@ export default function ContactPage() {
 
                                 <button
                                     type="submit"
-                                    className="w-full bg-slate-900 text-white p-6 py-3 rounded-2xl  text-[13px]   hover:bg-primary transition-all focus:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-luxe-lg flex items-center justify-center gap-4 group"
+                                    className="w-full bg-primary text-white p-6 py-3 rounded-2xl text-[13px] hover:bg-primary/90 transition-all focus:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-xl shadow-primary/20 flex items-center justify-center gap-4 group"
                                     disabled={loading}
                                 >
                                     {loading ? 'Transmitting...' : (

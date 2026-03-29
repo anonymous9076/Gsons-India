@@ -4,6 +4,7 @@
 export function formatPrice(value: string | number): string {
     const num = typeof value === "string" ? parseFloat(value) : value;
     if (isNaN(num)) return "—";
+    if (num === 0) return "Coming Soon";
     return `₹${num.toLocaleString("en-IN")}`;
 }
 

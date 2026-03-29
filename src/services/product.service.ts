@@ -7,6 +7,11 @@ export const fetchProducts = async (query = ""): Promise<ProductsResponse> => {
     return data;
 };
 
+export const fetchVariants = async (query = ""): Promise<ProductsResponse> => {
+    const { data } = await apiClient.get<ProductsResponse>(`/variants?${query}`);
+    return data;
+};
+
 export const fetchProductById = async (id: string): Promise<Product> => {
     const { data } = await apiClient.get<any>(`/product/${id}`);
     return data.product || data.data || data;

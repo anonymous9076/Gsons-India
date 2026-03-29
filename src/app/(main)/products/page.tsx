@@ -2,7 +2,7 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { Search, ChevronRight, ChevronDown, X, ArrowUp, ArrowDown } from "lucide-react";
+import { Search, ChevronRight, ChevronDown, X, ArrowUp, ArrowDown, Filter } from "lucide-react";
 import { cn } from "@/utils/cn";
 import ProductCard from "@/components/ProductCard";
 import Pagination from "@/components/Pagination";
@@ -109,7 +109,7 @@ function ProductsContent() {
     const handleClear = () => { setSearch(""); setActiveCategoryId(""); setSort("-createdAt"); setMaxPrice(50000); setPage(1); };
 
     return (
-        <div className="bg-[#FAF9F6] min-h-screen pt-8 pb-24">
+        <div className="bg-[#FAF9F6] min-h-screen pt-7 pb-24">
             <div className="container-custom">
                 {/* Page Navigation & Context */}
                 <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6 font-display">
@@ -125,9 +125,9 @@ function ProductsContent() {
                         </h2>
                     </div>
 
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center justify-end gap-4">
                         {/* Price Range - Refined Header UI */}
-                        <div className="relative group flex items-center gap-4 px-6 py-3.5 bg-white border border-slate-100 rounded-2xl shadow-luxe hover:border-primary/20 transition-all">
+                        {/* <div className="relative group flex items-center gap-4 px-6 py-3.5 bg-white border border-slate-100 rounded-2xl shadow-luxe hover:border-primary/20 transition-all">
                              <div className="flex flex-col">
                                 <span className="text-[9px] uppercase tracking-widest text-slate-400 mb-1 font-bold">Max Price</span>
                                 <div className="flex items-center gap-4">
@@ -143,10 +143,10 @@ function ProductsContent() {
                                     </span>
                                 </div>
                              </div>
-                        </div>
+                        </div> */}
 
                         {/* Sort - Custom Dropdown */}
-                        <div className="relative group z-20">
+                        <div className="relative group z-30">
                             {isSortOpen && (
                                 <div 
                                     className="fixed inset-0 z-10" 
@@ -155,19 +155,21 @@ function ProductsContent() {
                             )}
                             <button
                                 onClick={() => setIsSortOpen(!isSortOpen)}
-                                className="relative z-20 flex items-center justify-between min-w-[180px] sm:min-w-[210px] pl-[68px] pr-4 py-3.5 bg-white border border-slate-100 rounded-2xl shadow-luxe transition-all hover:border-primary/20 border-l-4 border-l-primary"
+                                className="relative z-20 flex items-center justify-center md:justify-between w-12 h-12 md:max-w-none md:w-auto md:min-w-[180px] sm:min-w-[210px] md:pl-[68px] md:pr-4 md:py-3.5 bg-white border border-slate-100 rounded-2xl shadow-luxe transition-all hover:border-primary/20  md:border-l-4 md:border-l-primary"
                             >
-                                <div className="absolute left-0 top-0 bottom-0 flex flex-col justify-center px-4 pointer-events-none border-r border-slate-50">
+                                <div className="hidden md:flex absolute left-0 top-0 bottom-0 flex-col justify-center px-4 pointer-events-none border-r border-slate-50">
                                     <span className="text-[9px] uppercase tracking-widest text-slate-400 font-bold">Sort By</span>
                                 </div>
-                                <span className="text-[11px] font-bold tracking-widest text-slate-900 truncate ml-2">
+                                
+                                <span className="hidden md:inline-block text-[11px] font-bold tracking-widest text-slate-900 truncate ml-2">
                                     {getSortLabel(sort)}
                                 </span>
-                                <ChevronDown className={cn("w-4 h-4 text-slate-400 transition-transform ml-2 shrink-0", isSortOpen && "rotate-180")} />
+                                <Filter className="w-5 h-5 text-slate-600 md:hidden" />
+                                <ChevronDown className={cn("hidden md:block w-4 h-4 text-slate-400 transition-transform ml-2 shrink-0", isSortOpen && "rotate-180")} />
                             </button>
 
                             {isSortOpen && (
-                                <div className="absolute right-0 top-full mt-2 w-full bg-white rounded-2xl shadow-2xl border border-slate-100 py-2 ring-1 ring-black/5 animate-in fade-in zoom-in-95 duration-200 z-30">
+                                <div className="absolute right-0 top-full mt-2 w-48 md:w-full bg-white rounded-2xl shadow-2xl border border-slate-100 py-2 ring-1 ring-black/5 animate-in fade-in zoom-in-95 duration-200 z-30">
                                     {SORT_CATEGORIES.map((cat) => {
                                         const activeBase = sort.replace("-", "");
                                         const isActive = activeBase === cat.id;
@@ -204,22 +206,30 @@ function ProductsContent() {
                         ) : products.length > 0 ? (
                             <>
                                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
-                                    {products.map((product) => {
-                                        // Pick the first variant or use product base data
-                                        const mainVariant = product.variants && product.variants.length > 0 ? product.variants[0] : null;
+                                    {products.map((variantObj: any) => {
+                                        const parentProduct = variantObj.productId || {};
+                                        
+                                        // Attach attributes to the name to differentiate variants
+                                        let attributeSuffix = "";
+                                        if (variantObj.attributes) {
+                                            const vals = Object.values(variantObj.attributes);
+                                            if (vals.length > 0) {
+                                                attributeSuffix = ` - ${vals.join(', ')}`;
+                                            }
+                                        }
 
                                         const displayItem = {
-                                            ...product,
-                                            _id: mainVariant ? mainVariant._id : product._id,
-                                            productId: product._id,
-                                            // Optional: Simplified name to avoid variant suffix in the main grid
-                                            name: product.name,
-                                            price: mainVariant ? mainVariant.price : product.price,
-                                            images: mainVariant && mainVariant.images && mainVariant.images.length > 0 ? mainVariant.images : product.images,
-                                            sku: mainVariant ? mainVariant.sku : (product.sku || product.code)
+                                            ...parentProduct,
+                                            ...variantObj,
+                                            _id: variantObj._id,
+                                            productId: parentProduct._id,
+                                            name: `${parentProduct.name || "Product"}${attributeSuffix}`,
+                                            price: variantObj.price ?? parentProduct.price,
+                                            images: variantObj.images && variantObj.images.length > 0 ? variantObj.images : parentProduct.images,
+                                            sku: variantObj.sku || parentProduct.sku || parentProduct.code
                                         };
 
-                                        return <ProductCard key={displayItem._id} {...displayItem} />;
+                                        return <ProductCard key={displayItem._id} {...displayItem} variantId={variantObj._id} />;
                                     })}
                                 </div>
                                 <Pagination page={page} totalPages={totalPages} onChange={setPage} />

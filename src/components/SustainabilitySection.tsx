@@ -21,7 +21,7 @@ export default function SustainabilitySection() {
 
                             {/* Impact Badge */}
                             <div className="absolute bottom-10 left-10 right-10 p-8 glass-effect rounded-3xl border-white/30">
-                                <p className="text-black/90  text-xl font-display mb-1  tracking-tighter">Carbon Conscious</p>
+                                <p className="text-black/90  text-xl font-bold mb-1  tracking-tighter">Carbon Conscious</p>
                                 <p className="text-black/70 text-[10px]   tracking-[0.2em]">100% Recyclable Frameworks</p>
                             </div>
                         </div>
