@@ -31,8 +31,7 @@ export default function ProductCard({ _id, name, price, images, productId, sku, 
     return (
         <div className="group relative flex flex-col bg-white rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-xl hover:-translate-y-1.5 border border-slate-100 shadow-luxe">
             {/* Top Section: Gradient + Image */}
-            <div className="relative aspect-square bg-linear-to-br from-primary/10
-             via-primary/10 to-white overflow-hidden">
+            <div className="relative aspect-square  bg-white/80 overflow-hidden">
                 {/* Heart Button */}
                 <button
                     onClick={handleSave}
@@ -40,10 +39,10 @@ export default function ProductCard({ _id, name, price, images, productId, sku, 
                         "absolute top-3 right-3 z-20 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300",
                         saved 
                             ? "bg-white text-primary shadow-md scale-110" 
-                            : "bg-white/60 backdrop-blur-md text-slate-400 hover:text-primary hover:bg-white shadow-sm hover:scale-110 border border-white"
+                            : "bg-white/80 backdrop-blur-md text-primary hover:text-primary hover:bg-white shadow-sm hover:scale-110 border border-white"
                     )}
                 >
-                    <Heart className={cn("w-4 h-4", saved && "fill-current")} />
+                    <Heart className={cn("w-4 h-4", saved && "fill-primary")} />
                 </button>
 
                 {/* Floating Image */}
@@ -62,23 +61,26 @@ export default function ProductCard({ _id, name, price, images, productId, sku, 
             <div className="p-4 md:p-5 flex flex-col bg-white rounded-t-3xl -mt-6 relative z-10 shadow-[0_-10px_30px_-10px_rgba(0,0,0,0.1)] grow">
                 {/* Info Container */}
                 <div className="space-y-2 grow">
+                    
+
+                    {/* Tags */}
+                    <div className="flex flex-col gap-1.5">
+                        <span className="px-2 py-0.5 w-fit bg-slate-50 border border-slate-100 rounded-lg text-[8px]   tracking-widest text-slate-500">
+                            {sku || "ARCHIVE"}
+                        </span>
+                       
+                            <span className=" py-0.5 w-fit text-[10px] tracking-widest text-primary flex items-center gap-1">
+                                {[...Array(5)].map((_, i) => (
+                                    <Star key={i} className="w-3 h-3 fill-current" />
+                                ))}
+                            </span>
+                       
+                    </div>
                     <Link href={`/products/${targetId}`} className="block group/title">
                         <h3 className="text-sm  text-slate-900 tracking-tight line-clamp-1 transition-colors group-hover/title:text-primary">
                             {name}
                         </h3>
                     </Link>
-
-                    {/* Tags */}
-                    <div className="flex flex-wrap gap-1.5">
-                        <span className="px-2 py-0.5 bg-slate-50 border border-slate-100 rounded-lg text-[8px]   tracking-widest text-slate-500">
-                            {sku || "ARCHIVE"}
-                        </span>
-                        {(rating || reviews) && (
-                            <span className="px-2 py-0.5 bg-orange-50 border border-orange-100 rounded-lg text-[8px]   tracking-widest text-primary flex items-center gap-1">
-                                <Star className="w-2.5 h-2.5 fill-current" /> {rating || "5.0"}
-                            </span>
-                        )}
-                    </div>
 
                     {/* Description */}
                     <p className="text-slate-400 text-[13px] font-medium leading-relaxed line-clamp-2">
@@ -87,9 +89,8 @@ export default function ProductCard({ _id, name, price, images, productId, sku, 
                 </div>
 
                 {/* Footer: Price */}
-                <div className="flex items-end justify-between mt-4 border-t border-slate-50 pt-4">
+                <div className="flex items-end justify-between mt-3 border-t border-slate-50 pt-2">
                     <div className="space-y-0.5">
-                        <span className="text-[9px] tracking-[0.2em] text-slate-300 block">Price</span>
                         <p className="text-base text-slate-900 tracking-tighter font-bold">{formatPrice(price)}</p>
                     </div>
                 </div>

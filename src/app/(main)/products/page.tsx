@@ -112,41 +112,20 @@ function ProductsContent() {
         <div className="bg-[#FAF9F6] min-h-screen pt-7 pb-24">
             <div className="container-custom">
                 {/* Page Navigation & Context */}
-                <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6 font-display">
-                    <div className="space-y-4">
-                        <div className="flex items-center gap-2 text-[10px] tracking-[0.2em] text-slate-400 uppercase">
-                            <span>Collection</span>
-                            <ChevronRight className="w-3 h-3" />
-                            <span className="text-primary">{activeCategoryName || "All Archives"}</span>
-                        </div>
-                       
+                <div className="mb-8 md:mb-12 font-display">
+                    <div className="flex items-center gap-2 text-[10px] tracking-[0.2em] text-slate-400 uppercase mb-4 md:mb-6">
+                        <span>Collection</span>
+                        <ChevronRight className="w-3 h-3" />
+                        <span className="text-primary">{activeCategoryName || "All Archives"}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between gap-4">
                         <h2 className="text-sm text-slate-500 font-medium">
                             {isLoading ? "Curating..." : `${totalProducts} Products Available`}
                         </h2>
-                    </div>
-
-                    <div className="flex items-center justify-end gap-4">
-                        {/* Price Range - Refined Header UI */}
-                        {/* <div className="relative group flex items-center gap-4 px-6 py-3.5 bg-white border border-slate-100 rounded-2xl shadow-luxe hover:border-primary/20 transition-all">
-                             <div className="flex flex-col">
-                                <span className="text-[9px] uppercase tracking-widest text-slate-400 mb-1 font-bold">Max Price</span>
-                                <div className="flex items-center gap-4">
-                                     <input
-                                        type="range"
-                                        min={0} max={5000} step={100}
-                                        value={maxPrice}
-                                        onChange={(e) => { setMaxPrice(Number(e.target.value)); setPage(1); }}
-                                        className="w-24 sm:w-40 h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-primary"
-                                    />
-                                    <span className="text-[11px] font-bold text-slate-900 min-w-[70px] text-right">
-                                        ₹{maxPrice >= 50000 ? "Any" : maxPrice.toLocaleString("en-IN")}
-                                    </span>
-                                </div>
-                             </div>
-                        </div> */}
 
                         {/* Sort - Custom Dropdown */}
-                        <div className="relative group z-30">
+                        <div className="relative group z-30 flex items-center justify-end">
                             {isSortOpen && (
                                 <div 
                                     className="fixed inset-0 z-10" 
@@ -155,7 +134,7 @@ function ProductsContent() {
                             )}
                             <button
                                 onClick={() => setIsSortOpen(!isSortOpen)}
-                                className="relative z-20 flex items-center justify-center md:justify-between w-12 h-12 md:max-w-none md:w-auto md:min-w-[180px] sm:min-w-[210px] md:pl-[68px] md:pr-4 md:py-3.5 bg-white border border-slate-100 rounded-2xl shadow-luxe transition-all hover:border-primary/20  md:border-l-4 md:border-l-primary"
+                                className="relative z-20 flex items-center justify-center md:justify-between w-fit p-3 md:p-0 md:min-w-[180px] md:pl-[68px] md:pr-4 md:py-3.5 bg-white border border-slate-100 rounded-2xl shadow-luxe transition-all hover:border-primary/20 md:border-l-4 md:border-l-primary"
                             >
                                 <div className="hidden md:flex absolute left-0 top-0 bottom-0 flex-col justify-center px-4 pointer-events-none border-r border-slate-50">
                                     <span className="text-[9px] uppercase tracking-widest text-slate-400 font-bold">Sort By</span>

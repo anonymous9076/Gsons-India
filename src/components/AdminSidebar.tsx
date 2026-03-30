@@ -21,7 +21,7 @@ import Image from "next/image";
 const menuItems = [
     { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
     { name: "Products", href: "/admin/products", icon: Package },
-    { name: "Bulk Import", href: "/admin/products/bulk", icon: UploadCloud },
+    // { name: "Bulk Import", href: "/admin/products/bulk", icon: UploadCloud },
     { name: "Categories", href: "/admin/categories", icon: Grid },
     { name: "Users", href: "/admin/users", icon: Users },
     { name: "Posts", href: "/admin/posts", icon: FileText },
