@@ -12,8 +12,6 @@ import toast from "react-hot-toast";
 
 export default function NewProductPage() {
     const router = useRouter();
-    const fileInputRef = useRef<HTMLInputElement>(null);
-    const [images, setImages] = useState<File[]>([]);
     const [loading, setLoading] = useState(false);
 
     const [formData, setFormData] = useState({
@@ -48,16 +46,7 @@ export default function NewProductPage() {
         setFormData(prev => ({ ...prev, [name]: val }));
     };
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files) {
-            const selectedFiles = Array.from(e.target.files);
-            setImages(prev => [...prev, ...selectedFiles]);
-        }
-    };
 
-    const removeImage = (index: number) => {
-        setImages(prev => prev.filter((_, i) => i !== index));
-    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -66,9 +55,11 @@ export default function NewProductPage() {
             return toast.error("Please select a category");
         }
 
-        if (images.length === 0) {
-            return toast.error("Please upload at least one product image");
+        if (formData.name.trim().length < 3) {
+            return toast.error("Name must be at least 3 characters long");
         }
+
+
 
         setLoading(true);
 
@@ -80,13 +71,11 @@ export default function NewProductPage() {
             data.append("description", formData.description);
             data.append("isActive", String(formData.isActive));
 
-            images.forEach((image) => {
-                data.append("files", image);
-            });
 
-            await createProduct(data);
+
+            const res = await createProduct(data);
             toast.success("Product created successfully!");
-            router.push("/admin/products");
+            router.push(`/admin/products/${res.product._id}/variants/new`);
         } catch (error: any) {
             console.error(error);
             toast.error(error.response?.data?.message || "Failed to create product");
@@ -100,7 +89,7 @@ export default function NewProductPage() {
             <div className="flex items-center justify-between">
                 <div>
                     <h1 className="text-3xl font-bold text-gray-900">Add New Product</h1>
-                    <p className="text-gray-500 mt-2">Create a new base product entry. You can add variants later.</p>
+                    <p className="text-gray-500 mt-2">Create a new base product entry. You'll add variants (and images) in the next step.</p>
                 </div>
                 <button
                     onClick={() => router.back()}
@@ -184,47 +173,7 @@ export default function NewProductPage() {
                         />
                     </div>
 
-                    <div className="pt-4">
-                        <label className="text-sm font-bold text-gray-900 block mb-2">Base Product Images</label>
-                        <div
-                            onClick={() => fileInputRef.current?.click()}
-                            className="border-2 border-dashed border-gray-200 rounded-3xl p-12 text-center hover:border-primary transition-colors cursor-pointer group"
-                        >
-                            <input
-                                type="file"
-                                hidden
-                                ref={fileInputRef}
-                                onChange={handleFileChange}
-                                multiple
-                                accept="image/*"
-                            />
-                            <div className="flex flex-col items-center">
-                                <div className="w-16 h-16 bg-orange-100 text-primary rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                                    <Upload className="w-8 h-8" />
-                                </div>
-                                <p className="font-bold text-gray-900">Click to upload base images</p>
-                                <p className="text-sm text-gray-500 mt-1">PNG, JPG or WEBP up to 5MB</p>
-                            </div>
-                        </div>
 
-                        {/* Image Preview */}
-                        {images.length > 0 && (
-                            <div className="mt-4 grid grid-cols-5 gap-4">
-                                {images.map((img, i) => (
-                                    <div key={i} className="relative aspect-square border rounded-xl overflow-hidden group">
-                                        <img src={URL.createObjectURL(img)} alt="preview" className="w-full h-full object-cover" />
-                                        <button
-                                            type="button"
-                                            onClick={(e) => { e.stopPropagation(); removeImage(i); }}
-                                            className="absolute top-1 right-1 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                                        >
-                                            <X className="w-4 h-4" />
-                                        </button>
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-                    </div>
                 </div>
 
                 <div className="flex justify-end gap-4 pb-12">
@@ -238,10 +187,10 @@ export default function NewProductPage() {
                     <Button
                         type="submit"
                         isLoading={loading}
-                        leftIcon={<Plus className="w-5 h-5" />}
+                        // leftIcon={<Plus className="w-5 h-5" />}
                         className="px-12"
                     >
-                        Create Product
+                        Next
                     </Button>
                 </div>
             </form>

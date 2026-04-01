@@ -147,6 +147,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         await updateProfileMutation.mutateAsync(profileData);
     };
 
+    const loading = isLoading || 
+        loginMutation.isPending || 
+        registerMutation.isPending || 
+        logoutMutation.isPending || 
+        forgotPasswordMutation.isPending || 
+        resetPasswordMutation.isPending || 
+        updatePasswordMutation.isPending || 
+        updateProfileMutation.isPending;
+
     if (isLoading) {
         return <Loader fullPage text=" Loading..." />;
     }
@@ -155,7 +164,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         <AuthContext.Provider value={{
             user,
             isAuthenticated,
-            loading: isLoading,
+            loading,
             login,
             register,
             logout,

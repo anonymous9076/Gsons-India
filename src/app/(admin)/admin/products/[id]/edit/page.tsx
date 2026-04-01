@@ -14,9 +14,6 @@ export default function EditProductPage() {
     const router = useRouter();
     const { id } = useParams();
     const queryClient = useQueryClient();
-    const fileInputRef = useRef<HTMLInputElement>(null);
-    const [images, setImages] = useState<File[]>([]);
-    const [existingImages, setExistingImages] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
 
     const [formData, setFormData] = useState({
@@ -53,7 +50,7 @@ export default function EditProductPage() {
                 isActive: p.isActive ?? true,
             });
 
-            setExistingImages(p.images || []);
+
         }
     }, [productData]);
 
@@ -63,16 +60,7 @@ export default function EditProductPage() {
         setFormData(prev => ({ ...prev, [name]: val }));
     };
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files) {
-            const selectedFiles = Array.from(e.target.files);
-            setImages(prev => [...prev, ...selectedFiles]);
-        }
-    };
 
-    const removeNewImage = (index: number) => {
-        setImages(prev => prev.filter((_, i) => i !== index));
-    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -91,13 +79,7 @@ export default function EditProductPage() {
             data.append("description", formData.description);
             data.append("isActive", String(formData.isActive));
 
-            // If new images are uploaded, they will replace old ones based on current backend logic
-            // (The backend updateProduct deletes old images if new ones are sent)
-            if (images.length > 0) {
-                images.forEach((image) => {
-                    data.append("files", image);
-                });
-            }
+
 
             await updateProduct(id as string, data);
             queryClient.invalidateQueries({ queryKey: ["product", id] });
@@ -207,66 +189,7 @@ export default function EditProductPage() {
                         />
                     </div>
 
-                    <div className="pt-4">
-                        <label className="text-sm font-bold text-gray-900 block mb-2">Product Images</label>
 
-                        {/* Existing Images */}
-                        {existingImages.length > 0 && images.length === 0 && (
-                            <div className="mb-4">
-                                <p className="text-xs text-gray-500 mb-2 font-medium  tracking-wider">Current Images</p>
-                                <div className="grid grid-cols-5 gap-4">
-                                    {existingImages.map((img, i) => (
-                                        <div key={i} className="aspect-square border rounded-xl overflow-hidden bg-gray-50">
-                                            <img src={img.url || '/logo.png'} alt="existing" className="w-full h-full object-cover" />
-                                        </div>
-                                    ))}
-                                </div>
-                                <p className="text-[10px] text-orange-500 mt-2 font-bold">Note: Uploading new images will replace all current images.</p>
-                            </div>
-                        )}
-
-                        <div
-                            onClick={() => fileInputRef.current?.click()}
-                            className="border-2 border-dashed border-gray-200 rounded-3xl p-8 text-center hover:border-primary transition-colors cursor-pointer group"
-                        >
-                            <input
-                                type="file"
-                                hidden
-                                ref={fileInputRef}
-                                onChange={handleFileChange}
-                                multiple
-                                accept="image/*"
-                            />
-                            <div className="flex flex-col items-center">
-                                <div className="w-12 h-12 bg-orange-100 text-primary rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
-                                    <Upload className="w-6 h-6" />
-                                </div>
-                                <p className="font-bold text-gray-900 text-sm">Upload new images to replace current ones</p>
-                                <p className="text-xs text-gray-500 mt-1">PNG, JPG or WEBP up to 5MB</p>
-                            </div>
-                        </div>
-
-                        {/* New Images Preview */}
-                        {images.length > 0 && (
-                            <div className="mt-4">
-                                <p className="text-xs mb-2 font-medium  tracking-wider text-primary">New Selection</p>
-                                <div className="grid grid-cols-5 gap-4">
-                                    {images.map((img, i) => (
-                                        <div key={i} className="relative aspect-square border rounded-xl overflow-hidden group">
-                                            <img src={URL.createObjectURL(img)} alt="preview" className="w-full h-full object-cover" />
-                                            <button
-                                                type="button"
-                                                onClick={(e) => { e.stopPropagation(); removeNewImage(i); }}
-                                                className="absolute top-1 right-1 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                                            >
-                                                <X className="w-4 h-4" />
-                                            </button>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-                    </div>
                 </div>
 
                 <div className="flex justify-end gap-4 pb-12">

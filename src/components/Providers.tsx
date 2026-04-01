@@ -23,7 +23,7 @@ export default function Providers({ children }: { children: ReactNode }) {
                 <SavedProvider>
                     {children}
                     <ReactQueryDevtools initialIsOpen={false} />
-                    <Toaster position="top-center" reverseOrder={false} />
+                    <Toaster position="top-right" reverseOrder={false} />
                 </SavedProvider>
             </AuthProvider>
         </QueryClientProvider>

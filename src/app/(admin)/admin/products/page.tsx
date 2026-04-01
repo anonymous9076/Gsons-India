@@ -13,13 +13,14 @@ import { cn } from "@/utils/cn";
 
 export default function ProductsPage() {
     const [searchTerm, setSearchTerm] = useState("");
+    const [page, setPage] = useState(1);
     const queryClient = useQueryClient();
     const router = useRouter();
 
     // Fetch Products
     const { data: productData, isLoading } = useQuery({
-        queryKey: ["products", searchTerm],
-        queryFn: () => getAllProducts(`name=${searchTerm}`),
+        queryKey: ["products", searchTerm, page],
+        queryFn: () => getAllProducts(`keyword=${searchTerm}&page=${page}`),
     });
 
     // Delete Product Mutation
@@ -67,7 +68,10 @@ export default function ProductsPage() {
                             placeholder="Search products by name..."
                             className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:bg-white transition-all text-gray-900 placeholder:text-gray-500"
                             value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
+                            onChange={(e) => {
+                                setSearchTerm(e.target.value);
+                                setPage(1);
+                            }}
                         />
                     </div>
                 </div>
@@ -179,8 +183,53 @@ export default function ProductsPage() {
                     )}
                 </div>
 
-                <div className="p-4 border-t border-gray-100 bg-gray-50 flex items-center justify-between text-sm text-gray-500">
-                    <span>Showing {products.length} products</span>
+                <div className="p-4 border-t border-gray-100 bg-gray-50 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-500">
+                    <div className="flex items-center gap-2">
+                        <span>Showing</span>
+                        <span className="font-bold text-gray-900">{products.length}</span>
+                        <span>of</span>
+                        <span className="font-bold text-gray-900">{productData?.filteredCount || 0}</span>
+                        <span>products</span>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            disabled={page === 1}
+                            onClick={() => setPage(p => Math.max(1, p - 1))}
+                            className="bg-white"
+                        >
+                            Previous
+                        </Button>
+
+                        <div className="flex items-center gap-1">
+                            {Array.from({ length: productData?.totalPages || 0 }, (_, i) => i + 1).map((p) => (
+                                <button
+                                    key={p}
+                                    onClick={() => setPage(p)}
+                                    className={cn(
+                                        "w-8 h-8 rounded-lg flex items-center justify-center transition-all",
+                                        p === page
+                                            ? "bg-primary text-white font-bold shadow-md shadow-primary/20"
+                                            : "hover:bg-white hover:shadow-sm text-gray-500 border border-transparent hover:border-gray-200"
+                                    )}
+                                >
+                                    {p}
+                                </button>
+                            ))}
+                        </div>
+
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            disabled={page === productData?.totalPages}
+                            onClick={() => setPage(p => p + 1)}
+                            className="bg-white"
+                        >
+                            Next
+                        </Button>
+                    </div>
                 </div>
             </div>
         </div>
