@@ -8,6 +8,8 @@ import { useState, useEffect } from 'react';
 import { formatPrice } from '@/utils/formatters';
 import { cn } from '@/utils/cn';
 import type { Product, Variant } from '@/types/product';
+import { useSaved } from '@/context/SavedContext';
+import { useAuth } from '@/context/AuthContext';
 
 export default function ProductDetailPage() {
     const params = useParams();
@@ -16,6 +18,8 @@ export default function ProductDetailPage() {
 
     const [selectedVariant, setSelectedVariant] = useState<Variant | null>(null);
     const [mainImage, setMainImage] = useState<string>('');
+    const { toggleSave, isSaved } = useSaved();
+    const { isAuthenticated } = useAuth();
 
     const { data: product, isLoading, error } = useQuery<Product>({
         queryKey: ['product', productId],
@@ -36,6 +40,17 @@ export default function ProductDetailPage() {
             }
         }
     }, [product, productId]);
+
+    const targetId = selectedVariant?._id || productId;
+    const saved = isSaved(targetId);
+
+    const handleSave = () => {
+        if (!isAuthenticated) {
+            router.push("/auth/login");
+            return;
+        }
+        toggleSave(targetId);
+    };
 
     if (isLoading) return (
         <div className="min-h-screen flex items-center justify-center bg-[#FAFAFA]">
@@ -79,7 +94,7 @@ export default function ProductDetailPage() {
                         <ArrowLeft className="w-4 h-4 mr-3 transition-transform group-hover:-translate-x-1" />
                         Back to Selection
                     </button>
-                   
+
                     <div className="flex items-center gap-6 lg:gap-10">
                         <span className="text-xl font-bold text-slate-900 font-display tracking-tight">
                             {formatPrice(currentPrice)}
@@ -94,8 +109,8 @@ export default function ProductDetailPage() {
             <div className="container-custom mt-12 lg:mt-16">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
                     {/* Visual Section */}
-                    <div className="space-y-10 lg:sticky lg:top-32">
-                        <div className="group relative aspect-square bg-white rounded-[3rem] overflow-hidden border border-slate-50 flex items-center justify-center p-12 lg:p-20 transition-all duration-700 hover:shadow-2xl hover:shadow-primary/5 cursor-zoom-in">
+                    <div className="space-y-10 lg:sticky lg:top-30">
+                        <div className="group relative aspect-square bg-white rounded-[3rem] overflow-hidden border border-slate-50 flex items-center justify-center  transition-all duration-700 hover:shadow-2xl hover:shadow-primary/5 cursor-zoom-in">
                             <img
                                 src={mainImage || '/logo.png'}
                                 alt={product.name}
@@ -115,7 +130,7 @@ export default function ProductDetailPage() {
                                         key={i}
                                         onClick={() => setMainImage(img.url)}
                                         className={cn(
-                                            "w-24 h-24 p-5 rounded-3xl bg-white border transition-all duration-500 transform active:scale-90",
+                                            "w-24 h-24  rounded-3xl overflow-hidden bg-white border transition-all duration-500 transform active:scale-90",
                                             mainImage === img.url
                                                 ? "border-primary ring-4 ring-primary/5 scale-110"
                                                 : "border-slate-50 opacity-50 hover:opacity-100"
@@ -130,11 +145,11 @@ export default function ProductDetailPage() {
 
                     {/* Content Section */}
                     <div className="space-y-16">
-                        <div className="space-y-8">
+                        <div className="space-y-4">
                             <div className="flex items-center gap-6">
                                 <span className="px-5 py-2 bg-slate-100 text-slate-500 text-[10px]  font-bold  tracking-[0.25em] rounded-full border border-slate-200">
-                                    {typeof product.categoryId === 'object' 
-                                        ? product.categoryId.name 
+                                    {typeof product.categoryId === 'object'
+                                        ? product.categoryId.name
                                         : (typeof product.category === 'object' ? product.category.name : (product.category || 'Uncategorized'))}
                                 </span>
                                 {currentSKU && (
@@ -154,55 +169,54 @@ export default function ProductDetailPage() {
                                     </span>
                                 )}
                             </div>
-                            <div className="h-px w-16 bg-primary/20" />
-                            <p className="text-slate-500 text-[13px] leading-relaxed font-medium max-w-lg">
-                                {product.description || "A masterclass in professional illumination. Engineered for the discerning architect and designer who demands precision, sustainability, and aesthetic purity."}
-                            </p>
+
                         </div>
 
                         {product.variants && product.variants.length > 0 && (
-                            <div className="space-y-8 pt-8 border-t border-slate-100">
-                                <h3 className="text-[10px]   tracking-[0.3em] text-slate-400">Select Configuration</h3>
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div className=" space-y-4">
+                                <div className="flex flex-col gap-3">
+                                    <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-slate-400">Select Configuration</h3>
+                                    {selectedVariant && (
+                                        <div className="flex items-center gap-3">
+                                            <div className="h-8 flex items-center px-4 bg-white border border-primary/20 rounded-xl shadow-sm">
+                                                <span className="text-[11px] font-bold text-primary uppercase tracking-widest">
+                                                    {Object.values(selectedVariant.attributes || {}).join(' | ')}
+                                                </span>
+                                            </div>
+                                            <span className="text-[10px] text-slate-400 font-bold tracking-widest uppercase">
+                                                SKU: {selectedVariant.sku}
+                                            </span>
+                                        </div>
+                                    )}
+                                </div>
+                                <div className="flex flex-wrap gap-4">
                                     {product.variants.map((variant) => {
                                         const isSelected = selectedVariant?._id === variant._id;
+                                        const variantImg = variant.images?.[0]?.url || product.images?.[0]?.url || '/logo.png';
                                         return (
                                             <button
                                                 key={variant._id}
                                                 onClick={() => {
                                                     setSelectedVariant(variant);
-                                                    if (variant.images?.[0]) setMainImage(variant.images[0].url || '/logo.png');
+                                                    const newImg = variant.images?.[0]?.url || product.images?.[0]?.url || '/logo.png';
+                                                    setMainImage(newImg);
                                                 }}
                                                 className={cn(
-                                                    "text-left p-5 rounded-2xl border transition-all duration-500 group relative overflow-hidden",
+                                                    "w-20 h-20 rounded-2xl border-2 transition-all duration-300 overflow-hidden relative group bg-white",
                                                     isSelected
-                                                        ? "bg-white border-primary shadow-xl shadow-primary/10 scale-[1.02]"
-                                                        : "bg-white text-slate-600 border-slate-100 hover:border-primary/30"
+                                                        ? "border-primary shadow-lg shadow-primary/20 scale-110 z-10"
+                                                        : "border-slate-100 hover:border-primary/40 opacity-60 hover:opacity-100"
                                                 )}
+                                                title={Object.values(variant.attributes || {}).join(' | ')}
                                             >
-                                                <div className="flex justify-between items-start mb-3">
-                                                    <span className={cn(
-                                                        "text-[10px]   tracking-widest",
-                                                        isSelected ? "text-primary" : "text-slate-400"
-                                                    )}>
-                                                        {variant.sku}
-                                                    </span>
-                                                    {isSelected && (
-                                                        <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center animate-in zoom-in duration-300">
-                                                            <Check className="w-3 h-3 text-white" />
-                                                        </div>
-                                                    )}
-                                                </div>
-                                                <div className="flex flex-wrap gap-2 text-xs">
-                                                    {Object.entries(variant.attributes || {}).map(([k, v]) => (
-                                                        <span key={k} className={cn(
-                                                            "px-3 py-1.5 rounded-xl font-bold text-[9px]  tracking-wider",
-                                                            isSelected ? "bg-primary/5 text-primary" : "bg-slate-50 text-slate-400"
-                                                        )}>
-                                                            <span className="opacity-50 mr-1">{k}:</span> {String(v)}
-                                                        </span>
-                                                    ))}
-                                                </div>
+                                                <img
+                                                    src={variantImg}
+                                                    alt={variant.sku}
+                                                    className="w-full h-full object-contain p-2 transition-transform duration-500 group-hover:scale-110"
+                                                />
+                                                {isSelected && (
+                                                    <div className="absolute inset-0 bg-primary/5 pointer-events-none" />
+                                                )}
                                             </button>
                                         );
                                     })}
@@ -210,14 +224,18 @@ export default function ProductDetailPage() {
                             </div>
                         )}
 
-                        <div className="space-y-10 pt-16 border-t border-slate-100">
+                        <p className="text-slate-500 text-[13px] leading-relaxed font-medium max-w-lg">
+                            {product.description || "A masterclass in professional illumination. Engineered for the discerning architect and designer who demands precision, sustainability, and aesthetic purity."}
+                        </p>
+
+                        <div className="space-y-10 pt-16 border-t border-slate-200">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                                 <div className="p-6 bg-white rounded-3xl border border-slate-100 shadow-xl shadow-slate-200/20 space-y-4">
                                     <div className="w-10 h-10 rounded-xl bg-primary/5 flex items-center justify-center text-primary">
                                         <Info className="w-5 h-5" />
                                     </div>
                                     <div className="space-y-2">
-                                        <h4 className="text-[9px]   tracking-[0.2em] text-slate-900">Technical Brief</h4>
+                                        <h4 className="text-[17px]   tracking-[0.2em] text-slate-900">Technical Brief</h4>
                                         <p className="text-[12px] text-slate-500 font-medium leading-relaxed">
                                             Designed for seamless spatial integration and architectural longevity. Optimized for high-end residential and gallery environments.
                                         </p>
@@ -228,7 +246,7 @@ export default function ProductDetailPage() {
                                         <ShieldCheck className="w-5 h-5" />
                                     </div>
                                     <div className="space-y-2">
-                                        <h4 className="text-[9px]   tracking-[0.2em] text-white">Build Standards</h4>
+                                        <h4 className="text-[17px]   tracking-[0.2em] text-white">Build Standards</h4>
                                         <p className="text-[12px] text-slate-400 font-medium leading-relaxed">
                                             Engineered with aeronautical grade components and advanced thermal-protected core technology.
                                         </p>
@@ -238,7 +256,7 @@ export default function ProductDetailPage() {
 
                             <div className="bg-white rounded-4xl border border-slate-100 shadow-xl shadow-slate-200/20 overflow-hidden">
                                 <div className="p-6 border-b border-slate-50 flex items-center justify-between">
-                                    <h3 className="text-[10px]   tracking-[0.3em] text-slate-900 font-display">Dossier Data</h3>
+                                    <h3 className="text-[17px]   tracking-[0.3em] text-slate-900 font-display">Product Data</h3>
                                     <span className="text-[8px]   tracking-widest text-primary px-3 py-1 bg-primary/5 rounded-full">Verified Specification</span>
                                 </div>
 
@@ -252,10 +270,10 @@ export default function ProductDetailPage() {
                                         { label: "Rendering", value: "CRI >90 (True)" }
                                     ].map((spec, i) => (
                                         <div key={i} className="p-6 border-r border-b border-slate-50 last:border-r-0 group hover:bg-slate-50 transition-colors">
-                                            <span className="block text-[8px]  text-slate-300  tracking-[0.15em] mb-2 group-hover:text-primary transition-colors">
+                                            <span className="block text-[12px] font-bold  text-slate-700  tracking-[0.15em]  group-hover:text-primary transition-colors">
                                                 {spec.label}
                                             </span>
-                                            <span className="text-xs font-bold text-slate-800">{spec.value}</span>
+                                            <span className="text-xs font-normal text-slate-400">{spec.value}</span>
                                         </div>
                                     ))}
                                 </div>
@@ -267,9 +285,17 @@ export default function ProductDetailPage() {
                                 <ShoppingCart className="w-5 h-5 transition-transform group-hover:scale-110" />
                                 Add to Cart
                             </button>
-                            <button className="flex-1 bg-white border border-slate-100 text-slate-900 py-6 rounded-3xl   tracking-[0.2em] text-[12px] transition-all duration-500 hover:border-primary hover:text-primary active:scale-95 flex items-center justify-center gap-4 group shadow-xl shadow-slate-200/20">
-                                <Heart className="w-5 h-5 group-hover:fill-current transition-transform group-hover:scale-110" />
-                                Save List
+                            <button 
+                                onClick={handleSave}
+                                className={cn(
+                                    "flex-1 py-6 rounded-3xl tracking-[0.2em] text-[12px] transition-all duration-500 flex items-center justify-center gap-4 group shadow-xl",
+                                    saved 
+                                        ? "bg-primary/10 text-primary border border-primary/20 shadow-primary/5" 
+                                        : "bg-white border border-slate-100 text-slate-900 hover:border-primary hover:text-primary active:scale-95 shadow-slate-200/20"
+                                )}
+                            >
+                                <Heart className={cn("w-5 h-5 transition-transform group-hover:scale-110", saved && "fill-current")} />
+                                {saved ? "Saved in Archive" : "Save to Archive"}
                             </button>
                         </div>
                     </div>

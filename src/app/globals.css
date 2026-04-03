@@ -124,4 +124,16 @@ h1, h2, h3, h4, h5, h6 {
   .animate-smoke-slow {
     animation: smoke 15s ease-in-out infinite;
   }
+
+  .admin-zoom-wrapper {
+    zoom: 0.75;
+    transform-origin: top left;
+    min-height: 133.333vh; /* Fills 100% physical height at 0.75 zoom */
+    
+    @supports not (zoom: 0.75) {
+      transform: scale(0.75);
+      width: 133.333% !important;
+      height: 133.333% !important;
+    }
+  }
 }

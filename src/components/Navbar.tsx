@@ -14,7 +14,7 @@ function NavbarContent() {
   const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState(searchParams.get("keyword") || "");
   const { user, isAuthenticated, logout } = useAuth();
-  const { savedProducts } = useSaved();
+  const { savedProducts, savedVariants } = useSaved();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -119,9 +119,9 @@ function NavbarContent() {
                 >
                   <div className="relative">
                     <link.icon className="w-4 h-4 transition-transform group-hover:scale-110" />
-                    {link.name === "Saved" && savedProducts.length > 0 && (
+                    {link.name === "Saved" && (savedProducts.length + savedVariants.length) > 0 && (
                       <span className="absolute -top-1.5 -right-1.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-primary text-[8px] text-white ring-1 ring-white">
-                        {savedProducts.length}
+                        { savedVariants.length}
                       </span>
                     )}
                   </div>
@@ -208,9 +208,9 @@ function NavbarContent() {
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {link.name}
-                {link.name === "Saved" && savedProducts.length > 0 && (
+                {link.name === "Saved" && (savedProducts.length + savedVariants.length) > 0 && (
                   <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs text-white">
-                    {savedProducts.length}
+                    {savedVariants.length}
                   </span>
                 )}
               </Link>

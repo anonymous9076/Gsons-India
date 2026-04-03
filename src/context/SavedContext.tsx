@@ -19,7 +19,8 @@ interface Product {
 }
 
 interface SavedContextType {
-    savedProducts: Product[];
+    savedProducts: any[];
+    savedVariants: any[];
     toggleSave: (productId: string) => void;
     isSaved: (productId: string) => boolean;
     loading: boolean;
@@ -37,7 +38,8 @@ export const SavedProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         enabled: isAuthenticated && !!user?._id,
     });
 
-    const savedProducts: Product[] = data?.data?.products || [];
+    const savedProducts: any[] = data?.data?.products || [];
+    const savedVariants: any[] = data?.data?.variants || [];
 
     const toggleMutation = useMutation({
         mutationFn: toggleSavedItem,
@@ -64,14 +66,20 @@ export const SavedProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
     const isSaved = (productId: string) => {
         if (!isAuthenticated) return false;
-        return savedProducts.some((p: any) => p._id === productId || p.product?._id === productId);
-        // Note: Backend might return populated 'product' field or just the product directly. 
-        // Logic might need adjustment based on exact backend response. 
-        // Assuming flat list of products for now based on 'getSavedItems' naming.
+        
+        // Check products
+        const inProducts = savedProducts.some((p: any) => (p?._id || p) === productId);
+        if (inProducts) return true;
+
+        // Check variants
+        const inVariants = savedVariants.some((v: any) => (v?._id || v) === productId);
+        if (inVariants) return true;
+
+        return false;
     };
 
     return (
-        <SavedContext.Provider value={{ savedProducts, toggleSave, isSaved, loading: isLoading }}>
+        <SavedContext.Provider value={{ savedProducts, savedVariants, toggleSave, isSaved, loading: isLoading }}>
             {children}
         </SavedContext.Provider>
     );

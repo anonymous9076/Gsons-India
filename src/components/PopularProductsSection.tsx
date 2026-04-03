@@ -47,6 +47,7 @@ export default function PopularProductsSection() {
                                 <ProductCard
                                     key={variant._id || idx}
                                     {...product}
+                                    attributes={variant.attributes}
                                     _id={product?._id}
                                     name={product?.name || "Premium Lighting"}
                                     price={variant.price}
@@ -112,6 +113,7 @@ export default function PopularProductsSection() {
                                 <ProductCard
                                     key={`deal-${idx}`}
                                     {...product}
+                                    attributes={variant.attributes}
                                     _id={product?._id}
                                     name={product?.name || "Best Selection"}
                                     price={variant.price}

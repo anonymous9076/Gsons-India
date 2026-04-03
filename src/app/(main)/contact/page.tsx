@@ -127,7 +127,7 @@ export default function ContactPage() {
                         <div className="bg-white p-10 md:p-12 rounded-4xl border border-slate-100 shadow-luxe-lg sticky top-32">
                             <div className="mb-8">
                                 <h3 className="text-2xl  text-slate-900 font-display  tracking-tight">Technical Inquiry</h3>
-                                <p className="text-slate-400 text-[10px]   tracking-[0.3em] mt-2">Dossier Initialization</p>
+                                <p className="text-slate-400 text-[10px]   tracking-[0.3em] mt-2"> Initialization</p>
                             </div>
 
                             <form onSubmit={handleSubmit} className="space-y-8">

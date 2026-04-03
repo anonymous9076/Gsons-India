@@ -9,7 +9,7 @@ import { cn } from "@/utils/cn";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-export default function ProductCard({ _id, name, price, images, productId, sku, rating, reviews, isNew, isSale, variantId }: Product & { productId?: string, sku?: string, rating?: number, reviews?: number, isNew?: boolean, isSale?: boolean, variantId?: string }) {
+export default function ProductCard({ _id, name, price, images, productId, sku, rating, reviews, isNew, isSale, variantId, attributes }: Product & { productId?: string, sku?: string, rating?: number, reviews?: number, isNew?: boolean, isSale?: boolean, variantId?: string, attributes?: Record<string, any> }) {
     const { toggleSave, isSaved } = useSaved();
     const { isAuthenticated } = useAuth();
     const router = useRouter();
@@ -46,8 +46,8 @@ export default function ProductCard({ _id, name, price, images, productId, sku, 
                 </button>
 
                 {/* Floating Image */}
-                <Link href={`/products/${targetId}`} className="block w-full h-full p-4">
-                    <div className="w-full h-full relative transition-transform duration-700 group-hover:scale-110 group-hover:-rotate-3">
+                <Link href={`/products/${targetId}`} className="block w-full h-full">
+                    <div className="w-full h-full relative ">
                         <img
                             src={imageUrl}
                             alt={name}
@@ -58,7 +58,7 @@ export default function ProductCard({ _id, name, price, images, productId, sku, 
             </div>
 
             {/* Bottom Section: Details */}
-            <div className="p-4 md:p-5 flex flex-col bg-white rounded-t-3xl -mt-6 relative z-10 shadow-[0_-10px_30px_-10px_rgba(0,0,0,0.1)] grow">
+            <div className="p-4 md:p-5 flex flex-col bg-white  -mt-6 relative z-10 shadow-[0_-10px_30px_-10px_rgba(0,0,0,0.1)] grow">
                 {/* Info Container */}
                 <div className="space-y-2 grow">
                     
@@ -82,10 +82,17 @@ export default function ProductCard({ _id, name, price, images, productId, sku, 
                         </h3>
                     </Link>
 
+                    {/* Attributes */}
+                    {attributes && Object.values(attributes).length > 0 && (
+                        <p className="text-slate-400 text-[11px] font-bold uppercase tracking-[0.1em] line-clamp-1">
+                            {Object.values(attributes).map(val => String(val)).join(" | ")}
+                        </p>
+                    )}
+
                     {/* Description */}
-                    <p className="text-slate-400 text-[13px] font-medium leading-relaxed line-clamp-2">
+                    {/* <p className="text-slate-400 text-[13px] font-medium leading-relaxed line-clamp-2">
                         Architectural precision meets high-performance. Minimalist construction with refined detailing and sleek aesthetics.
-                    </p>
+                    </p> */}
                 </div>
 
                 {/* Footer: Price */}

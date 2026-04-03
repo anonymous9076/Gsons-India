@@ -67,7 +67,7 @@ export default function CataloguesPage() {
                                 </h3>
                                 <div className="flex items-center gap-6 pt-4 border-t border-white/10">
                                     <span className="flex items-center gap-3 text-[10px]   tracking-[0.3em] text-primary group-hover:text-white transition-colors">
-                                        Access Dossier <Download className="w-4 h-4" />
+                                        Access <Download className="w-4 h-4" />
                                     </span>
                                     <span className="w-2 h-2 rounded-full bg-white/20"></span>
                                     <span className="text-[10px]   tracking-[0.3em] text-white/40 group-hover:text-white/60 transition-all">

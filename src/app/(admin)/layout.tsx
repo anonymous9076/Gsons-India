@@ -8,7 +8,7 @@ export default function AdminLayout({
 }) {
     return (
         <AdminGuard>
-            <div className="flex min-h-screen bg-gray-50">
+            <div className="flex h-[133.33dvh] overflow-hidden bg-gray-50 admin-zoom-wrapper">
                 <AdminSidebar />
                 <main className="flex-1 p-8 overflow-y-auto">
                     <div className="max-w-7xl mx-auto">

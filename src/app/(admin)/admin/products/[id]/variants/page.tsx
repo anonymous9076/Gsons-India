@@ -57,19 +57,20 @@ export default function ProductVariantsPage() {
     return (
         <div className="space-y-8">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div className="flex items-center gap-4">
-                    <Button
-                        variant="outline"
-                        onClick={() => router.back()}
-                        leftIcon={<ArrowLeft className="w-4 h-4" />}
-                    >
-                        Back to Products
-                    </Button>
+                <div className="flex  flex-1 items-center gap-4">
+                    
                     <div>
                         <h1 className="text-3xl font-bold text-gray-900">Manage Variants</h1>
                         <p className="text-gray-500 mt-1">Product: <span className="text-primary font-bold">{product?.name}</span></p>
                     </div>
                 </div>
+                <Button
+                        variant="outline"
+                        onClick={() => router.push(`/admin/products`)}
+                        leftIcon={<ArrowLeft className="w-4 h-4" />}
+                    >
+                        Back to Products
+                    </Button>
                 <Button
                     variant="primary"
                     onClick={() => router.push(`/admin/products/${productId}/variants/new`)}

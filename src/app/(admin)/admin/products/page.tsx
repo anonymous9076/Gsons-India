@@ -13,14 +13,15 @@ import { cn } from "@/utils/cn";
 
 export default function ProductsPage() {
     const [searchTerm, setSearchTerm] = useState("");
+    const [sort, setSort] = useState("-createdAt");
     const [page, setPage] = useState(1);
     const queryClient = useQueryClient();
     const router = useRouter();
 
     // Fetch Products
     const { data: productData, isLoading } = useQuery({
-        queryKey: ["products", searchTerm, page],
-        queryFn: () => getAllProducts(`keyword=${searchTerm}&page=${page}`),
+        queryKey: ["products", searchTerm, sort, page],
+        queryFn: () => getAllProducts(`keyword=${searchTerm}&sort=${sort}&page=${page}`),
     });
 
     // Delete Product Mutation
@@ -60,8 +61,8 @@ export default function ProductsPage() {
             </div>
 
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-                <div className="p-4 border-b border-gray-100 flex items-center gap-4">
-                    <div className="relative flex-1">
+                <div className="p-4 border-b border-gray-100 flex flex-col sm:flex-row items-center gap-4">
+                    <div className="relative flex-1 w-full">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
                         <input
                             type="text"
@@ -73,6 +74,23 @@ export default function ProductsPage() {
                                 setPage(1);
                             }}
                         />
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                        <span className="text-xs font-bold text-gray-400 uppercase  tracking-widest">Sort:</span>
+                        <select
+                            value={sort}
+                            onChange={(e) => {
+                                setSort(e.target.value);
+                                setPage(1);
+                            }}
+                            className="bg-gray-50 border border-gray-100 text-gray-700 text-xs font-bold rounded-xl focus:ring-2 focus:ring-primary focus:border-primary block px-4 py-2 transition-all outline-none cursor-pointer hover:bg-white hover:shadow-sm"
+                        >
+                            <option value="-createdAt">Newest First</option>
+                            <option value="createdAt">Oldest First</option>
+                            <option value="name">Name (A-Z)</option>
+                            <option value="-name">Name (Z-A)</option>
+                            <option value="-updatedAt">Recently Updated</option>
+                        </select>
                     </div>
                 </div>
 

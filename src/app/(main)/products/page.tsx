@@ -188,21 +188,12 @@ function ProductsContent() {
                                     {products.map((variantObj: any) => {
                                         const parentProduct = variantObj.productId || {};
                                         
-                                        // Attach attributes to the name to differentiate variants
-                                        let attributeSuffix = "";
-                                        if (variantObj.attributes) {
-                                            const vals = Object.values(variantObj.attributes);
-                                            if (vals.length > 0) {
-                                                attributeSuffix = ` - ${vals.join(', ')}`;
-                                            }
-                                        }
-
                                         const displayItem = {
                                             ...parentProduct,
                                             ...variantObj,
                                             _id: variantObj._id,
                                             productId: parentProduct._id,
-                                            name: `${parentProduct.name || "Product"}${attributeSuffix}`,
+                                            name: parentProduct.name || "Product",
                                             price: variantObj.price ?? parentProduct.price,
                                             images: variantObj.images && variantObj.images.length > 0 ? variantObj.images : parentProduct.images,
                                             sku: variantObj.sku || parentProduct.sku || parentProduct.code
