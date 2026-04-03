@@ -1,18 +1,22 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { Plus, X, Upload, Trash2 } from "lucide-react";
+import { Plus, X, Upload, Trash2, Image as ImageIcon } from "lucide-react";
 import Loader from "@/components/Loader";
 import { useRouter, useParams } from "next/navigation";
 import { addVariant } from "@/services/variantApi";
 import toast from "react-hot-toast";
 import Button from "@/components/Button";
+import GalleryPickerModal from "@/components/GalleryPickerModal";
+import { GalleryItem } from "@/services/galleryApi";
 
 export default function NewVariantPage() {
     const router = useRouter();
     const { id: productId } = useParams();
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [images, setImages] = useState<File[]>([]);
+    const [galleryImages, setGalleryImages] = useState<GalleryItem[]>([]);
+    const [isGalleryModalOpen, setIsGalleryModalOpen] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const [formData, setFormData] = useState({
@@ -52,11 +56,23 @@ export default function NewVariantPage() {
         setImages(prev => prev.filter((_, i) => i !== index));
     };
 
+    const removeGalleryImage = (id: string) => {
+        setGalleryImages(prev => prev.filter(img => img._id !== id));
+    };
+
+    const handleGallerySelect = (selected: GalleryItem[]) => {
+        setGalleryImages(prev => {
+            const existingIds = prev.map(img => img._id);
+            const newImages = selected.filter(img => !existingIds.includes(img._id));
+            return [...prev, ...newImages];
+        });
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if (!productId) return toast.error("Product ID is missing");
-        if (images.length === 0) return toast.error("Please upload at least one image");
+        if (images.length === 0 && galleryImages.length === 0) return toast.error("Please provide at least one image");
 
         setLoading(true);
 
@@ -80,6 +96,11 @@ export default function NewVariantPage() {
             images.forEach((image) => {
                 data.append("files", image);
             });
+
+            // Append gallery images
+            if (galleryImages.length > 0) {
+                data.append("galleryImages", JSON.stringify(galleryImages));
+            }
 
             await addVariant(data);
             toast.success("Variant added successfully!");
@@ -212,7 +233,7 @@ export default function NewVariantPage() {
                         <label className="text-sm font-bold text-gray-900 block mb-2">Variant Images</label>
                         <div
                             onClick={() => fileInputRef.current?.click()}
-                            className="border-2 border-dashed border-gray-200 rounded-3xl p-8 text-center hover:border-primary transition-colors cursor-pointer group"
+                            className="border-2 min-h-[160px] border-dashed border-gray-200 rounded-3xl p-8 text-center hover:border-primary transition-colors cursor-pointer group"
                         >
                             <input
                                 type="file"
@@ -231,21 +252,45 @@ export default function NewVariantPage() {
                             </div>
                         </div>
 
-                        {/* Image Preview */}
-                        {images.length > 0 && (
-                            <div className="mt-4 grid grid-cols-5 gap-4">
+                        {/* Image Previews */}
+                        {(images.length > 0 || galleryImages.length > 0) && (
+                            <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                                 {images.map((img, i) => (
-                                    <div key={i} className="relative aspect-square border rounded-xl overflow-hidden group">
+                                    <div key={`file-${i}`} className="relative aspect-square border-2 border-primary/10 rounded-2xl overflow-hidden group bg-orange-50/10">
                                         <img src={URL.createObjectURL(img)} alt="preview" className="w-full h-full object-cover" />
+                                        <div className="absolute top-2 left-2 px-1.5 py-0.5 bg-gray-500 text-[10px] text-white font-bold rounded-md shadow-sm uppercase">File</div>
                                         <button
                                             type="button"
                                             onClick={(e) => { e.stopPropagation(); removeImage(i); }}
-                                            className="absolute top-1 right-1 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                                            className="absolute top-2 right-2 p-1.5 bg-white shadow-xl rounded-full text-red-500 opacity-0 group-hover:opacity-100 transition-all transform scale-90 group-hover:scale-100"
                                         >
-                                            <X className="w-4 h-4" />
+                                            <Trash2 className="w-4 h-4" />
                                         </button>
                                     </div>
                                 ))}
+
+                                {galleryImages.map((img) => (
+                                    <div key={img._id} className="relative aspect-square border-2 border-primary/20 rounded-2xl overflow-hidden group bg-orange-50">
+                                        <img src={img.url} alt="Gallery" className="w-full h-full object-cover" />
+                                        <div className="absolute top-2 left-2 px-1.5 py-0.5 bg-primary text-[10px] text-white font-bold rounded-md shadow-sm uppercase">Gallery</div>
+                                        <button
+                                            type="button"
+                                            onClick={(e) => { e.stopPropagation(); removeGalleryImage(img._id); }}
+                                            className="absolute top-2 right-2 p-1.5 bg-white shadow-xl rounded-full text-red-500 opacity-0 group-hover:opacity-100 transition-all transform scale-90 group-hover:scale-100"
+                                        >
+                                            <Trash2 className="w-4 h-4" />
+                                        </button>
+                                    </div>
+                                ))}
+
+                                <button
+                                    type="button"
+                                    onClick={() => setIsGalleryModalOpen(true)}
+                                    className="flex flex-col items-center justify-center gap-2 border-2 border-dashed border-primary/20 rounded-2xl hover:bg-orange-50 transition-all p-4 text-primary group"
+                                >
+                                    <ImageIcon className="w-6 h-6 group-hover:scale-110 transition-transform" />
+                                    <span className="text-[10px] font-bold uppercase tracking-tight">Gallery</span>
+                                </button>
                             </div>
                         )}
                     </div>
@@ -270,6 +315,12 @@ export default function NewVariantPage() {
                     </Button>
                 </div>
             </form>
+
+            <GalleryPickerModal
+                isOpen={isGalleryModalOpen}
+                onClose={() => setIsGalleryModalOpen(false)}
+                onSelect={handleGallerySelect}
+            />
         </div>
     );
 }

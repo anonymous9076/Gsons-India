@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { X, Upload, Plus, Trash2, Send, Save, ArrowLeft } from "lucide-react";
+import { X, Upload, Plus, Trash2, Send, Save, ArrowLeft, Image as ImageIcon } from "lucide-react";
 import Loader from "@/components/Loader";
 import Button from "@/components/Button";
 import { useRouter, useParams } from "next/navigation";
@@ -9,12 +9,21 @@ import { updateProduct, getAllProducts, getProductById } from "@/services/produc
 import { getAllCategories } from "@/services/categoryApi";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import GalleryPickerModal from "@/components/GalleryPickerModal";
+import { GalleryItem } from "@/services/galleryApi";
 
 export default function EditProductPage() {
     const router = useRouter();
     const { id } = useParams();
     const queryClient = useQueryClient();
+    
     const [loading, setLoading] = useState(false);
+    const [newImages, setNewImages] = useState<File[]>([]);
+    const [newPreviews, setNewPreviews] = useState<string[]>([]);
+    const [existingImages, setExistingImages] = useState<any[]>([]);
+    const [imagesToDelete, setImagesToDelete] = useState<string[]>([]);
+    const [galleryImages, setGalleryImages] = useState<GalleryItem[]>([]);
+    const [isGalleryModalOpen, setIsGalleryModalOpen] = useState(false);
 
     const [formData, setFormData] = useState({
         name: "",
@@ -49,8 +58,7 @@ export default function EditProductPage() {
                 description: p.description || "",
                 isActive: p.isActive ?? true,
             });
-
-
+            setExistingImages(p.images || []);
         }
     }, [productData]);
 
@@ -60,7 +68,42 @@ export default function EditProductPage() {
         setFormData(prev => ({ ...prev, [name]: val }));
     };
 
+    // Handle New Image Selection
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const files = Array.from(e.target.files || []);
+        if (files.length === 0) return;
+        setNewImages(prev => [...prev, ...files]);
+        const previews = files.map(file => URL.createObjectURL(file));
+        setNewPreviews(prev => [...prev, ...previews]);
+    };
 
+    // Remove new image
+    const removeNewImage = (index: number) => {
+        setNewImages(prev => prev.filter((_, i) => i !== index));
+        setNewPreviews(prev => {
+            const updated = prev.filter((_, i) => i !== index);
+            URL.revokeObjectURL(prev[index]);
+            return updated;
+        });
+    };
+
+    // Remove existing image
+    const removeExistingImage = (publicUrl: string) => {
+        setExistingImages(prev => prev.filter(img => img.publicUrl !== publicUrl));
+        setImagesToDelete(prev => [...prev, publicUrl]);
+    };
+
+    const removeGalleryImage = (id: string) => {
+        setGalleryImages(prev => prev.filter(img => img._id !== id));
+    };
+
+    const handleGallerySelect = (selected: GalleryItem[]) => {
+        setGalleryImages(prev => {
+            const existingIds = prev.map(img => img._id);
+            const newImages = selected.filter(img => !existingIds.includes(img._id));
+            return [...prev, ...newImages];
+        });
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -79,7 +122,16 @@ export default function EditProductPage() {
             data.append("description", formData.description);
             data.append("isActive", String(formData.isActive));
 
+            // Append new images
+            newImages.forEach(img => data.append("images", img));
 
+            // Append images to delete
+            imagesToDelete.forEach(pid => data.append("imagesToDelete", pid));
+
+            // Append gallery images
+            if (galleryImages.length > 0) {
+                data.append("galleryImages", JSON.stringify(galleryImages));
+            }
 
             await updateProduct(id as string, data);
             queryClient.invalidateQueries({ queryKey: ["product", id] });
@@ -116,8 +168,74 @@ export default function EditProductPage() {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-8">
-                <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm space-y-6">
-                    <div className="grid md:grid-cols-2 gap-6">
+                <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm space-y-8">
+                    {/* Image Management Section */}
+                    <div className="space-y-4">
+                        <label className="text-sm font-bold text-gray-900 ml-1">Product Images</label>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                            {/* Existing Images */}
+                            {existingImages.map((img, index) => (
+                                <div key={`ex-${index}`} className="relative aspect-square group rounded-2xl overflow-hidden border border-gray-100 bg-gray-50">
+                                    <img src={img.url} alt="Product" className="w-full h-full object-cover" />
+                                    <button
+                                        type="button"
+                                        onClick={() => removeExistingImage(img.publicUrl)}
+                                        className="absolute top-2 right-2 p-1.5 bg-white shadow-lg rounded-full text-red-500 opacity-0 group-hover:opacity-100 transition-all transform scale-90 group-hover:scale-100"
+                                    >
+                                        <Trash2 className="w-4 h-4" />
+                                    </button>
+                                </div>
+                            ))}
+                            
+                            {/* New Previews */}
+                            {newPreviews.map((preview, index) => (
+                                <div key={`new-${index}`} className="relative aspect-square group rounded-2xl overflow-hidden border border-primary/20 bg-orange-50">
+                                    <img src={preview} alt="New Preview" className="w-full h-full object-cover" />
+                                    <div className="absolute top-2 left-2 px-1.5 py-0.5 bg-primary text-[10px] text-white font-bold rounded-md">NEW</div>
+                                    <button
+                                        type="button"
+                                        onClick={() => removeNewImage(index)}
+                                        className="absolute top-2 right-2 p-1.5 bg-white shadow-lg rounded-full text-red-500 opacity-0 group-hover:opacity-100 transition-all transform scale-90 group-hover:scale-100"
+                                    >
+                                        <Trash2 className="w-4 h-4" />
+                                    </button>
+                                </div>
+                            ))}
+
+                            {/* Gallery Images */}
+                            {galleryImages.map((img) => (
+                                <div key={img._id} className="relative aspect-square group rounded-2xl overflow-hidden border border-primary/20 bg-orange-50">
+                                    <img src={img.url} alt="Gallery" className="w-full h-full object-cover" />
+                                    <div className="absolute top-2 left-2 px-1.5 py-0.5 bg-primary text-[10px] text-white font-bold rounded-md shadow-sm uppercase">Gallery</div>
+                                    <button
+                                        type="button"
+                                        onClick={() => removeGalleryImage(img._id)}
+                                        className="absolute top-2 right-2 p-1.5 bg-white shadow-xl rounded-full text-red-500 opacity-0 group-hover:opacity-100 transition-all transform scale-90 group-hover:scale-100"
+                                    >
+                                        <Trash2 className="w-4 h-4" />
+                                    </button>
+                                </div>
+                            ))}
+
+                            <div className="flex flex-col gap-2">
+                                <label className="flex-1  min-h-[160px] flex flex-col items-center justify-center border-2 border-dashed border-gray-200 rounded-2xl cursor-pointer hover:border-primary hover:bg-orange-50/30 transition-all group p-4">
+                                    <input type="file" multiple className="hidden" onChange={handleImageChange} accept="image/*" />
+                                    <Upload className="w-6 h-6 text-gray-400 group-hover:text-primary mb-2" />
+                                    <span className="text-[10px] font-bold text-gray-400 group-hover:text-primary uppercase tracking-tight text-center">Add Files</span>
+                                </label>
+                                <button
+                                    type="button"
+                                    onClick={() => setIsGalleryModalOpen(true)}
+                                    className="flex items-center justify-center gap-2 py-2 bg-gray-50 border border-gray-100 rounded-xl text-[10px] font-bold text-gray-500 hover:bg-orange-50 hover:text-primary hover:border-primary/20 transition-all uppercase tracking-tight shadow-sm"
+                                >
+                                    <ImageIcon className="w-3.5 h-3.5" />
+                                    Gallery
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 gap-6 pt-4 border-t border-gray-50">
                         <div className="space-y-2">
                             <label className="text-sm font-bold text-gray-900">Product Name</label>
                             <input
@@ -188,8 +306,6 @@ export default function EditProductPage() {
                             placeholder="Detailed product information..."
                         />
                     </div>
-
-
                 </div>
 
                 <div className="flex justify-end gap-4 pb-12">
@@ -210,6 +326,12 @@ export default function EditProductPage() {
                     </Button>
                 </div>
             </form>
+
+            <GalleryPickerModal
+                isOpen={isGalleryModalOpen}
+                onClose={() => setIsGalleryModalOpen(false)}
+                onSelect={handleGallerySelect}
+            />
         </div>
     );
 }
