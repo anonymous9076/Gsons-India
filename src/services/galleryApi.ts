@@ -41,6 +41,13 @@ export const deleteFolder = async (id: string) => {
     return data;
 };
 
+export const exportGallery = async () => {
+    const response = await apiClient.get("/gallery/folders/export", {
+        responseType: 'blob'
+    });
+    return response.data;
+};
+
 // Image APIs
 export const getGalleryImages = async (folderId?: string): Promise<GalleryResponse> => {
     const url = folderId ? `/gallery?folderId=${folderId}` : "/gallery";

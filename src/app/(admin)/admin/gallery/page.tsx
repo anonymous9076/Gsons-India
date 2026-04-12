@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { Plus, Trash2, Image as ImageIcon, Upload, X, Loader2, ExternalLink, Copy, Check, Folder, ChevronRight, ArrowLeft, FolderPlus } from "lucide-react";
+import { Plus, Trash2, Image as ImageIcon, Upload, X, Loader2, ExternalLink, Copy, Check, Folder, ChevronRight, ArrowLeft, FolderPlus, Download } from "lucide-react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { 
     getGalleryImages, 
@@ -11,6 +11,7 @@ import {
     getFolders, 
     createFolder, 
     deleteFolder,
+    exportGallery,
     GalleryItem,
     GalleryFolder
 } from "@/services/galleryApi";
@@ -27,6 +28,7 @@ export default function GalleryPage() {
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const [copiedId, setCopiedId] = useState<string | null>(null);
     const [isCreatingFolder, setIsCreatingFolder] = useState(false);
+    const [isExporting, setIsExporting] = useState(false);
     const [newFolderName, setNewFolderName] = useState("");
     const [selectedImageIds, setSelectedImageIds] = useState<string[]>([]);
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -184,6 +186,26 @@ export default function GalleryPage() {
         createFolderMutation.mutate(newFolderName);
     };
 
+    const handleExport = async () => {
+        try {
+            setIsExporting(true);
+            const blob = await exportGallery();
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', `gsons_gallery_backup_${new Date().toISOString().split('T')[0]}.zip`);
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            window.URL.revokeObjectURL(url);
+            toast.success("Gallery export successful");
+        } catch (error) {
+            toast.error("Failed to export gallery");
+        } finally {
+            setIsExporting(false);
+        }
+    };
+
     return (
         <div className="space-y-8 pb-20">
             {/* Header Section */}
@@ -215,14 +237,24 @@ export default function GalleryPage() {
                 
                 <div className="flex items-center gap-4">
                     {!selectedFolder ? (
-                        <Button
-                            variant="primary"
-                            onClick={() => setIsCreatingFolder(true)}
-                            leftIcon={<FolderPlus className="w-5 h-5" />}
-                            className="shadow-lg shadow-primary/20"
-                        >
-                            New Folder
-                        </Button>
+                        <div className="flex items-center gap-3">
+                            <Button
+                                variant="primary"
+                                onClick={() => setIsCreatingFolder(true)}
+                                leftIcon={<FolderPlus className="w-5 h-5" />}
+                                className="shadow-lg shadow-primary/20"
+                            >
+                                New Folder
+                            </Button>
+                            <Button
+                                variant="outline"
+                                onClick={handleExport}
+                                disabled={isExporting}
+                                leftIcon={isExporting ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
+                            >
+                                {isExporting ? "Zipping..." : "Export All"}
+                            </Button>
+                        </div>
                     ) : (
                         <div className="flex items-center gap-3">
                             <input
