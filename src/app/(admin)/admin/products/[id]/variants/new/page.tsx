@@ -241,7 +241,7 @@ export default function NewVariantPage() {
                                 ref={fileInputRef}
                                 onChange={handleFileChange}
                                 multiple
-                                accept="image/*"
+                                accept="image/*,video/*"
                             />
                             <div className="flex flex-col items-center">
                                 <div className="w-12 h-12 bg-orange-100 text-primary rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
@@ -255,9 +255,16 @@ export default function NewVariantPage() {
                         {/* Image Previews */}
                         {(images.length > 0 || galleryImages.length > 0) && (
                             <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                                {images.map((img, i) => (
+                                {images.map((img, i) => {
+                                    const previewUrl = URL.createObjectURL(img);
+                                    const isVideo = img.type.startsWith('video/');
+                                    return (
                                     <div key={`file-${i}`} className="relative aspect-square border-2 border-primary/10 rounded-2xl overflow-hidden group bg-orange-50/10">
-                                        <img src={URL.createObjectURL(img)} alt="preview" className="w-full h-full object-cover" />
+                                        {isVideo ? (
+                                            <video src={previewUrl} className="w-full h-full object-cover" autoPlay loop muted playsInline />
+                                        ) : (
+                                            <img src={previewUrl} alt="preview" className="w-full h-full object-cover" />
+                                        )}
                                         <div className="absolute top-2 left-2 px-1.5 py-0.5 bg-gray-500 text-[10px] text-white font-bold rounded-md shadow-sm uppercase">File</div>
                                         <button
                                             type="button"
@@ -267,11 +274,18 @@ export default function NewVariantPage() {
                                             <Trash2 className="w-4 h-4" />
                                         </button>
                                     </div>
-                                ))}
+                                    );
+                                })}
 
-                                {galleryImages.map((img) => (
+                                {galleryImages.map((img) => {
+                                    const isVideo = img.url.match(/\.(mp4|webm|ogg)$/i);
+                                    return (
                                     <div key={img._id} className="relative aspect-square border-2 border-primary/20 rounded-2xl overflow-hidden group bg-orange-50">
-                                        <img src={img.url} alt="Gallery" className="w-full h-full object-cover" />
+                                        {isVideo ? (
+                                            <video src={img.url} className="w-full h-full object-cover" autoPlay loop muted playsInline />
+                                        ) : (
+                                            <img src={img.url} alt="Gallery" className="w-full h-full object-cover" />
+                                        )}
                                         <div className="absolute top-2 left-2 px-1.5 py-0.5 bg-primary text-[10px] text-white font-bold rounded-md shadow-sm uppercase">Gallery</div>
                                         <button
                                             type="button"
@@ -281,7 +295,8 @@ export default function NewVariantPage() {
                                             <Trash2 className="w-4 h-4" />
                                         </button>
                                     </div>
-                                ))}
+                                    );
+                                })}
 
                                 <button
                                     type="button"

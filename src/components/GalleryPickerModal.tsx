@@ -190,6 +190,7 @@ export default function GalleryPickerModal({ isOpen, onClose, onSelect }: Galler
                             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
                                 {filteredImages.map((image) => {
                                     const isSelected = selectedItems.has(image._id);
+                                    const isVideo = image.url.match(/\.(mp4|webm|ogg)$/i);
                                     return (
                                         <div
                                             key={image._id}
@@ -201,14 +202,28 @@ export default function GalleryPickerModal({ isOpen, onClose, onSelect }: Galler
                                                     : "border-transparent hover:border-gray-200"
                                             )}
                                         >
-                                            <img
-                                                src={image.url}
-                                                alt="Gallery"
-                                                className={cn(
-                                                    "w-full h-full object-cover transition-transform duration-500",
-                                                    isSelected ? "scale-105" : "group-hover:scale-110"
-                                                )}
-                                            />
+                                            {isVideo ? (
+                                                <video
+                                                    src={image.url}
+                                                    autoPlay
+                                                    loop
+                                                    muted
+                                                    playsInline
+                                                    className={cn(
+                                                        "w-full h-full object-cover transition-transform duration-500",
+                                                        isSelected ? "scale-105" : "group-hover:scale-110"
+                                                    )}
+                                                />
+                                            ) : (
+                                                <img
+                                                    src={image.url}
+                                                    alt="Gallery"
+                                                    className={cn(
+                                                        "w-full h-full object-cover transition-transform duration-500",
+                                                        isSelected ? "scale-105" : "group-hover:scale-110"
+                                                    )}
+                                                />
+                                            )}
                                             
                                             {/* Selection Indicator */}
                                             <div className={cn(

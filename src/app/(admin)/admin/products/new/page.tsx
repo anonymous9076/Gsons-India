@@ -16,7 +16,7 @@ export default function NewProductPage() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [images, setImages] = useState<File[]>([]);
-    const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+    const [imagePreviews, setImagePreviews] = useState<{url: string, type: string}[]>([]);
     const [galleryImages, setGalleryImages] = useState<GalleryItem[]>([]);
     const [isGalleryModalOpen, setIsGalleryModalOpen] = useState(false);
 
@@ -66,7 +66,10 @@ export default function NewProductPage() {
 
         setImages(prev => [...prev, ...files]);
 
-        const newPreviews = files.map(file => URL.createObjectURL(file));
+        const newPreviews = files.map(file => ({
+            url: URL.createObjectURL(file),
+            type: file.type.startsWith('video/') ? 'video' : 'image'
+        }));
         setImagePreviews(prev => [...prev, ...newPreviews]);
     };
 
@@ -75,7 +78,7 @@ export default function NewProductPage() {
         setImages(prev => prev.filter((_, i) => i !== index));
         setImagePreviews(prev => {
             const newPreviews = prev.filter((_, i) => i !== index);
-            URL.revokeObjectURL(prev[index]); // Clean up memory
+            URL.revokeObjectURL(prev[index].url); // Clean up memory
             return newPreviews;
         });
     };
@@ -158,7 +161,11 @@ export default function NewProductPage() {
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                             {imagePreviews.map((preview, index) => (
                                 <div key={index} className="relative aspect-square group rounded-2xl overflow-hidden border border-gray-100 bg-gray-50">
-                                    <img src={preview} alt="Preview" className="w-full h-full object-cover" />
+                                    {preview.type === 'video' ? (
+                                        <video src={preview.url} className="w-full h-full object-cover" autoPlay loop muted playsInline />
+                                    ) : (
+                                        <img src={preview.url} alt="Preview" className="w-full h-full object-cover" />
+                                    )}
                                     <button
                                         type="button"
                                         onClick={() => removeImage(index)}
@@ -170,9 +177,15 @@ export default function NewProductPage() {
                             ))}
 
                             {/* Gallery Images */}
-                            {galleryImages.map((img) => (
+                            {galleryImages.map((img) => {
+                                const isVideo = img.url.match(/\.(mp4|webm|ogg)$/i);
+                                return (
                                 <div key={img._id} className="relative aspect-square group rounded-2xl overflow-hidden border border-primary/20 bg-orange-50">
-                                    <img src={img.url} alt="Gallery" className="w-full h-full object-cover" />
+                                    {isVideo ? (
+                                        <video src={img.url} className="w-full h-full object-cover" autoPlay loop muted playsInline />
+                                    ) : (
+                                        <img src={img.url} alt="Gallery" className="w-full h-full object-cover" />
+                                    )}
                                     <div className="absolute top-2 left-2 px-1.5 py-0.5 bg-primary text-[10px] text-white font-bold rounded-md shadow-sm">GALLERY</div>
                                     <button
                                         type="button"
@@ -182,11 +195,12 @@ export default function NewProductPage() {
                                         <Trash2 className="w-4 h-4" />
                                     </button>
                                 </div>
-                            ))}
+                                );
+                            })}
 
                             <div className="flex flex-col gap-2">
                                 <label className="flex-1 min-h-[160px] flex flex-col items-center justify-center border-2 border-dashed border-gray-200 rounded-2xl cursor-pointer hover:border-primary hover:bg-orange-50/30 transition-all group p-4">
-                                    <input type="file" multiple className="hidden" onChange={handleImageChange} accept="image/*" />
+                                    <input type="file" multiple className="hidden" onChange={handleImageChange} accept="image/*,video/*" />
                                     <Upload className="w-6 h-6 text-gray-400 group-hover:text-primary mb-2" />
                                     <span className="text-[10px] font-bold text-gray-400 group-hover:text-primary uppercase tracking-tight">Upload</span>
                                 </label>

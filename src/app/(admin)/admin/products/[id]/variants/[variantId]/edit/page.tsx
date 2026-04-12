@@ -278,9 +278,15 @@ export default function EditVariantPage() {
 
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4">
                             {/* Existing Images */}
-                            {existingImages.map((img, i) => (
+                            {existingImages.map((img, i) => {
+                                const isVideo = img.url && img.url.match(/\.(mp4|webm|ogg)$/i);
+                                return (
                                 <div key={`ex-${i}`} className="relative aspect-square group rounded-2xl overflow-hidden border border-gray-100 bg-gray-50">
-                                    <img src={img.url || '/logo.png'} alt="existing" className="w-full h-full object-cover" />
+                                    {isVideo ? (
+                                        <video src={img.url} className="w-full h-full object-cover" autoPlay loop muted playsInline />
+                                    ) : (
+                                        <img src={img.url || '/logo.png'} alt="existing" className="w-full h-full object-cover" />
+                                    )}
                                     <button
                                         type="button"
                                         onClick={() => removeExistingImage(img.publicUrl)}
@@ -289,12 +295,20 @@ export default function EditVariantPage() {
                                         <Trash2 className="w-4 h-4" />
                                     </button>
                                 </div>
-                            ))}
+                                );
+                            })}
 
                             {/* New Previews */}
-                            {images.map((img, i) => (
+                            {images.map((img, i) => {
+                                const previewUrl = URL.createObjectURL(img);
+                                const isVideo = img.type.startsWith('video/');
+                                return (
                                 <div key={`new-${i}`} className="relative aspect-square group rounded-2xl overflow-hidden border border-primary/20 bg-orange-50">
-                                    <img src={URL.createObjectURL(img)} alt="preview" className="w-full h-full object-cover" />
+                                    {isVideo ? (
+                                        <video src={previewUrl} className="w-full h-full object-cover" autoPlay loop muted playsInline />
+                                    ) : (
+                                        <img src={previewUrl} alt="preview" className="w-full h-full object-cover" />
+                                    )}
                                     <div className="absolute top-2 left-2 px-1.5 py-0.5 bg-primary text-[10px] text-white font-bold rounded-md">NEW</div>
                                     <button
                                         type="button"
@@ -304,12 +318,19 @@ export default function EditVariantPage() {
                                         <Trash2 className="w-4 h-4" />
                                     </button>
                                 </div>
-                            ))}
+                                );
+                            })}
 
                             {/* Gallery Images */}
-                            {galleryImages.map((img) => (
+                            {galleryImages.map((img) => {
+                                const isVideo = img.url.match(/\.(mp4|webm|ogg)$/i);
+                                return (
                                 <div key={img._id} className="relative aspect-square group rounded-2xl overflow-hidden border border-primary/20 bg-orange-50">
-                                    <img src={img.url} alt="Gallery" className="w-full h-full object-cover" />
+                                    {isVideo ? (
+                                        <video src={img.url} className="w-full h-full object-cover" autoPlay loop muted playsInline />
+                                    ) : (
+                                        <img src={img.url} alt="Gallery" className="w-full h-full object-cover" />
+                                    )}
                                     <div className="absolute top-2 left-2 px-1.5 py-0.5 bg-primary text-[10px] text-white font-bold rounded-md shadow-sm uppercase">Gallery</div>
                                     <button
                                         type="button"
@@ -319,7 +340,8 @@ export default function EditVariantPage() {
                                         <Trash2 className="w-4 h-4" />
                                     </button>
                                 </div>
-                            ))}
+                                );
+                            })}
 
                             {/* Add Buttons */}
                             <div className="flex flex-col gap-2">
@@ -330,7 +352,7 @@ export default function EditVariantPage() {
                                         className="hidden"
                                         ref={fileInputRef}
                                         onChange={handleFileChange}
-                                        accept="image/*"
+                                        accept="image/*,video/*"
                                     />
                                     <Upload className="w-6 h-6 text-gray-400 group-hover:text-primary mb-2" />
                                     <span className="text-[10px] font-bold text-gray-400 group-hover:text-primary uppercase tracking-tight text-center">Upload Files</span>
