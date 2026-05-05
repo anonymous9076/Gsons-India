@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Plus, Search, Trash2, Edit2, Layers } from "lucide-react";
+import { Plus, Search, Trash2, Edit2, Layers, UploadCloud } from "lucide-react";
 import Loader from "@/components/Loader";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getAllProducts, deleteProduct } from "@/services/productApi";
@@ -51,13 +51,23 @@ export default function ProductsPage() {
                     <h1 className="text-3xl font-bold text-gray-900">Products</h1>
                     <p className="text-gray-500 mt-2">Manage your base lighting collection.</p>
                 </div>
-                <Button
-                    variant="primary"
-                    onClick={() => router.push("/admin/products/new")}
-                    leftIcon={<Plus className="w-5 h-5" />}
-                >
-                    Add Product
-                </Button>
+                <div className="flex gap-3">
+                    <Button
+                        variant="outline"
+                        onClick={() => router.push("/admin/products/bulk")}
+                        leftIcon={<UploadCloud className="w-5 h-5" />}
+                        className="bg-white border-gray-200 text-gray-700 hover:bg-gray-50"
+                    >
+                        Bulk Import
+                    </Button>
+                    <Button
+                        variant="primary"
+                        onClick={() => router.push("/admin/products/new")}
+                        leftIcon={<Plus className="w-5 h-5" />}
+                    >
+                        Add Product
+                    </Button>
+                </div>
             </div>
 
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">

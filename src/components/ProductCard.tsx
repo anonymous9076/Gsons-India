@@ -51,7 +51,7 @@ export default function ProductCard({ _id, name, price, images, productId, sku, 
                         <img
                             src={imageUrl}
                             alt={name}
-                            className="w-full h-full object-contain drop-shadow-2xl  brightness-110"
+                            className="w-full h-full object-cover drop-shadow-2xl brightness-110"
                         />
                     </div>
                 </Link>

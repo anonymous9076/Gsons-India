@@ -3,8 +3,8 @@
 import { useParams, useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { getProductById } from '@/services/productApi';
-import { ArrowLeft, Heart, ShoppingCart, Check, Info } from "lucide-react";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { ArrowLeft, Heart, ShoppingCart, Check, Info, Play, Pause } from "lucide-react";
 import { formatPrice } from '@/utils/formatters';
 import { cn } from '@/utils/cn';
 import type { Product, Variant } from '@/types/product';
@@ -20,6 +20,12 @@ export default function ProductDetailPage() {
     const [mainImage, setMainImage] = useState<string>('');
     const { toggleSave, isSaved } = useSaved();
     const { isAuthenticated } = useAuth();
+    const videoRef = useRef<HTMLVideoElement>(null);
+
+    const isVideo = (url: string) => {
+        if (!url) return false;
+        return /\.(mp4|webm|ogg)$/i.test(url);
+    };
 
     const { data: product, isLoading, error } = useQuery<Product>({
         queryKey: ['product', productId],
@@ -82,6 +88,7 @@ export default function ProductDetailPage() {
     const currentPrice = selectedVariant?.price ?? product.price;
     const currentSKU = selectedVariant?.sku ?? product.code;
     const currentImages = (selectedVariant?.images?.length ? selectedVariant.images : product.images) || [];
+    const productVideo = currentImages.find(img => isVideo(img.url))?.url;
 
     return (
         <div className="bg-[#FAFAFA] min-h-screen pb-32">
@@ -89,7 +96,7 @@ export default function ProductDetailPage() {
                 <div className="container-custom flex items-center justify-between gap-6">
                     <button
                         onClick={() => router.back()}
-                        className="flex items-center text-[10px]   tracking-[0.2em] text-slate-400 hover:text-primary transition-colors group"
+                        className="flex items-center text-[10px]    text-slate-400 hover:text-primary transition-colors group"
                     >
                         <ArrowLeft className="w-4 h-4 mr-3 transition-transform group-hover:-translate-x-1" />
                         Back to Selection
@@ -111,13 +118,24 @@ export default function ProductDetailPage() {
                     {/* Visual Section */}
                     <div className="space-y-10 lg:sticky lg:top-30">
                         <div className="group relative aspect-square bg-white rounded-[3rem] overflow-hidden border border-slate-50 flex items-center justify-center  transition-all duration-700 hover:shadow-2xl hover:shadow-primary/5 cursor-zoom-in">
-                            <img
-                                src={mainImage || '/logo.png'}
-                                alt={product.name}
-                                className="max-w-full max-h-full object-contain transition-transform duration-1000 group-hover:scale-105"
-                            />
+                            {isVideo(mainImage) ? (
+                                <video
+                                    src={mainImage}
+                                    className="max-w-full max-h-full object-contain transition-transform duration-1000 group-hover:scale-105"
+                                    autoPlay
+                                    loop
+                                    muted
+                                    playsInline
+                                />
+                            ) : (
+                                <img
+                                    src={mainImage || '/logo.png'}
+                                    alt={product.name}
+                                    className="max-w-full max-h-full object-contain transition-transform duration-1000 group-hover:scale-105"
+                                />
+                            )}
                             {product.isSale && (
-                                <div className="absolute top-12 left-12 bg-primary text-white  px-8 py-2.5 rounded-2xl shadow-xl shadow-primary/20 text-[10px] tracking-[0.2em] -rotate-2 ">
+                                <div className="absolute top-12 left-12 bg-primary text-white  px-8 py-2.5 rounded-2xl shadow-xl shadow-primary/20 text-[10px]  -rotate-2 ">
                                     Special Offer
                                 </div>
                             )}
@@ -130,13 +148,22 @@ export default function ProductDetailPage() {
                                         key={i}
                                         onClick={() => setMainImage(img.url)}
                                         className={cn(
-                                            "w-24 h-24  rounded-3xl overflow-hidden bg-white border transition-all duration-500 transform active:scale-90",
+                                            "w-24 h-24  rounded-3xl overflow-hidden bg-white border transition-all duration-500 transform active:scale-90 relative",
                                             mainImage === img.url
                                                 ? "border-primary ring-4 ring-primary/5 scale-110"
                                                 : "border-slate-50 opacity-50 hover:opacity-100"
                                         )}
                                     >
-                                        <img src={img.url || '/logo.png'} alt="" className="w-full h-full object-contain" />
+                                        {isVideo(img.url) ? (
+                                            <div className="w-full h-full flex items-center justify-center bg-slate-50">
+                                                <Play className="w-8 h-8 text-primary fill-primary/10" />
+                                                <div className="absolute bottom-1 right-1 bg-primary/10 p-1 rounded-lg">
+                                                    <div className="w-1 h-1 rounded-full bg-primary animate-pulse" />
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <img src={img.url || '/logo.png'} alt="" className="w-full h-full object-contain" />
+                                        )}
                                     </button>
                                 ))}
                             </div>
@@ -153,7 +180,7 @@ export default function ProductDetailPage() {
                                         : (typeof product.category === 'object' ? product.category.name : (product.category || 'Uncategorized'))}
                                 </span>
                                 {currentSKU && (
-                                    <span className="text-[14px]  text-slate-500 font-bold  tracking-[0.2em] border-l border-slate-200 pl-6">
+                                    <span className="text-[14px]  text-slate-500 font-bold   border-l border-slate-200 pl-6">
                                         ID: {currentSKU}
                                     </span>
                                 )}
@@ -235,7 +262,7 @@ export default function ProductDetailPage() {
                                         <Info className="w-5 h-5" />
                                     </div>
                                     <div className="space-y-2">
-                                        <h4 className="text-[17px]   tracking-[0.2em] text-slate-900">Technical Brief</h4>
+                                        <h4 className="text-[17px]    text-slate-900">Technical Brief</h4>
                                         <p className="text-[12px] text-slate-500 font-medium leading-relaxed">
                                             Designed for seamless spatial integration and architectural longevity. Optimized for high-end residential and gallery environments.
                                         </p>
@@ -246,7 +273,7 @@ export default function ProductDetailPage() {
                                         <ShieldCheck className="w-5 h-5" />
                                     </div>
                                     <div className="space-y-2">
-                                        <h4 className="text-[17px]   tracking-[0.2em] text-white">Build Standards</h4>
+                                        <h4 className="text-[17px]    text-white">Build Standards</h4>
                                         <p className="text-[12px] text-slate-400 font-medium leading-relaxed">
                                             Engineered with aeronautical grade components and advanced thermal-protected core technology.
                                         </p>
@@ -281,26 +308,70 @@ export default function ProductDetailPage() {
                         </div>
 
                         <div className="flex flex-col sm:flex-row gap-6 pt-12 border-t border-slate-100">
-                            <button className="flex-2 bg-primary text-white py-6 rounded-3xl   tracking-[0.2em] text-[14px] font-semibold shadow-2xl shadow-primary/30 transition-all duration-500 hover:bg-primary/90 hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-4 group">
+                            <button className="flex-2 bg-primary text-white py-4 rounded-3xl    text-lg font-semibold shadow-2xl shadow-primary/30 transition-all duration-500 hover:bg-primary/90 hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-4 group">
                                 <ShoppingCart className="w-5 h-5 transition-transform group-hover:scale-110" />
                                 Add to Cart
                             </button>
                             <button 
                                 onClick={handleSave}
                                 className={cn(
-                                    "flex-1 py-6 rounded-3xl tracking-[0.2em] text-[12px] transition-all duration-500 flex items-center justify-center gap-4 group shadow-xl",
+                                    "flex-1 py-4 rounded-3xl  text-lg transition-all duration-500 font-semibold flex items-center justify-center gap-4 group shadow-xl",
                                     saved 
                                         ? "bg-primary/10 text-primary border border-primary/20 shadow-primary/5" 
                                         : "bg-white border border-slate-100 text-slate-900 hover:border-primary hover:text-primary active:scale-95 shadow-slate-200/20"
                                 )}
                             >
                                 <Heart className={cn("w-5 h-5 transition-transform group-hover:scale-110", saved && "fill-current")} />
-                                {saved ? "Saved in Archive" : "Save to Archive"}
+                                {saved ? "Saved" : "Save"}
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
+
+            {/* Infinite Video Section */}
+            {productVideo && (
+                <div className="w-full flex flex-col items-center py-24 lg:py-32 bg-white/40 border-y border-slate-100 mt-20">
+                    <div className="container-custom mb-12 text-center">
+                        <span className="text-[10px] font-bold text-primary uppercase tracking-[0.4em] mb-4 block">Product Showcase</span>
+                        <h2 className="text-3xl lg:text-4xl font-display text-slate-900 tracking-tight">Experience in Motion</h2>
+                    </div>
+                    
+                    <div 
+                        className={cn(
+                            "w-[95%] lg:w-[85%] h-[60vh] lg:h-[75vh] rounded-[3.5rem] overflow-hidden shadow-2xl shadow-primary/5 border border-white/50 relative group transition-all duration-700",
+                            "hover:shadow-3xl hover:shadow-primary/10"
+                        )}
+                        onMouseEnter={() => videoRef.current?.pause()}
+                        onMouseLeave={() => videoRef.current?.play()}
+                    >
+                        <video
+                            ref={videoRef}
+                            src={productVideo}
+                            className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-105"
+                            loop
+                            muted
+                            playsInline
+                            autoPlay
+                        />
+                        
+                        {/* Interactive Overlay */}
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-700 pointer-events-none flex items-center justify-center">
+                            <div className="opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 bg-white/20 backdrop-blur-xl p-8 rounded-full border border-white/30 shadow-2xl">
+                                <Pause className="w-12 h-12 text-white fill-white/20" />
+                            </div>
+                        </div>
+
+                        {/* Video Info Badge */}
+                        <div className="absolute bottom-12 left-12 right-12 flex items-center justify-between pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                             <div className="flex items-center gap-4 bg-white/10 backdrop-blur-md px-6 py-3 rounded-2xl border border-white/20">
+                                <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                                <span className="text-[10px] font-bold text-white uppercase tracking-widest">Live Dynamic View</span>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

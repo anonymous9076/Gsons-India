@@ -16,7 +16,8 @@ import {
     User as UserIcon,
     Settings,
     ChevronUp,
-    Images
+    Images,
+    UploadCloud
 } from "lucide-react";
 import { cn } from "@/utils/cn";
 import { useAuth } from "@/context/AuthContext";
@@ -29,6 +30,7 @@ const menuItems = [
     { name: "Users", href: "/admin/users", icon: Users },
     { name: "Posts", href: "/admin/posts", icon: FileText },
     { name: "Gallery", href: "/admin/gallery", icon: Images },
+    { name: "Bulk Import", href: "/admin/products/bulk", icon: UploadCloud },
 ];
 
 export default function AdminSidebar() {
